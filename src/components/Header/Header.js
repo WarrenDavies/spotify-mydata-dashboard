@@ -6,7 +6,9 @@ export default function Header (props) {
     return (
         <header className='Header'>
             <h1 className='Header__text'>Your Spotify Data</h1>
-            <DataImportForm />
+            <DataImportForm 
+                addData={props.addData}
+            />
         </header>
     )
 }
