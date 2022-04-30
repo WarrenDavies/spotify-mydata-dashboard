@@ -22,7 +22,9 @@ export default function DataImportForm(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.addData(newData);
+        if (newData) {
+            props.addData(newData);
+        }
     }
 
     return (
