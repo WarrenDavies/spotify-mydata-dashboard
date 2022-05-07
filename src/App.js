@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, BrowserRouter}
+    from 'react-router-dom';
 import './App.scss';
 import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar'
+import Home from './dashboards/Home/Home'
+import Time from './dashboards/Time/Time'
+
 
 function App(props) {
 
@@ -53,8 +58,10 @@ function App(props) {
       <div className='container'>
         <Sidebar />
         <div className='dashboard'>
-          data.length: {data.length} <br/><br/>
-          data: {JSON.stringify(data)}
+          <Routes>
+            <Route exact path='/' exact element={<Home data={data} />} />
+            <Route path='/time' element={<Time data={data} />} />
+          </Routes>
         </div>
       </div>
     </div>

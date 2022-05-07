@@ -3,4 +3,12 @@ $Sidebar-color: greenyellow;
 .Sidebar {
     min-width: 80px;
     background-color: $Sidebar-color;
+    
+    ul.sidebar__links {
+        list-style-type: none;
+        padding: 10px;
+        li {
+            
+        }
+    }
 }
