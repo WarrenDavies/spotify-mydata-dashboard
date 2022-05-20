@@ -11,6 +11,8 @@ import Time from './dashboards/Time/Time'
 function App(props) {
 
   const [data, setData] = useState(props.data);
+  const [listensUploaded, setListensUploaded] = useState(props.listensUploaded);
+  const [stats, setStats] = useState(props.stats);
 
   function checkIfRecordExists(existingListen, newListen) {
     if (
@@ -43,10 +45,28 @@ function App(props) {
         uniqueData.push(i);
       }
     });
-    
-
-    setData([...data, ...uniqueData]);
+    let combinedData = [...data, ...uniqueData];
+    setData(combinedData);
+    setListensUploaded(combinedData.length);
+    updateStats(combinedData);
   }
+
+  function updateStats(data) {
+    let newStats = stats;
+
+    // newStats.highLevel.totalListeningTime = data.reduce((a, b) => a.msPlayed + b.msPlayed);
+    console.log(data.length);
+
+    let newTotalListeningTime = 0
+    data.forEach((i) => {
+      newTotalListeningTime += i.msPlayed;
+    });   
+    
+    newStats.highLevel.totalListeningTime = newTotalListeningTime;
+
+    setStats(newStats)
+  }
+
 
   return (
     
@@ -59,8 +79,8 @@ function App(props) {
         <Sidebar />
         <div className='dashboard'>
           <Routes>
-            <Route exact path='/' exact element={<Home data={data} />} />
-            <Route path='/time' element={<Time data={data} />} />
+            <Route exact path='/' exact element={<Home data={data} stats={props.stats} />} />
+            <Route path='/time' element={<Time data={data} listensUploaded={listensUploaded} />} />
           </Routes>
         </div>
       </div>

@@ -7,12 +7,46 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter}
     from 'react-router-dom';
 
 const DATA = [];
+const LISTENS_UPLOADED = 0;
+
+const STATS = {
+  highLevel: {
+    totalListeningTime: 0
+  }
+};
+
+const CURRENT_PAGE = 'Home';
+
+const PAGES = {
+  home: {
+    path: '/',
+    data: {
+      listensProcessed: 0,
+      totalListeningTime: 0
+    }
+  },
+  time: {
+    path: '/',
+    data: {
+      listensProcessed: 0,
+      totalTimePerDate: {},
+      totalTimePerDayOfWeek: {},
+      totalTimePerHourOfDay: [],
+    }
+  }
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App data={DATA}/>
+      <App 
+        data={DATA}
+        pages={PAGES}
+        stats={STATS}
+        current_page={CURRENT_PAGE}
+        listensUploaded={LISTENS_UPLOADED}
+      />
     </BrowserRouter>
   </React.StrictMode>
 );
