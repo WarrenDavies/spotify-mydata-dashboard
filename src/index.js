@@ -11,7 +11,8 @@ const LISTENS_UPLOADED = 0;
 
 const STATS = {
   highLevel: {
-    totalListeningTime: 0
+    totalListeningTimeMs: 0,
+    totalListeningTimeHrs: 0 
   }
 };
 
