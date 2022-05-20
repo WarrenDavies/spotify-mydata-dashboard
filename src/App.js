@@ -54,9 +54,6 @@ function App(props) {
   function updateStats(data) {
     let newStats = stats;
 
-    // newStats.highLevel.totalListeningTime = data.reduce((a, b) => a.msPlayed + b.msPlayed);
-    console.log(data.length);
-
     let newTotalListeningTime = 0
     data.forEach((i) => {
       newTotalListeningTime += i.msPlayed;
