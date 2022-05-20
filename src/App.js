@@ -26,6 +26,8 @@ function App(props) {
 
   }
 
+
+
   function addData(newData) {
     
     let uniqueData = [];
@@ -48,22 +50,40 @@ function App(props) {
     let combinedData = [...data, ...uniqueData];
     setData(combinedData);
     setListensUploaded(combinedData.length);
-    updateStats(combinedData);
+    updateStats(uniqueData);
   }
 
-  function updateStats(data) {
+
+
+  function updateStats(newData) {
     let newStats = stats;
 
-    let newTotalListeningTime = 0
-    data.forEach((i) => {
+    let newTotalListeningTime = newStats.highLevel.totalListeningTimeMs;
+
+    newData.forEach((i) => {
       newTotalListeningTime += i.msPlayed;
-    });   
-    
-    newStats.highLevel.totalListeningTimeMs = newTotalListeningTime;
+
+      let artistArrayIndex = newStats.artists.findIndex(e => e.artistName == i.artistName);
+
+      if (artistArrayIndex === -1) {
+        newStats.artists.push ({
+          artistName: i.artistName,
+          msPlayed: i.msPlayed
+        });
+      } else {
+        newStats.artists[artistArrayIndex].msPlayed += i.msPlayed;
+      }
+    });
+
+    newStats.highLevel.totalListeningTimeMs += newTotalListeningTime;
     newStats.highLevel.totalListeningTimeString = convertMsToLargestTimeUnit(newTotalListeningTime);
 
-    setStats(newStats)
+    newStats.highLevel.uniqueArtists = stats.artists.length;
+
+    setStats(newStats);
   }
+
+
 
   function convertMsToLargestTimeUnit(millisec) {
 
@@ -84,7 +104,11 @@ function App(props) {
     } else {
         return days + " Days"
     }
-}
+  }
+
+
+
+
 
 
   return (

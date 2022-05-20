@@ -12,8 +12,10 @@ const LISTENS_UPLOADED = 0;
 const STATS = {
   highLevel: {
     totalListeningTimeMs: 0,
-    totalListeningTimeHrs: 0 
-  }
+    totalListeningTimeString: 0,
+    uniqueArtists: 0
+  },
+  artists: [],
 };
 
 const CURRENT_PAGE = 'Home';
