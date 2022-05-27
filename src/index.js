@@ -9,6 +9,20 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter}
 const DATA = [];
 const LISTENS_UPLOADED = 0;
 
+const hoursArray = []
+for (let i = 0; i < 24; i++) {
+  let hour = i.toString();
+  if (hour.length == 1) {
+  	hour = '0' + hour;
+  }
+  let hourObject = {
+    msPlayed: 0
+  }
+  hourObject['hourOfListen'] = hour;
+  hoursArray.push(hourObject);
+}
+
+
 const STATS = {
   highLevel: {
     totalListeningTimeMs: 0,
@@ -17,7 +31,7 @@ const STATS = {
   },
   time: {
     dates: [],
-    hours: []
+    hours: hoursArray
   },
   artists: [],
 };

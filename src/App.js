@@ -87,10 +87,10 @@ function App(props) {
         newStats.time.dates[dateArrayIndex].msPlayed += i.msPlayed;
       }
       
-      // let hourArrayIndex = getArrayItemIndex(newStats.time.hours, i, 'endTime')
 
-
-
+      let hourOfListen = i.endTime.substring(11, 13);
+      let hourArrayIndex = newStats.time.hours.findIndex(e => e['hourOfListen'] === hourOfListen);
+      newStats.time.hours[hourArrayIndex].msPlayed += i.msPlayed;
     });
 
 
