@@ -53,7 +53,9 @@ function App(props) {
     updateStats(uniqueData);
   }
 
-
+  function getArrayItemIndex(array, listen, key) {
+    return array.findIndex(e => e[key] == listen[key]);
+  }
 
   function updateStats(newData) {
     let newStats = stats;
@@ -63,8 +65,7 @@ function App(props) {
     newData.forEach((i) => {
       newTotalListeningTime += i.msPlayed;
 
-      let artistArrayIndex = newStats.artists.findIndex(e => e.artistName == i.artistName);
-
+      let artistArrayIndex = getArrayItemIndex(newStats.artists, i, 'artistName')
       if (artistArrayIndex === -1) {
         newStats.artists.push ({
           artistName: i.artistName,
@@ -73,7 +74,12 @@ function App(props) {
       } else {
         newStats.artists[artistArrayIndex].msPlayed += i.msPlayed;
       }
+
+
+
+
     });
+
 
     newStats.highLevel.totalListeningTimeMs += newTotalListeningTime;
     newStats.highLevel.totalListeningTimeString = convertMsToLargestTimeUnit(newTotalListeningTime);

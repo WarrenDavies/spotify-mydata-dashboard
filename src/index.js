@@ -15,6 +15,9 @@ const STATS = {
     totalListeningTimeString: 0,
     uniqueArtists: 0
   },
+  time: {
+    days: [],
+  },
   artists: [],
 };
 
