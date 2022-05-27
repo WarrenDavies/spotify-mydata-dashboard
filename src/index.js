@@ -16,7 +16,8 @@ const STATS = {
     uniqueArtists: 0
   },
   time: {
-    days: [],
+    dates: [],
+    hours: []
   },
   artists: [],
 };

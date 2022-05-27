@@ -75,6 +75,19 @@ function App(props) {
         newStats.artists[artistArrayIndex].msPlayed += i.msPlayed;
       }
 
+      let dateOfListen = i.endTime.substring(0, 10);
+      let dateArrayIndex = newStats.time.dates.findIndex(e => e['dateOfListen'] === dateOfListen);
+
+      if (dateArrayIndex === -1) {
+        newStats.time.dates.push ({
+          dateOfListen: dateOfListen,
+          msPlayed: i.msPlayed
+        });
+      } else {
+        newStats.time.dates[dateArrayIndex].msPlayed += i.msPlayed;
+      }
+      
+      // let hourArrayIndex = getArrayItemIndex(newStats.time.hours, i, 'endTime')
 
 
 
@@ -129,7 +142,7 @@ function App(props) {
         <div className='dashboard'>
           <Routes>
             <Route exact path='/' exact element={<Home data={data} stats={props.stats} />} />
-            <Route path='/time' element={<Time data={data} listensUploaded={listensUploaded} />} />
+            <Route path='/time' element={<Time data={data} listensUploaded={listensUploaded} stats={props.stats} />} />
           </Routes>
         </div>
       </div>
