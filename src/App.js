@@ -7,6 +7,7 @@ import Sidebar from './components/Sidebar/Sidebar'
 import Home from './dashboards/Home/Home'
 import Time from './dashboards/Time/Time'
 import Artists from './dashboards/Artists/Artists'
+import Artist from './dashboards/Artist/Artist';
 
 
 function App(props) {
@@ -162,6 +163,23 @@ function App(props) {
                   convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
                 />
               } 
+            />
+            <Route
+              path="/artist/:artistName"
+                element = {
+                    <Artist
+                      data={data}
+                      stats={props.stats}
+                      convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
+                    />
+                }
+                // element = {
+                //   <Artist
+                //     {...routerProps}
+                //     data={data}
+                //     stats={props.stats}
+                //   />
+                // }
             />
           </Routes>
         </div>
