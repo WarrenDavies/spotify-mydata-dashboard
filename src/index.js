@@ -54,6 +54,15 @@ const PAGES = {
       totalTimePerDayOfWeek: {},
       totalTimePerHourOfDay: [],
     }
+  },
+  artist: {
+    path: '/artist',
+    data: {
+      listensProcessed: 0,
+      totalTimePerDate: {},
+      totalTimePerDayOfWeek: {},
+      totalTimePerHourOfDay: [],
+    }
   }
 }
 

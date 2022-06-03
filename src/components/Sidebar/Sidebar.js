@@ -8,6 +8,7 @@ export default function Sidebar() {
             <ul className='sidebar__links'>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/time">Time</Link></li>
+                <li><Link to="/artist">Artist</Link></li>
             </ul>
         </aside>
     )

@@ -6,6 +6,7 @@ import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar'
 import Home from './dashboards/Home/Home'
 import Time from './dashboards/Time/Time'
+import Artist from './dashboards/Artist/Artist'
 
 
 function App(props) {
@@ -143,6 +144,7 @@ function App(props) {
           <Routes>
             <Route exact path='/' exact element={<Home data={data} stats={props.stats} />} />
             <Route path='/time' element={<Time data={data} listensUploaded={listensUploaded} stats={props.stats} />} />
+            <Route path='/artist' element={<Artist data={data} stats={props.stats}/>} />
           </Routes>
         </div>
       </div>
