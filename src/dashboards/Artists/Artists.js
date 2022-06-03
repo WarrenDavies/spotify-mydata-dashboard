@@ -52,6 +52,7 @@ export default function Artists(props) {
             <Table
                 columns={columns}
                 data={props.stats.artists}
+                convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
             />
 
             <br/><br/>

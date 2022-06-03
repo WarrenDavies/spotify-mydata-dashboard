@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useTable, useFilters, useSortBy } from 'react-table';
 
-export default function Table({columns, data}) {
+export default function Table({columns, data, convertMsToLargestTimeUnit}) {
     
     const [filterInput, setFilterInput] = useState('');
 
@@ -40,18 +40,18 @@ export default function Table({columns, data}) {
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                            <th 
-                                {...column.getHeaderProps(column.getSortByToggleProps())}
-                                className={
-                                    columns.isSorted
-                                        ? column.isSortedDesc
-                                            ? "sort-desc"
-                                            : "sort-asc"
-                                        : ""
-                                }
-                            >
-                                {column.render("Header")}
-                            </th>
+                                <th 
+                                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                                    className={
+                                        columns.isSorted
+                                            ? column.isSortedDesc
+                                                ? "sort-desc"
+                                                : "sort-asc"
+                                            : ""
+                                    }
+                                >
+                                    {column.render("Header")}
+                                </th>
                             ))}
                         </tr>
                     ))}
@@ -64,7 +64,11 @@ export default function Table({columns, data}) {
                                 {row.cells.map(cell => {
                                     return (
                                         <td {...cell.getCellProps()}>
-                                            {cell.render("Cell")}
+                                            {console.log(cell)}
+                                            {cell.column.id === 'msPlayed'
+                                                ? convertMsToLargestTimeUnit(cell.value)
+                                                : cell.render("Cell")
+                                            }
                                         </td>
                                     )   
                                 })}
