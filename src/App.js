@@ -169,7 +169,7 @@ function App(props) {
                 element = {
                     <Artist
                       data={data}
-                      stats={props.stats}
+                      stats={stats}
                       convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
                     />
                 }

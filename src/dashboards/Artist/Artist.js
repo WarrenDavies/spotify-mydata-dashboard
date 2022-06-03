@@ -7,6 +7,10 @@ export default function Artist(props) {
     const artistStats = props.stats.artists.find(e => e.artistName == artistName);
     const totalListeningTime = props.convertMsToLargestTimeUnit(artistStats.msPlayed);
     const uniqueListens = artistStats.uniqueListens;
+    const artistData = props.data.filter(
+        i => i.artistName == artistName
+    );
+
 
     return (
         <div>
@@ -21,8 +25,11 @@ export default function Artist(props) {
             <br/><br/>
             Number of listens = {uniqueListens}
             <br/><br/>
-
-            
+            {JSON.stringify(artistData)}
+            <br/><br/>
+            {JSON.stringify(props.data)}
+            <br/><br/>
+            {JSON.stringify(props.stats)}
         </div>
     )
 }
