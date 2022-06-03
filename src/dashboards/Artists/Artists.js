@@ -1,9 +1,34 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import TableRow from '../../components/TableRow/TableRow';
 import { nanoid } from 'nanoid';
+import Table from '../../components/Table/Table';
 
 export default function Artists(props) {
     
+    const columns = useMemo(() => [
+        {
+            Header: 'Data',
+            columns: [
+                {
+                    Header: "ArtistName",
+                    accessor: 'artistName'
+                },
+                {
+                    Header: "Listening Time",
+                    accessor: 'msPlayed'
+                },
+                {
+                    Header: "Total Listens",
+                    accessor: 'uniqueListens'
+                },
+                {
+                    Header: "First Listen",
+                    accessor: 'firstListen'
+                }
+            ]
+        }
+    ])
+
     const [artistData, updateArtistData] = useState(props.stats.artists);
 
     const artistTableRows = artistData.map((i) => {
@@ -21,6 +46,14 @@ export default function Artists(props) {
     return (
         <div className="Artists">
             This is the artists page.
+
+            <br/><br/>
+            
+            <Table
+                columns={columns}
+                data={props.stats.artists}
+            />
+
             <br/><br/>
             <table>
                 <thead>
