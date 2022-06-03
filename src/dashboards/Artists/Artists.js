@@ -4,40 +4,19 @@ import { nanoid } from 'nanoid';
 
 export default function Artists(props) {
     
-    const [artistTable, updateArtistTable] = useState('test');
+    const [artistData, updateArtistData] = useState(props.stats.artists);
 
-    const artistTableRows = props.stats.artists.map((i) => {
+    const artistTableRows = artistData.map((i) => {
         return (
             <TableRow
                 key={'artistTableRow' + nanoid()}
                 artistName={i.artistName}
-                listeningTime={i.msPlayed}
+                listeningTime={props.convertMsToLargestTimeUnit(i.msPlayed)}
                 uniqueListens={i.uniqueListens}
                 firstListen={i.firstListen}
             />
         )
     });
-
-    // const artistTableRows = props.stats.artists.map((i) => {
-    //     return i.artistName
-    // });
-
-    function tabulateArtistStats(artistData) {
-        let newArtistTable;
-
-        newArtistTable = artistData.map((artist) =>{
-            return (
-                '<p>' + artist.artistName + '</p>'
-            )
-        });
-
-        updateArtistTable(updateArtistTable, newArtistTable);
-        
-    }
-
-    useEffect( () => {
-        tabulateArtistStats(props.stats.artists);
-    }, []);
 
     return (
         <div className="Artists">
@@ -57,7 +36,7 @@ export default function Artists(props) {
                 </tbody>
                 
             </table>
-            {artistTable}
+            {/* {artistTable} */}
             <br/><br/>
             {JSON.stringify(props.stats.artists)}
 

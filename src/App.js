@@ -129,7 +129,12 @@ function App(props) {
     }
   }
 
+  function convertMsToHours(millisec) {
 
+    var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+    
+    return hours + " Hrs";
+  }
 
 
 
@@ -147,8 +152,17 @@ function App(props) {
           <Routes>
             <Route exact path='/' exact element={<Home data={data} stats={props.stats} />} />
             <Route path='/time' element={<Time data={data} listensUploaded={listensUploaded} stats={props.stats} />} />
-            <Route path='/artists' 
-            element={<Artists data={data} stats={props.stats}/>} />
+            <Route 
+              path='/artists' 
+              element={
+                <Artists 
+                  data={data} 
+                  stats={props.stats}
+                  convertMsToHours={convertMsToHours}
+                  convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
+                />
+              } 
+            />
           </Routes>
         </div>
       </div>
