@@ -14,7 +14,7 @@ export default function Artists(props) {
                     accessor: 'artistName',
                     Cell: ({ value }) => {
                         return (
-                            <a href={'/' + value}>{value}</a>
+                            <a href={'/artist/' + value}>{value}</a>
                         )
                     }
                 },
@@ -41,18 +41,6 @@ export default function Artists(props) {
 
     const [artistData, updateArtistData] = useState(props.stats.artists);
 
-    const artistTableRows = artistData.map((i) => {
-        return (
-            <TableRow
-                key={'artistTableRow' + nanoid()}
-                artistName={i.artistName}
-                listeningTime={props.convertMsToLargestTimeUnit(i.msPlayed)}
-                uniqueListens={i.uniqueListens}
-                firstListen={i.firstListen}
-            />
-        )
-    });
-
     return (
         <div className="Artists">
             This is the artists page.
@@ -64,25 +52,6 @@ export default function Artists(props) {
                 data={props.stats.artists}
                 convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
             />
-
-            <br/><br/>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Artist</th>
-                        <th>Listening Time</th>
-                        <th>Listens</th>
-                        <th>First Listen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {artistTableRows}
-                </tbody>
-                
-            </table>
-            {/* {artistTable} */}
-            <br/><br/>
-            {JSON.stringify(props.stats.artists)}
 
         </div>
     )
