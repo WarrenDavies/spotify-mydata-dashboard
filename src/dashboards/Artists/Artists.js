@@ -53,11 +53,6 @@ export default function Artists(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                    </tr>
                     {artistTableRows}
                 </tbody>
                 
