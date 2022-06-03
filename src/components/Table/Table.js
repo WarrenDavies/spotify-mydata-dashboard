@@ -64,11 +64,7 @@ export default function Table({columns, data, convertMsToLargestTimeUnit}) {
                                 {row.cells.map(cell => {
                                     return (
                                         <td {...cell.getCellProps()}>
-                                            {console.log(cell)}
-                                            {cell.column.id === 'msPlayed'
-                                                ? convertMsToLargestTimeUnit(cell.value)
-                                                : cell.render("Cell")
-                                            }
+                                            {cell.render("Cell")}
                                         </td>
                                     )   
                                 })}

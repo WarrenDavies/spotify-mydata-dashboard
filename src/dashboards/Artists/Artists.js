@@ -11,11 +11,21 @@ export default function Artists(props) {
             columns: [
                 {
                     Header: "ArtistName",
-                    accessor: 'artistName'
+                    accessor: 'artistName',
+                    Cell: ({ value }) => {
+                        return (
+                            <a href={'/' + value}>{value}</a>
+                        )
+                    }
                 },
                 {
                     Header: "Listening Time",
-                    accessor: 'msPlayed'
+                    accessor: 'msPlayed',
+                    Cell: ({ value }) => {
+                        return (
+                            props.convertMsToLargestTimeUnit(value)
+                        )
+                    }
                 },
                 {
                     Header: "Total Listens",
