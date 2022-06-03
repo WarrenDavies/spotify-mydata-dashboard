@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useTable, useFilters } from 'react-table';
+import { useTable, useFilters, useSortBy } from 'react-table';
 
 export default function Table({columns, data}) {
     
@@ -17,7 +17,8 @@ export default function Table({columns, data}) {
             columns,
             data
         },
-        useFilters
+        useFilters,
+        useSortBy
     )
 
     const handleFilterChange = e => {
@@ -39,7 +40,18 @@ export default function Table({columns, data}) {
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                            <th 
+                                {...column.getHeaderProps(column.getSortByToggleProps())}
+                                className={
+                                    columns.isSorted
+                                        ? column.isSortedDesc
+                                            ? "sort-desc"
+                                            : "sort-asc"
+                                        : ""
+                                }
+                            >
+                                {column.render("Header")}
+                            </th>
                             ))}
                         </tr>
                     ))}
