@@ -70,10 +70,12 @@ function App(props) {
       if (artistArrayIndex === -1) {
         newStats.artists.push ({
           artistName: i.artistName,
-          msPlayed: i.msPlayed
+          msPlayed: i.msPlayed,
+          uniqueListens: 1
         });
       } else {
         newStats.artists[artistArrayIndex].msPlayed += i.msPlayed;
+        newStats.artists[artistArrayIndex].uniqueListens += 1;
       }
 
       let dateOfListen = i.endTime.substring(0, 10);
