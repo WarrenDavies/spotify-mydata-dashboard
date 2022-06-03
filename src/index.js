@@ -34,6 +34,7 @@ const STATS = {
     hours: hoursArray
   },
   artists: [],
+  tracks: []
 };
 
 const CURRENT_PAGE = 'Home';

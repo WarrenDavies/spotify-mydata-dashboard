@@ -8,6 +8,7 @@ import Home from './dashboards/Home/Home'
 import Time from './dashboards/Time/Time'
 import Artists from './dashboards/Artists/Artists'
 import Artist from './dashboards/Artist/Artist';
+import Tracks from './dashboards/Tracks/Tracks'
 
 
 function App(props) {
@@ -67,6 +68,8 @@ function App(props) {
     newData.forEach((i) => {
       newTotalListeningTime += i.msPlayed;
 
+      // Artists
+      //////////
       let artistArrayIndex = getArrayItemIndex(newStats.artists, i, 'artistName')
       if (artistArrayIndex === -1) {
         newStats.artists.push ({
@@ -80,6 +83,8 @@ function App(props) {
         newStats.artists[artistArrayIndex].uniqueListens += 1;
       }
 
+      // Dates
+      ////////
       let dateOfListen = i.endTime.substring(0, 10);
       let dateArrayIndex = newStats.time.dates.findIndex(e => e['dateOfListen'] === dateOfListen);
 
@@ -92,10 +97,26 @@ function App(props) {
         newStats.time.dates[dateArrayIndex].msPlayed += i.msPlayed;
       }
       
-
       let hourOfListen = i.endTime.substring(11, 13);
       let hourArrayIndex = newStats.time.hours.findIndex(e => e['hourOfListen'] === hourOfListen);
       newStats.time.hours[hourArrayIndex].msPlayed += i.msPlayed;
+
+      // Tracks
+      /////////
+      let trackArrayIndex = getArrayItemIndex(newStats.tracks, i, 'trackName')
+      if (trackArrayIndex === -1) {
+        newStats.tracks.push ({
+          artistName: i.artistName,
+          trackName: i.trackName,
+          msPlayed: i.msPlayed,
+          firstListen: i.endTime,
+          uniqueListens: 1
+        });
+      } else {
+        newStats.tracks[trackArrayIndex].msPlayed += i.msPlayed;
+        newStats.tracks[trackArrayIndex].uniqueListens += 1;
+      }
+
     });
 
 
@@ -173,13 +194,17 @@ function App(props) {
                       convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
                     />
                 }
-                // element = {
-                //   <Artist
-                //     {...routerProps}
-                //     data={data}
-                //     stats={props.stats}
-                //   />
-                // }
+            />
+            <Route 
+              path='/tracks' 
+              element={
+                <Tracks
+                  data={data} 
+                  stats={props.stats}
+                  convertMsToHours={convertMsToHours}
+                  convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
+                />
+              } 
             />
           </Routes>
         </div>

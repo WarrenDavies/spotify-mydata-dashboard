@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useTable, useFilters, useSortBy } from 'react-table';
 
-export default function Table({columns, data, convertMsToLargestTimeUnit}) {
+export default function Table({columns, data, convertMsToLargestTimeUnit, placeholder}) {
     
     const [filterInput, setFilterInput] = useState('');
 
@@ -32,7 +32,7 @@ export default function Table({columns, data, convertMsToLargestTimeUnit}) {
             <input
                 value={filterInput} 
                 onChange={handleFilterChange}
-                placeholder={'Search for an artist'}
+                placeholder={placeholder}
             />
             
             <table {...getTableProps()}>

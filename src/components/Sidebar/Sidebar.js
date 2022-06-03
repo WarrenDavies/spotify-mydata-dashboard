@@ -9,6 +9,7 @@ export default function Sidebar() {
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/time">Time</Link></li>
                 <li><Link to="/artists">Artists</Link></li>
+                <li><Link to="/tracks">Tracks</Link></li>
             </ul>
         </aside>
     )
