@@ -63,7 +63,6 @@ export default function Artist(props) {
 
     return (
         <div>
-            {console.log(artistName)}
 
             This is the artist page for {artistName}
             <br/><br/>
