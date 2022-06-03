@@ -55,8 +55,8 @@ const PAGES = {
       totalTimePerHourOfDay: [],
     }
   },
-  artist: {
-    path: '/artist',
+  artists: {
+    path: '/artists',
     data: {
       listensProcessed: 0,
       totalTimePerDate: {},
