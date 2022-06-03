@@ -9,7 +9,7 @@ import Time from './dashboards/Time/Time'
 import Artists from './dashboards/Artists/Artists'
 import Artist from './dashboards/Artist/Artist';
 import Tracks from './dashboards/Tracks/Tracks'
-
+import Track from './dashboards/Track/Track'
 
 function App(props) {
 
@@ -205,6 +205,16 @@ function App(props) {
                   convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
                 />
               } 
+            />
+            <Route
+              path="/track/:trackName"
+                element = {
+                    <Track
+                      data={data}
+                      stats={stats}
+                      convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
+                    />
+                }
             />
           </Routes>
         </div>
