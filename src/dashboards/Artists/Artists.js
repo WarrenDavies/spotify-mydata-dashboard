@@ -1,8 +1,26 @@
 import React, {useState, useEffect} from 'react';
+import TableRow from '../../components/TableRow/TableRow';
+import { nanoid } from 'nanoid';
 
 export default function Artists(props) {
     
     const [artistTable, updateArtistTable] = useState('test');
+
+    const artistTableRows = props.stats.artists.map((i) => {
+        return (
+            <TableRow
+                key={'artistTableRow' + nanoid()}
+                artistName={i.artistName}
+                listeningTime={i.msPlayed}
+                uniqueListens={i.uniqueListens}
+                firstListen={i.firstListen}
+            />
+        )
+    });
+
+    // const artistTableRows = props.stats.artists.map((i) => {
+    //     return i.artistName
+    // });
 
     function tabulateArtistStats(artistData) {
         let newArtistTable;
@@ -26,16 +44,23 @@ export default function Artists(props) {
             This is the artists page.
             <br/><br/>
             <table>
-                <tr>
-                    <th>Artist</th>
-                    <th>Listening Time</th>
-                    <th>Listens</th>
-                </tr>
-                <tr>
-                    <td>test</td>
-                    <td>test</td>
-                    <td>test</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Artist</th>
+                        <th>Listening Time</th>
+                        <th>Listens</th>
+                        <th>First Listen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>test</td>
+                        <td>test</td>
+                        <td>test</td>
+                    </tr>
+                    {artistTableRows}
+                </tbody>
+                
             </table>
             {artistTable}
             <br/><br/>

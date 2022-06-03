@@ -71,6 +71,7 @@ function App(props) {
         newStats.artists.push ({
           artistName: i.artistName,
           msPlayed: i.msPlayed,
+          firstListen: i.endTime,
           uniqueListens: 1
         });
       } else {
