@@ -91,10 +91,12 @@ function App(props) {
       if (dateArrayIndex === -1) {
         newStats.time.dates.push ({
           dateOfListen: dateOfListen,
-          msPlayed: i.msPlayed
+          msPlayed: i.msPlayed,
+          uniqueListens: 1
         });
       } else {
         newStats.time.dates[dateArrayIndex].msPlayed += i.msPlayed;
+        newStats.time.dates[dateArrayIndex].uniqueListens += 1;
       }
       
       let hourOfListen = i.endTime.substring(11, 13);
@@ -177,7 +179,18 @@ function App(props) {
         <div className='dashboard'>
           <Routes>
             <Route exact path='/' exact element={<Home data={data} stats={props.stats} />} />
-            <Route path='/time' element={<Time data={data} listensUploaded={listensUploaded} stats={props.stats} />} />
+            <Route 
+              path='/time' 
+              element={
+                <Time 
+                  data={data} 
+                  listensUploaded={listensUploaded} 
+                  stats={props.stats} 
+                  convertMsToHours={convertMsToHours}
+                  convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
+                />
+              } 
+            />
             <Route 
               path='/artists' 
               element={
