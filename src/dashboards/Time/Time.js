@@ -13,7 +13,7 @@ export default function Time(props) {
                     accessor: 'dateOfListen',
                     Cell: ({ value }) => {
                         return (
-                            <Link to={'/track/' + value}>{value}</Link>
+                            <Link to={'/time/' + value}>{value}</Link>
                         )
                     }
                 },
@@ -48,9 +48,10 @@ export default function Time(props) {
                 columns={columns}
                 data={props.stats.time.dates}
                 convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
-                placeholder="Search for a track"
+                placeholder="Search for a date"
             />
 
+            <br/><br/><br/><br/>
             hours: {JSON.stringify(props.stats.time.hours)} <br/><br/>
             dates: {JSON.stringify(props.stats.time.dates)} <br/>
         </div>

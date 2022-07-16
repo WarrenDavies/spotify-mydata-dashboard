@@ -1,11 +1,12 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import { useParams } from 'react-router-dom'
-import Table from '../../components/Table/Table';
-import { Link } from 'react-router-dom';
+import Table from '../../components/Table/Table'
+import { Link } from 'react-router-dom'
 
 export default function Artist(props) {
 
     const { artistName } = useParams();
+    
     const artistStats = props.stats.artists.find(e => e.artistName == artistName);
     const totalListeningTime = props.convertMsToLargestTimeUnit(artistStats.msPlayed);
     const uniqueListens = artistStats.uniqueListens;

@@ -7,9 +7,10 @@ import Sidebar from './components/Sidebar/Sidebar'
 import Home from './dashboards/Home/Home'
 import Time from './dashboards/Time/Time'
 import Artists from './dashboards/Artists/Artists'
-import Artist from './dashboards/Artist/Artist';
+import Artist from './dashboards/Artist/Artist'
 import Tracks from './dashboards/Tracks/Tracks'
 import Track from './dashboards/Track/Track'
+import DatePage from './dashboards/Time/DatePage'
 
 function App(props) {
 
@@ -92,11 +93,13 @@ function App(props) {
         newStats.time.dates.push ({
           dateOfListen: dateOfListen,
           msPlayed: i.msPlayed,
-          uniqueListens: 1
+          uniqueListens: 1,
+          listens: []
         });
       } else {
         newStats.time.dates[dateArrayIndex].msPlayed += i.msPlayed;
         newStats.time.dates[dateArrayIndex].uniqueListens += 1;
+        // newStats.time.dates.listens.push(i);
       }
       
       let hourOfListen = i.endTime.substring(11, 13);
@@ -178,10 +181,20 @@ function App(props) {
         <Sidebar />
         <div className='dashboard'>
           <Routes>
-            <Route exact path='/' exact element={<Home data={data} stats={props.stats} />} />
+            
             <Route 
-              path='/time' 
-              element={
+              exact path='/' 
+              exact element={
+                <Home 
+                  data={data} 
+                  stats={props.stats}
+                />
+              } 
+            />
+
+            <Route 
+              exact path='/time' 
+              exact element={
                 <Time 
                   data={data} 
                   listensUploaded={listensUploaded} 
@@ -191,6 +204,19 @@ function App(props) {
                 />
               } 
             />
+
+            <Route 
+              exact path='/time/:dateOfListen' 
+              exact element={
+                <DatePage
+                  data={data} 
+                  stats={stats} 
+                  convertMsToHours={convertMsToHours}
+                  convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
+                />
+              } 
+            />
+
             <Route 
               path='/artists' 
               element={
@@ -202,16 +228,18 @@ function App(props) {
                 />
               } 
             />
+
             <Route
               path="/artist/:artistName"
-                element = {
-                    <Artist
-                      data={data}
-                      stats={stats}
-                      convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
-                    />
-                }
+              element = {
+                <Artist
+                  data={data}
+                  stats={stats}
+                  convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
+                />
+              }
             />
+
             <Route 
               path='/tracks' 
               element={
@@ -223,6 +251,7 @@ function App(props) {
                 />
               } 
             />
+
             {/* might need to update this to be /track/:artistName/:trackName */}
             <Route
               path="/track/:trackName"
