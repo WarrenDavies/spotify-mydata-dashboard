@@ -1,7 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react'
 import { useParams } from 'react-router-dom'
-import Table from '../../components/Table/Table';
-import { Link } from 'react-router-dom';
 
 export default function Track(props) {
 
@@ -12,9 +10,6 @@ export default function Track(props) {
     const trackData = props.data.filter(
         (i) => {return i.trackName == trackName}
     );
-
-
- 
 
     return (
         <div>

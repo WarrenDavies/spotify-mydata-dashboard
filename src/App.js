@@ -103,6 +103,7 @@ function App(props) {
 
       // Tracks
       /////////
+      /// to do - get indices, return as array
       let trackArrayIndex = getArrayItemIndex(newStats.tracks, i, 'trackName')
       if (trackArrayIndex === -1) {
         newStats.tracks.push ({
@@ -113,6 +114,9 @@ function App(props) {
           uniqueListens: 1
         });
       } else {
+        // to do - if indices.length = 1, update the stats
+        // else, check for artist name match and get the array index of the right one first
+        // then update stats
         newStats.tracks[trackArrayIndex].msPlayed += i.msPlayed;
         newStats.tracks[trackArrayIndex].uniqueListens += 1;
       }
@@ -206,6 +210,7 @@ function App(props) {
                 />
               } 
             />
+            {/* might need to update this to be /track/:artistName/:trackName */}
             <Route
               path="/track/:trackName"
                 element = {
