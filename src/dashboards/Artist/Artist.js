@@ -10,18 +10,21 @@ export default function Artist(props) {
     const artistStats = props.stats.artists.find(e => e.artistName == artistName);
     const totalListeningTime = props.convertMsToLargestTimeUnit(artistStats.msPlayed);
     const uniqueListens = artistStats.uniqueListens;
+
     const artistData = props.stats.tracks.filter(
         i => i.artistName == artistName
     );
+
     const uniqueTracksArray = artistData.map(
         (i) => {
           return i.trackName
         }
-      ).filter(
+    ).filter(
         (item, index, arr) => {
-          return arr.indexOf(item) == index
+            return arr.indexOf(item) == index
         }
-      );
+    );
+
     const uniqueTracks = uniqueTracksArray.length;
 
     const averageListensPerTrack = parseFloat(uniqueListens / uniqueTracks).toFixed(2);

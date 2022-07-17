@@ -30,10 +30,7 @@ function App(props) {
 
   }
 
-
-
   function addData(newData) {
-    
     let uniqueData = [];
    
     newData.forEach((i, j) => {
@@ -252,7 +249,7 @@ function App(props) {
               } 
             />
 
-            {/* might need to update this to be /track/:artistName/:trackName */}
+            {/*different artists might have a track of the same name. Probs need to update this to be /track/:artistName/:trackName */}
             <Route
               path="/track/:trackName"
                 element = {

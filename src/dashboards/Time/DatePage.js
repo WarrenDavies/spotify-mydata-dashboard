@@ -7,7 +7,6 @@ import { makePropGetter } from 'react-table';
 export default function DatePage(props) {
 
     const { dateOfListen } = useParams();
-    // const [listeningTimePerHour, updateListeningTimePerHour] = useState([]);
 
     const dateData = props.data.filter(
         i => i.endTime.substring(0, 10) == dateOfListen
@@ -48,7 +47,9 @@ export default function DatePage(props) {
 
 
         return hours
+
     }
+    
     const newHourData = useMemo( () => getListeningTimePerHour(dateData))
 
     const hoursColumns = useMemo(() => [
