@@ -53,6 +53,7 @@ export default function Tracks(props) {
                 data={props.stats.tracks}
                 convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
                 placeholder="Search for a track"
+                search={true}
             />
 
         </div>

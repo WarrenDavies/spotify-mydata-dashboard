@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useTable, useFilters, useSortBy } from 'react-table';
 
-export default function Table({columns, data, convertMsToLargestTimeUnit, placeholder}) {
+export default function Table({columns, data, convertMsToLargestTimeUnit, placeholder, search}) {
     
     const [filterInput, setFilterInput] = useState('');
 
@@ -25,15 +25,19 @@ export default function Table({columns, data, convertMsToLargestTimeUnit, placeh
         const value = e.target.value || '';
         setFilter('artistName', value)
         setFilterInput(value);
-    }
+    }  
+
+    const searchBar = search ? 
+    <input
+        value={filterInput} 
+        onChange={handleFilterChange}
+        placeholder={placeholder}
+    /> 
+    : null
 
     return (
         <div id='artistTable'>
-            <input
-                value={filterInput} 
-                onChange={handleFilterChange}
-                placeholder={placeholder}
-            />
+            {searchBar}
             
             <table {...getTableProps()}>
                 <thead>

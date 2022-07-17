@@ -54,6 +54,7 @@ export default function Artists(props) {
                 data={props.stats.artists}
                 convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
                 placeholder='Search for an artist'
+                search={true}
             />
 
         </div>

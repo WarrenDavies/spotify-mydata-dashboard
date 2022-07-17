@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 export default function Artist(props) {
 
     const { artistName } = useParams();
-    
+
     const artistStats = props.stats.artists.find(e => e.artistName == artistName);
     const totalListeningTime = props.convertMsToLargestTimeUnit(artistStats.msPlayed);
     const uniqueListens = artistStats.uniqueListens;
@@ -83,6 +83,7 @@ export default function Artist(props) {
                 data={artistData}
                 convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
                 placeholder={'Search for a track'}
+                search={true}
             />
             <br/><br/>
             {JSON.stringify(artistData)}
