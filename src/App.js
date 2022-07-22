@@ -58,6 +58,10 @@ function App(props) {
     return array.findIndex(e => e[key] == listen[key]);
   }
 
+  function getTrackArrayItemIndex(array, listen, trackKey, artistKey) {
+    return array.findIndex(e => (e[trackKey] == listen[trackKey]) && (e[artistKey] == listen[artistKey]));
+  }
+
   function updateStats(newData) {
     let newStats = stats;
 
@@ -106,7 +110,10 @@ function App(props) {
       // Tracks
       /////////
       /// to do - get indices, return as array
-      let trackArrayIndex = getArrayItemIndex(newStats.tracks, i, 'trackName')
+      let trackArrayIndex = getTrackArrayItemIndex(newStats.tracks, i, 'trackName', 'artistName');
+
+      // let trackArrayIndex = getArrayItemIndex(newStats.tracks, i, 'trackName');
+      
       if (trackArrayIndex === -1) {
         newStats.tracks.push ({
           artistName: i.artistName,
