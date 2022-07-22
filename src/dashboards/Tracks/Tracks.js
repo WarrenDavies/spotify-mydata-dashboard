@@ -13,9 +13,9 @@ export default function Tracks(props) {
                 {
                     Header: "Track Name",
                     accessor: 'trackName',
-                    Cell: ({ value }) => {
+                    Cell: ({ row, value }) => {
                         return (
-                            <Link to={'/track/' + value}>{value}</Link>
+                            <Link to={'/track/' + value + '/' + row.original.artistName}>{value}</Link>
                         )
                     }
                 },

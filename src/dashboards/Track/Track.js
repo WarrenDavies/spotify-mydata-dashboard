@@ -3,8 +3,10 @@ import { useParams } from 'react-router-dom'
 
 export default function Track(props) {
 
-    const { trackName } = useParams();
-    const trackStats = props.stats.tracks.find(e => e.trackName == trackName);
+    const { trackName, artistName } = useParams();
+    const trackStats = props.stats.tracks.find(
+        e => (e.trackName == trackName) && (e.artistName == artistName)
+    );
     const totalListeningTime = props.convertMsToLargestTimeUnit(trackStats.msPlayed);
     const uniqueListens = trackStats.uniqueListens;
     const trackData = props.data.filter(
@@ -14,7 +16,7 @@ export default function Track(props) {
     return (
         <div>
 
-            This is the track page for {trackName}
+            This is the track page for {trackName} by {artistName}
             <br/><br/>
             {JSON.stringify(trackStats)}
 
