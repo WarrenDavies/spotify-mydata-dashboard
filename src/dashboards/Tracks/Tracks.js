@@ -11,8 +11,17 @@ export default function Tracks(props) {
             Header: 'Data',
             columns: [
                 {
-                    Header: "TrackName",
+                    Header: "Track Name",
                     accessor: 'trackName',
+                    Cell: ({ value }) => {
+                        return (
+                            <Link to={'/track/' + value}>{value}</Link>
+                        )
+                    }
+                },
+                {
+                    Header: "Artist Name",
+                    accessor: 'artistName',
                     Cell: ({ value }) => {
                         return (
                             <Link to={'/track/' + value}>{value}</Link>
