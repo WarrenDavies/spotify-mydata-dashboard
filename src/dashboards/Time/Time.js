@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useMemo} from 'react';
 import Table from '../../components/Table/Table';
 import { Link } from 'react-router-dom';
+import * as d3 from 'd3';
+import BarChart from '../../components/vis/BarChart/BarChart'
 
 export default function Time(props) {
 
@@ -38,6 +40,20 @@ export default function Time(props) {
         }
     ])
 
+    // bar chart
+
+    const width = 960;
+    const height = 700;
+    const margin = { top: 20, right: 20, bottom: 20, left: 230};
+    const innerHeight = height - margin.top - margin.bottom - 100;
+    const innerWidth = width - margin.left - margin.right;
+    const xAxisLabelOffset = 50
+    const xValue = d => d.msPlayed;
+    const yValue = d => d.dateOfListen;
+    const d3Format = d3.format(".2s")
+    const xAxisTickFormat = n => d3Format(n)
+
+
     return (
         
         <div className='Time'>
@@ -45,6 +61,19 @@ export default function Time(props) {
             Time dashboard<br/>
             Listens Uploaded = {props.listensUploaded}<br/>
             Days listened on = {props.stats.time.dates.length}<br/>
+
+            <BarChart 
+                width={width}
+                height={height}
+                innerHeight={innerHeight}
+                innerWidth={innerWidth}
+                margin={margin}
+                data={props.stats.time.dates}
+                xValue={xValue}
+                yValue={yValue}
+                xAxisLabelOffset={xAxisLabelOffset}
+                xAxisTickFormat={xAxisTickFormat}
+            />
 
             <Table
                 columns={columns}
