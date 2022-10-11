@@ -57,6 +57,11 @@ export default function Tracks(props) {
 
             <br/><br/>
             
+            You listened to {props.stats.tracks.length} tracks.
+
+
+            <br/><br/>
+            
             <Table
                 columns={columns}
                 data={props.stats.tracks}

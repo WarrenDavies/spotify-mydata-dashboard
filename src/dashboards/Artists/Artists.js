@@ -48,6 +48,8 @@ export default function Artists(props) {
             This is the artists page.
 
             <br/><br/>
+            You listened to {props.stats.highLevel.uniqueArtists} artists.
+            <br/><br/>
             
             <Table
                 columns={columns}
