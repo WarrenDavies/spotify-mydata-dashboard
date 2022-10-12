@@ -1,19 +1,21 @@
 // export const AxisY = ({yScale}) => {
 
-export default function AxisX(props) {
+export default function AxisY(props) {
     return (
-        props.yScale.domain().map(tickValue => (
+        props.yScale.ticks().map(tickValue => (
             <g 
                 className='tick'
-                key={props.tickValue}
+                key={tickValue}
+                transform={`translate(0, ${props.innerHeight - props.yScale(tickValue)})`}
             >
                 <text 
                     style={{textAnchor:'end', fill:'#635FSD'}}
                     x='-9'
-                    y={props.yScale(props.tickValue) + props.yScale.bandwidth() / 2}
+                    y='1'
+                    // y={props.yScale(tickValue) + props.yScale.bandwidth() / 2}
                     dy='.32em'
                 >
-                    {props.tickValue}
+                    {tickValue}
                 </text>
             </g>
         ))

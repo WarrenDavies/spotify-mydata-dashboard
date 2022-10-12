@@ -48,8 +48,8 @@ export default function Time(props) {
     const innerHeight = height - margin.top - margin.bottom - 100;
     const innerWidth = width - margin.left - margin.right;
     const xAxisLabelOffset = 50
-    const xValue = d => d.msPlayed;
-    const yValue = d => d.dateOfListen;
+    const xValue = d => d.dateOfListen;
+    const yValue = d => d.msPlayed;
     const d3Format = d3.format(".2s")
     const xAxisTickFormat = n => d3Format(n)
 

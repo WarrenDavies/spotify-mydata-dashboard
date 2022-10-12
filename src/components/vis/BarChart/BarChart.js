@@ -6,15 +6,15 @@ import * as d3 from 'd3';
 export default function BarChart(props) {
 
     
-    const xScale = d3.scaleLinear()
-        .domain([ 0, d3.max(props.data, props.xValue)])
+    const xScale = d3.scaleBand()
+        .domain(props.data.map(props.xValue))
         .range([0, props.innerWidth]);
 
     
-    const yScale = d3.scaleBand()
-        .domain(props.data.map(props.yValue))
-        .range([0, props.innerHeight])
-        .paddingInner(.1);
+    const yScale = d3.scaleLinear()
+        .domain([ 0, d3.max(props.data, props.yValue)])
+        .range([0, props.innerHeight]);
+        // .paddingInner(.1);
 
 
     return (
@@ -30,6 +30,7 @@ export default function BarChart(props) {
                 
                 <AxisY 
                     yScale={yScale}
+                    innerHeight={props.innerHeight}
                 />
                 <text
                     className='axis-label'
@@ -46,6 +47,7 @@ export default function BarChart(props) {
                     xValue={props.xValue}
                     yValue={props.yValue}
                     tooltipFormat={props.xAxisTickFormat}
+                    innerHeight={props.innerHeight}
                 />
             </g>
         </svg>
