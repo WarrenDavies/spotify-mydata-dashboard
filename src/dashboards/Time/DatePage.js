@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import Table from '../../components/Table/Table'
 import { Link } from 'react-router-dom'
 import { makePropGetter } from 'react-table';
+import * as d3 from 'd3';
+import BarChart from '../../components/vis/BarChart/BarChart'
 
 export default function DatePage(props) {
 
@@ -115,6 +117,16 @@ export default function DatePage(props) {
         }
     ])
 
+    const width = 960;
+    const height = 700;
+    const margin = { top: 20, right: 20, bottom: 20, left: 0};
+    const innerHeight = height - margin.top - margin.bottom - 100;
+    const innerWidth = width - margin.left - margin.right;
+    const xAxisLabelOffset = 50
+    const xValue = d => d.hour;
+    const yValue = d => Math.round((d.listeningTimeMs / 60000) * 100) / 100;
+    const d3Format = d3.format(".2s")
+    const xAxisTickFormat = n => d3Format(n)
 
     return (
         
@@ -130,6 +142,19 @@ export default function DatePage(props) {
 
             {'[' + props.data[0].endTime.substring(11, 13) + ']'}
             <br/><br/>
+
+            <BarChart 
+                width={width}
+                height={height}
+                innerHeight={innerHeight}
+                innerWidth={innerWidth}
+                margin={margin}
+                data={newHourData}
+                xValue={xValue}
+                yValue={yValue}
+                xAxisLabelOffset={xAxisLabelOffset}
+                xAxisTickFormat={xAxisTickFormat}
+            />
 
             <Table
                 columns={allListenscolumns}

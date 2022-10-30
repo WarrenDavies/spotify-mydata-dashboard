@@ -10,7 +10,7 @@ export default function BarChart(props) {
         .domain(props.data.map(props.xValue))
         .range([0, props.innerWidth]);
 
-    
+
     const yScale = d3.scaleLinear()
         .domain([ 0, d3.max(props.data, props.yValue)])
         .range([0, props.innerHeight]);
