@@ -81,6 +81,8 @@ export default function DatePage(props) {
         /// duplication from App here. need to pull these in from one place
         let artistStatsThisDay = [];
         let trackStatsThisDay = [];
+        let listeningTimeThisDay = 0;
+        let uniqueListensThisDay = 0;
 
         dateData.forEach((i) => {
             let artistArrayIndex = artistStatsThisDay.findIndex(e => e['artistName'] == i['artistName']);
@@ -111,6 +113,9 @@ export default function DatePage(props) {
                 trackStatsThisDay[trackArrayIndex].msPlayed += i.msPlayed;
                 trackStatsThisDay[trackArrayIndex].uniqueListens += 1;
             }
+
+            listeningTimeThisDay = listeningTimeThisDay + i.msPlayed;
+            uniqueListensThisDay = uniqueListensThisDay + 1;
         });
 
         const artistStatsThisDaySorted = artistStatsThisDay.sort( (a, b) => {
@@ -123,7 +128,9 @@ export default function DatePage(props) {
 
         return {
             'artists': artistStatsThisDaySorted, 
-            'tracks': trackStatsThisDaySorted
+            'tracks': trackStatsThisDaySorted,
+            'listeningTimeThisDay': props.convertMsToLargestTimeUnit(listeningTimeThisDay),
+            'uniqueListensThisDay': uniqueListensThisDay,
         }
     }
     
@@ -213,7 +220,10 @@ export default function DatePage(props) {
             <br/><br/>
             Top Tracks on this Date: {topTracks}
             <br/><br/>
-            
+            listening time this day: {highLevelStatsThisDay.listeningTimeThisDay}
+            <br/><br/>
+            unique listens this day: {highLevelStatsThisDay.uniqueListensThisDay}
+            <br/><br/>
 
             <BarChart 
                 width={width}
