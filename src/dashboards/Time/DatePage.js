@@ -71,6 +71,64 @@ export default function DatePage(props) {
         }
     ])
 
+    // this is duplicated. Need to pass in or import separately
+    function getArrayItemIndex(array, listen, key) {
+        return array.findIndex(e => e[key] == listen[key]);
+    }
+
+    const getHighLevelStatsThisDay = (dateData) => {
+        
+        /// duplication from App here. need to pull these in from one place
+        let artistStatsThisDay = [];
+        let trackStatsThisDay = [];
+
+        dateData.forEach((i) => {
+            let artistArrayIndex = artistStatsThisDay.findIndex(e => e['artistName'] == i['artistName']);
+            // getArrayItemIndex(artistStatsThisDay.artists, i, 'artistName')
+            if (artistArrayIndex === -1) {
+                artistStatsThisDay.push ({
+                    artistName: i.artistName,
+                    msPlayed: i.msPlayed,
+                    uniqueListens: 1
+                });
+
+            } else {
+                artistStatsThisDay[artistArrayIndex].msPlayed += i.msPlayed;
+                artistStatsThisDay[artistArrayIndex].uniqueListens += 1;
+            }
+
+            let trackArrayIndex = trackStatsThisDay.findIndex(e => e['trackName'] == i['trackName']);
+
+            if (trackArrayIndex === -1) {
+                trackStatsThisDay.push ({
+                    trackName: i.trackName,
+                    artistName: i.artistName,
+                    msPlayed: i.msPlayed,
+                    uniqueListens: 1
+                });
+
+            } else {
+                trackStatsThisDay[trackArrayIndex].msPlayed += i.msPlayed;
+                trackStatsThisDay[trackArrayIndex].uniqueListens += 1;
+            }
+        });
+
+        const artistStatsThisDaySorted = artistStatsThisDay.sort( (a, b) => {
+            return b.msPlayed - a.msPlayed;
+        })
+
+        const trackStatsThisDaySorted = trackStatsThisDay.sort( (a, b) => {
+            return b.msPlayed - a.msPlayed;
+        })
+
+        return {
+            'artists': artistStatsThisDaySorted, 
+            'tracks': trackStatsThisDaySorted
+        }
+    }
+    
+    const highLevelStatsThisDay = useMemo( () => getHighLevelStatsThisDay(dateData))
+
     const allListenscolumns = useMemo(() => [
         {
             Header: 'All of your listens this day',
@@ -128,6 +186,13 @@ export default function DatePage(props) {
     const d3Format = d3.format(".2s")
     const xAxisTickFormat = n => d3Format(n)
 
+    const topArtists = highLevelStatsThisDay.artists.slice(0, 4).map( (j, i) => {
+        return (j.artistName + ",")
+    });
+    const topTracks = highLevelStatsThisDay.tracks.slice(0, 4).map( (j, i) => {
+        return (j.trackName + ' (' + j.artistName + ')' + ",")
+    });
+
     return (
         
        <div className="Date">
@@ -142,6 +207,13 @@ export default function DatePage(props) {
 
             {'[' + props.data[0].endTime.substring(11, 13) + ']'}
             <br/><br/>
+
+            {/* Top Artists on this Date: {highLevelStatsThisDay[0].artistName} */}
+            Top Artists on this Date: {topArtists}
+            <br/><br/>
+            Top Tracks on this Date: {topTracks}
+            <br/><br/>
+            
 
             <BarChart 
                 width={width}
