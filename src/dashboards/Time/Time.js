@@ -2,7 +2,8 @@ import React, {useState, useEffect, useMemo} from 'react';
 import Table from '../../components/Table/Table';
 import { Link } from 'react-router-dom';
 import * as d3 from 'd3';
-import BarChart from '../../components/vis/BarChart/BarChart'
+import BarChart from '../../components/vis/BarChart/BarChart';
+import * as dateAndTime from '../../utils/DateAndTime';
 
 export default function Time(props) {
 
@@ -24,7 +25,7 @@ export default function Time(props) {
                     accessor: 'msPlayed',
                     Cell: ({ value }) => {
                         return (
-                            props.convertMsToLargestTimeUnit(value)
+                            dateAndTime.convertMsToLargestTimeUnit(value)
                         )
                     }
                 },
@@ -61,8 +62,9 @@ export default function Time(props) {
             Time dashboard<br/>
             Listens Uploaded = {props.listensUploaded}<br/>
             Days listened on = {props.stats.time.dates.length}<br/>
-            From: {props.stats.highLevel.minDate}<br/>
-            To: {props.stats.highLevel.maxDate}<br/>
+            From: {props.stats.highLevel.minDate.toDateString()}<br/>
+            To: {props.stats.highLevel.maxDate.toDateString()}<br/>
+            Days in period: {dateAndTime.convertMsToDays(props.stats.highLevel.daysInPeriod)}<br/>
 
             <BarChart 
                 width={width}
@@ -80,7 +82,7 @@ export default function Time(props) {
             <Table
                 columns={columns}
                 data={props.stats.time.dates}
-                convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
+                convertMsToLargestTimeUnit={dateAndTime.convertMsToLargestTimeUnit}
                 placeholder="Search for a date"
             />
 

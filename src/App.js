@@ -12,6 +12,7 @@ import Tracks from './dashboards/Tracks/Tracks'
 import Track from './dashboards/Track/Track'
 import DatePage from './dashboards/Time/DatePage'
 import {min, max} from 'd3'
+import {convertMsToLargestTimeUnit, convertMsToHours} from './utils/DateAndTime'
 
 function App(props) {
 
@@ -49,6 +50,9 @@ function App(props) {
         uniqueData.push(i);
       }
     });
+
+    
+
     let combinedData = [...data, ...uniqueData];
     setData(combinedData);
     setListensUploaded(combinedData.length);
@@ -90,19 +94,22 @@ function App(props) {
       ////////
       let dateOfListen = i.endTime.substring(0, 10);
       let dateArrayIndex = newStats.time.dates.findIndex(e => e['dateOfListen'] === dateOfListen);
-
+            
       if (dateArrayIndex === -1) {
         newStats.time.dates.push ({
           dateOfListen: dateOfListen,
           msPlayed: i.msPlayed,
+          // hrsPlayed: convertMsToHoursNumber(i.msPlayed),
           uniqueListens: 1,
           listens: []
         });
       } else {
         newStats.time.dates[dateArrayIndex].msPlayed += i.msPlayed;
+        // newStats.time.dates[dateArrayIndex].hrsPlayed += i.hrsPlayed;
         newStats.time.dates[dateArrayIndex].uniqueListens += 1;
         // newStats.time.dates.listens.push(i);
       }
+      
       
       let hourOfListen = i.endTime.substring(11, 13);
       let hourArrayIndex = newStats.time.hours.findIndex(e => e['hourOfListen'] === hourOfListen);
@@ -138,42 +145,13 @@ function App(props) {
     newStats.highLevel.totalListeningTimeString = convertMsToLargestTimeUnit(newTotalListeningTime);
 
     newStats.highLevel.uniqueArtists = stats.artists.length;
-    newStats.highLevel.maxDate = max(combinedData, d => d.endTime)
-    newStats.highLevel.minDate = min(combinedData, d => d.endTime)
+    newStats.highLevel.maxDate = new Date(max(combinedData, d => d.endTime));
+    newStats.highLevel.minDate = new Date(min(combinedData, d => d.endTime));
+
+    newStats.highLevel.daysInPeriod = (newStats.highLevel.maxDate - newStats.highLevel.minDate);
+
     setStats(newStats);
   }
-
-
-
-  function convertMsToLargestTimeUnit(millisec) {
-
-    var seconds = (millisec / 1000).toFixed(1);
-
-    var minutes = (millisec / (1000 * 60)).toFixed(1);
-
-    var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
-
-    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
-
-    if (seconds < 60) {
-        return seconds + " Sec";
-    } else if (minutes < 60) {
-        return minutes + " Min";
-    } else if (hours < 24) {
-        return hours + " Hrs";
-    } else {
-        return days + " Days"
-    }
-  }
-
-  function convertMsToHours(millisec) {
-
-    var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
-    
-    return hours + " Hrs";
-  }
-
-
 
 
   return (
@@ -205,8 +183,6 @@ function App(props) {
                   data={data} 
                   listensUploaded={listensUploaded} 
                   stats={props.stats} 
-                  convertMsToHours={convertMsToHours}
-                  convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
                 />
               } 
             />
