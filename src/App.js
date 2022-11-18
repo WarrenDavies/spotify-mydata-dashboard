@@ -12,7 +12,7 @@ import Tracks from './dashboards/Tracks/Tracks'
 import Track from './dashboards/Track/Track'
 import DatePage from './dashboards/Time/DatePage'
 import {min, max} from 'd3'
-import {convertMsToLargestTimeUnit, convertMsToHours} from './utils/DateAndTime'
+import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from './utils/DateAndTime'
 
 function App(props) {
 
@@ -99,13 +99,11 @@ function App(props) {
         newStats.time.dates.push ({
           dateOfListen: dateOfListen,
           msPlayed: i.msPlayed,
-          // hrsPlayed: convertMsToHoursNumber(i.msPlayed),
           uniqueListens: 1,
           listens: []
         });
       } else {
         newStats.time.dates[dateArrayIndex].msPlayed += i.msPlayed;
-        // newStats.time.dates[dateArrayIndex].hrsPlayed += i.hrsPlayed;
         newStats.time.dates[dateArrayIndex].uniqueListens += 1;
         // newStats.time.dates.listens.push(i);
       }
@@ -140,7 +138,10 @@ function App(props) {
 
     });
 
-
+    newStats.time.dates.forEach( (j) => {
+      j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+    })
+    
     newStats.highLevel.totalListeningTimeMs += newTotalListeningTime;
     newStats.highLevel.totalListeningTimeString = convertMsToLargestTimeUnit(newTotalListeningTime);
 
