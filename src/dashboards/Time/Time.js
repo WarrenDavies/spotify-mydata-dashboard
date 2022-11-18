@@ -61,6 +61,8 @@ export default function Time(props) {
             Time dashboard<br/>
             Listens Uploaded = {props.listensUploaded}<br/>
             Days listened on = {props.stats.time.dates.length}<br/>
+            From: {props.stats.highLevel.minDate}<br/>
+            To: {props.stats.highLevel.maxDate}<br/>
 
             <BarChart 
                 width={width}

@@ -209,12 +209,6 @@ export default function DatePage(props) {
             data.length: {props.data.length}
             <br/><br/>
 
-            new hour data: {JSON.stringify(newHourData)}
-            <br/><br/>
-
-            {'[' + props.data[0].endTime.substring(11, 13) + ']'}
-            <br/><br/>
-
             {/* Top Artists on this Date: {highLevelStatsThisDay[0].artistName} */}
             Top Artists on this Date: {topArtists}
             <br/><br/>
@@ -247,7 +241,8 @@ export default function DatePage(props) {
             />
 
             <br/><br/>
-            
+            new hour data: {JSON.stringify(newHourData)}
+            <br/><br/>
             {JSON.stringify(dateData)}
 
        </div> 

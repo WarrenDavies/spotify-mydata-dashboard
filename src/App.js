@@ -11,6 +11,7 @@ import Artist from './dashboards/Artist/Artist'
 import Tracks from './dashboards/Tracks/Tracks'
 import Track from './dashboards/Track/Track'
 import DatePage from './dashboards/Time/DatePage'
+import {min, max} from 'd3'
 
 function App(props) {
 
@@ -51,7 +52,7 @@ function App(props) {
     let combinedData = [...data, ...uniqueData];
     setData(combinedData);
     setListensUploaded(combinedData.length);
-    updateStats(uniqueData);
+    updateStats(uniqueData, combinedData);
   }
 
   function getArrayItemIndex(array, listen, key) {
@@ -62,7 +63,7 @@ function App(props) {
     return array.findIndex(e => (e[trackKey] == listen[trackKey]) && (e[artistKey] == listen[artistKey]));
   }
 
-  function updateStats(newData) {
+  function updateStats(newData, combinedData) {
     let newStats = stats;
 
     let newTotalListeningTime = newStats.highLevel.totalListeningTimeMs;
@@ -137,7 +138,8 @@ function App(props) {
     newStats.highLevel.totalListeningTimeString = convertMsToLargestTimeUnit(newTotalListeningTime);
 
     newStats.highLevel.uniqueArtists = stats.artists.length;
-
+    newStats.highLevel.maxDate = max(combinedData, d => d.endTime)
+    newStats.highLevel.minDate = min(combinedData, d => d.endTime)
     setStats(newStats);
   }
 
