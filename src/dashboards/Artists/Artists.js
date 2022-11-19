@@ -85,7 +85,7 @@ export default function Artists(props) {
                 }
             ]
         }
-    ])
+    ], [props.data])
 
     const [artistData, updateArtistData] = useState(props.stats.artists);
 
