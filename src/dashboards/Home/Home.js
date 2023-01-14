@@ -69,6 +69,45 @@ export default function Home(props) {
         )
     }, [props.stats.artists])
 
+
+
+    const topTracksChart = {
+        width: 960,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xValue: d => d[barChartMeasure],
+        yValue: d => d.trackName,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => topTracksChart.d3Format(n),
+    }
+    topTracksChart.innerHeight = topTracksChart.height - topTracksChart.margin.top - topTracksChart.margin.bottom - 100;
+    topTracksChart.innerWidth = topTracksChart.width - topTracksChart.margin.left - topTracksChart.margin.right;
+
+    const topTracks = useMemo(() => {
+        const hrsPlayed = props.stats.tracks
+            .sort((a, b) => {
+                return b.hrsPlayed - a.hrsPlayed;
+            })
+            .slice(0, 19);
+
+        const uniqueListens = props.stats.tracks
+            .sort((a, b) => {
+                return b.uniqueListens - a.uniqueListens;
+            })
+            .slice(0, 19);
+
+        return (
+            {
+                "hrsPlayed": hrsPlayed,
+                "uniqueListens": uniqueListens
+            }
+        )
+    }, [props.stats.tracks])
+    console.log(topTracks);
+    console.log(props.stats.tracks);
+
+
     function processData(data) {
         // let listensUploaded;
 
@@ -138,11 +177,21 @@ export default function Home(props) {
                 xAxisLabelOffset={topArtistChart.xAxisLabelOffset}
                 xAxisTickFormat={topArtistChart.xAxisTickFormat}
             />
-
-            data: {JSON.stringify(props.data)} <br/>
             
-            
+            <h1>Top Tracks</h1>
 
+            <BarChartHorizontalCategorical
+                width={topTracksChart.width}
+                height={topTracksChart.height}
+                innerHeight={topTracksChart.innerHeight}
+                innerWidth={topTracksChart.innerWidth}
+                margin={topTracksChart.margin}
+                data={topTracks[barChartMeasure]}
+                xValue={topTracksChart.xValue}
+                yValue={topTracksChart.yValue}
+                xAxisLabelOffset={topTracksChart.xAxisLabelOffset}
+                xAxisTickFormat={topTracksChart.xAxisTickFormat}
+            />
 
         </div>
     )
