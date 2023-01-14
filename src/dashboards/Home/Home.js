@@ -104,8 +104,9 @@ export default function Home(props) {
             }
         )
     }, [props.stats.tracks])
-    console.log(topTracks);
-    console.log(props.stats.tracks);
+    // console.log(topTracks);
+    // console.log(props.stats.tracks);
+    // console.log(props.stats.artists);
 
 
     function processData(data) {

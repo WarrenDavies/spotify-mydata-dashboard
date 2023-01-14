@@ -145,6 +145,10 @@ function App(props) {
     newStats.artists.forEach( (j) => {
       j.hrsPlayed = +(convertMsToHoursNumber(j.msPlayed).toFixed(2));
     })
+
+    newStats.tracks.forEach( (j) => {
+      j.hrsPlayed = +(convertMsToHoursNumber(j.msPlayed).toFixed(2));
+    })
     
     newStats.highLevel.totalListeningTimeMs += newTotalListeningTime;
     newStats.highLevel.totalListeningTimeString = convertMsToLargestTimeUnit(newTotalListeningTime);
