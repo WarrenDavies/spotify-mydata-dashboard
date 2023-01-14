@@ -22,29 +22,31 @@ export default function Home(props) {
     const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
 
 
-    const timeChart = {}
-    timeChart.width = 960;
-    timeChart.height = 700;
-    timeChart.margin = { top: 20, right: 20, bottom: 20, left: 230};
+    const timeChart = {
+        width: 960,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xValue: d => d.dateOfListen,
+        yValue: d => d[barChartMeasure],
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => timeChart.d3Format(n),
+    }
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
-    timeChart.xAxisLabelOffset = 50
-    timeChart.xValue = d => d.dateOfListen;
-    timeChart.yValue = d => d[barChartMeasure];
-    timeChart.d3Format = d3.format(".2s")
-    timeChart.xAxisTickFormat = n => timeChart.d3Format(n)
 
-    const topArtistChart = {}
-    topArtistChart.width = 960;
-    topArtistChart.height = 700;
-    topArtistChart.margin = { top: 20, right: 20, bottom: 20, left: 230 };
+    const topArtistChart = {
+        width: 960,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xValue: d => d[barChartMeasure],
+        yValue: d => d.artistName,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => topArtistChart.d3Format(n),
+    }
     topArtistChart.innerHeight = topArtistChart.height - topArtistChart.margin.top - topArtistChart.margin.bottom - 100;
     topArtistChart.innerWidth = topArtistChart.width - topArtistChart.margin.left - topArtistChart.margin.right;
-    topArtistChart.xAxisLabelOffset = 50
-    topArtistChart.xValue = d => d[barChartMeasure];
-    topArtistChart.yValue = d => d.artistName;
-    topArtistChart.d3Format = d3.format(".2s")
-    topArtistChart.xAxisTickFormat = n => topArtistChart.d3Format(n)
 
     const topArtists = useMemo(() => {
         const hrsPlayed = props.stats.artists
