@@ -19,7 +19,7 @@ export default function BarChartHorizontalCategorical(props) {
 
     return (
         <svg width={props.width} height={props.height}>
-            lll
+            
             <g transform={`translate(${props.margin.left}, ${props.margin.top})`} >
 
                 <AxisXContinuous 
@@ -29,7 +29,10 @@ export default function BarChartHorizontalCategorical(props) {
                 />
                 
                 <AxisYDiscreet
+                    urlPrefix={props.urlPrefix}
+                    urlSuffixLookup={props.urlSuffixLookup}
                     yScale={yScale}
+                    data={props.data}
                     innerHeight={props.innerHeight}
                     tickOffset={-9}
                 />

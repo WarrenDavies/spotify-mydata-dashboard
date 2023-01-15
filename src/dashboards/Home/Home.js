@@ -104,9 +104,6 @@ export default function Home(props) {
             }
         )
     }, [props.stats.tracks])
-    // console.log(topTracks);
-    // console.log(props.stats.tracks);
-    // console.log(props.stats.artists);
 
 
     function processData(data) {
@@ -177,6 +174,8 @@ export default function Home(props) {
                 yValue={topArtistChart.yValue}
                 xAxisLabelOffset={topArtistChart.xAxisLabelOffset}
                 xAxisTickFormat={topArtistChart.xAxisTickFormat}
+                urlPrefix='artist/'
+                urlSuffix=''
             />
             
             <h1>Top Tracks</h1>
@@ -192,6 +191,8 @@ export default function Home(props) {
                 yValue={topTracksChart.yValue}
                 xAxisLabelOffset={topTracksChart.xAxisLabelOffset}
                 xAxisTickFormat={topTracksChart.xAxisTickFormat}
+                urlPrefix='track/'
+                urlSuffixLookup='artistName'
             />
 
         </div>
