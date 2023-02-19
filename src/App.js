@@ -51,8 +51,6 @@ function App(props) {
       }
     });
 
-    
-
     let combinedData = [...data, ...uniqueData];
     setData(combinedData);
     setListensUploaded(combinedData.length);
@@ -154,6 +152,7 @@ function App(props) {
     newStats.highLevel.totalListeningTimeString = convertMsToLargestTimeUnit(newTotalListeningTime);
 
     newStats.highLevel.uniqueArtists = stats.artists.length;
+    newStats.highLevel.uniqueTracks = stats.tracks.length;
     newStats.highLevel.maxDate = new Date(max(combinedData, d => d.endTime));
     newStats.highLevel.minDate = new Date(min(combinedData, d => d.endTime));
 

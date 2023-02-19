@@ -67,7 +67,7 @@ export default function Home(props) {
                 "uniqueListens": uniqueListens
             }
         )
-    }, [props.stats.artists])
+    }, [props.data])
 
 
 
@@ -84,7 +84,7 @@ export default function Home(props) {
     topTracksChart.innerHeight = topTracksChart.height - topTracksChart.margin.top - topTracksChart.margin.bottom - 100;
     topTracksChart.innerWidth = topTracksChart.width - topTracksChart.margin.left - topTracksChart.margin.right;
 
-    const topTracks = useMemo(() => {
+    const topTracks = useMemo( () => {
         const hrsPlayed = props.stats.tracks
             .sort((a, b) => {
                 return b.hrsPlayed - a.hrsPlayed;
@@ -103,22 +103,22 @@ export default function Home(props) {
                 "uniqueListens": uniqueListens
             }
         )
-    }, [props.stats.tracks])
+    }, [props.data])
 
 
-    function processData(data) {
-        // let listensUploaded;
+    // function processData(data) {
+    //     // let listensUploaded;
 
-        // if (listensProcessed != data.length) {
+    //     // if (listensProcessed != data.length) {
             
-        //     listensUploaded = listensProcessed + data.length;
-        //     setListensProcessed(listensUploaded);
-        // }
-    }
+    //     //     listensUploaded = listensProcessed + data.length;
+    //     //     setListensProcessed(listensUploaded);
+    //     // }
+    // }
 
-    useEffect(() => {
-        processData(props.data);
-    });
+    // useEffect(() => {
+    //     processData(props.data);
+    // });
     
     if (!props.data) {
         return (
@@ -132,9 +132,10 @@ export default function Home(props) {
         
         <div className='Home'>
             The home page with high level stats. <br/>
-            Total listening time: {props.stats.highLevel.totalListeningTimeString} <br/>
+            Total listening time: {props.stats.highLevel.totalListeningTimeString}<br/>
             Total artists listened to: {props.stats.highLevel.uniqueArtists}<br/>
-
+            Total tracks listened to: {props.stats.highLevel.uniqueTracks}<br/>
+            Average tracks per artist: {(props.stats.highLevel.uniqueTracks / props.stats.highLevel.uniqueArtists).toFixed(2)}<br/>
             data.length: {props.data.length} <br/>
             listensProcessed: {listensProcessed} <br/><br/>
 
