@@ -65,6 +65,72 @@ function App(props) {
     return array.findIndex(e => (e[trackKey] == listen[trackKey]) && (e[artistKey] == listen[artistKey]));
   }
 
+  function getHighLevelStatsThisDay(dateData) {
+        
+    /// duplication from App here. need to pull these in from one place
+    let artistStatsThisDay = [];
+    let trackStatsThisDay = [];
+    // let listeningTimeThisDay = 0;
+    // let uniqueListensThisDay = 0;
+
+    dateData.listens.forEach((i) => {
+        let artistArrayIndex = artistStatsThisDay.findIndex(e => e['artistName'] == i['artistName']);
+        // getArrayItemIndex(artistStatsThisDay.artists, i, 'artistName')
+        if (artistArrayIndex === -1) {
+            artistStatsThisDay.push ({
+                artistName: i.artistName,
+                msPlayed: i.msPlayed,
+                uniqueListens: 1
+            });
+
+        } else {
+            artistStatsThisDay[artistArrayIndex].msPlayed += i.msPlayed;
+            artistStatsThisDay[artistArrayIndex].uniqueListens += 1;
+        }
+
+        let trackArrayIndex = trackStatsThisDay.findIndex(e => e['trackName'] == i['trackName']);
+
+        if (trackArrayIndex === -1) {
+            trackStatsThisDay.push ({
+                trackName: i.trackName,
+                artistName: i.artistName,
+                msPlayed: i.msPlayed,
+                uniqueListens: 1
+            });
+
+        } else {
+            trackStatsThisDay[trackArrayIndex].msPlayed += i.msPlayed;
+            trackStatsThisDay[trackArrayIndex].uniqueListens += 1;
+        }
+
+        // listeningTimeThisDay = listeningTimeThisDay + i.msPlayed;
+        // uniqueListensThisDay = uniqueListensThisDay + 1;
+    });
+
+    const artistStatsThisDaySorted = artistStatsThisDay.sort( (a, b) => {
+        return b.msPlayed - a.msPlayed;
+    })
+
+    const trackStatsThisDaySorted = trackStatsThisDay.sort( (a, b) => {
+        return b.msPlayed - a.msPlayed;
+    })
+
+    dateData.artistStatsThisDay = artistStatsThisDaySorted;
+    dateData.trackStatsThisDay = trackStatsThisDaySorted;
+    dateData.topArtist = artistStatsThisDaySorted[0];
+    dateData.topTrack = trackStatsThisDaySorted[0];
+    dateData.topTrack.trackAndArtistName = trackStatsThisDaySorted[0].trackName + ' (' + trackStatsThisDaySorted[0].artistName + ')';
+
+    return dateData
+    // return {
+    //     'artists': artistStatsThisDaySorted, 
+    //     'tracks': trackStatsThisDaySorted,
+    //     'listeningTimeThisDay': props.convertMsToLargestTimeUnit(listeningTimeThisDay),
+    //     'uniqueListensThisDay': uniqueListensThisDay,
+    // }
+  }
+
+
   function updateStats(newData, combinedData) {
     let newStats = stats;
 
@@ -137,7 +203,11 @@ function App(props) {
     });
 
     newStats.time.dates.forEach( (j) => {
+      j.listens = newData.filter(
+        i => i.endTime.substring(0, 10) == j.dateOfListen
+      )
       j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+      j = getHighLevelStatsThisDay(j);
     })
 
     newStats.artists.forEach( (j) => {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function AxisYDiscreet(props) {
 
-    console.log(props.urlSuffixLookup);
+    // console.log(props.urlSuffixLookup);
     
     // function getUrlSuffix(i) {
     //     console.log(i);

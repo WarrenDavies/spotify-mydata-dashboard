@@ -34,8 +34,22 @@ export default function Time(props) {
                     accessor: 'uniqueListens'
                 },
                 {
-                    Header: "First Listen",
-                    accessor: 'firstListen'
+                    Header: "Top Artist",
+                    accessor: 'topArtist.artistName',
+                    Cell: ({ value }) => {
+                        return (
+                            <Link to={'/artist/' + value}>{value}</Link>
+                        )
+                    }
+                },
+                {
+                    Header: "Top Track",
+                    accessor: 'topTrack.trackAndArtistName',
+                    Cell: ({ value }) => {
+                        return (
+                            <Link to={'/track/' + value}>{value}</Link>
+                        )
+                    }
                 }
             ]
         }
