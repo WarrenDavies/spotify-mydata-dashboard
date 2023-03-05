@@ -147,11 +147,15 @@ function App(props) {
                     artistName: i.artistName,
                     msPlayed: i.msPlayed,
                     firstListen: i.endTime,
+                    lastListen: i.endTime,
                     uniqueListens: 1
                 });
             } else {
                 newStats.artists[artistArrayIndex].msPlayed += i.msPlayed;
                 newStats.artists[artistArrayIndex].uniqueListens += 1;
+                newStats.artists[artistArrayIndex].firstListen = newStats.artists[artistArrayIndex].firstListen < i.endTime ? newStats.artists[artistArrayIndex].firstListen : i.endTime;
+
+                newStats.artists[artistArrayIndex].lastListen = newStats.artists[artistArrayIndex].lastListen > i.endTime ? newStats.artists[artistArrayIndex].lastListen : i.endTime;
             }
 
             // Dates
@@ -198,6 +202,9 @@ function App(props) {
                 // then update stats
                 newStats.tracks[trackArrayIndex].msPlayed += i.msPlayed;
                 newStats.tracks[trackArrayIndex].uniqueListens += 1;
+                newStats.tracks[trackArrayIndex].firstListen = newStats.tracks[trackArrayIndex].firstListen < i.endTime ? newStats.tracks[trackArrayIndex].firstListen : i.endTime;
+                
+                newStats.tracks[trackArrayIndex].lastListen = newStats.tracks[artistArrayIndex].lastListen > i.endTime ? newStats.tracks[trackArrayIndex].lastListen : i.endTime;
             }
 
         });

@@ -17,12 +17,17 @@ export default function Artist(props) {
     // another way to do this will be to add the listents to an array in .artists during updateStats.
 
     // should this be using data not tracks
-    const artistData = props.data.filter(
+    const artistTrackData = props.stats.tracks.filter(
+        i => i.artistName == artistName
+    );
+
+    // should this be using data not tracks
+    const artistDateData = props.data.filter(
         i => i.artistName == artistName
     );
     
     let artistDateStats = []
-    artistData.forEach((i) => {
+    artistDateData.forEach((i) => {
         
         // Dates
         ////////
@@ -45,9 +50,8 @@ export default function Artist(props) {
     artistDateStats.forEach( (j) => {
         j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
     })
-    console.log(artistDateStats);
 
-    const uniqueTracksArray = artistData.map(
+    const uniqueTracksArray = artistTrackData.map(
         (i) => {
           return i.trackName
         }
@@ -107,6 +111,10 @@ export default function Artist(props) {
                 {
                     Header: "First Listen",
                     accessor: 'firstListen'
+                },
+                {
+                    Header: "Last Listen",
+                    accessor: 'lastListen'
                 }
             ]
         }
@@ -146,13 +154,13 @@ export default function Artist(props) {
 
             <Table
                 columns={columns}
-                data={artistData}
+                data={artistTrackData}
                 convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
                 placeholder={'Search for a track'}
                 search={true}
             />
             <br/><br/>
-            {JSON.stringify(artistData)}
+            {JSON.stringify(artistTrackData)}
             <br/><br/>
             {JSON.stringify(props.data)}
             <br/><br/>
