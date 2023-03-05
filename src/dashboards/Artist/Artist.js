@@ -2,6 +2,9 @@ import React, {useState, useEffect, useMemo} from 'react'
 import { useParams } from 'react-router-dom'
 import Table from '../../components/Table/Table'
 import { Link } from 'react-router-dom'
+import * as d3 from 'd3';
+import BarChart from '../../components/vis/BarChart/BarChart';
+import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from '../../utils/DateAndTime'
 
 export default function Artist(props) {
 
@@ -11,9 +14,38 @@ export default function Artist(props) {
     const totalListeningTime = props.convertMsToLargestTimeUnit(artistStats.msPlayed);
     const uniqueListens = artistStats.uniqueListens;
 
-    const artistData = props.stats.tracks.filter(
+    // another way to do this will be to add the listents to an array in .artists during updateStats.
+
+    // should this be using data not tracks
+    const artistData = props.data.filter(
         i => i.artistName == artistName
     );
+    
+    let artistDateStats = []
+    artistData.forEach((i) => {
+        
+        // Dates
+        ////////
+        let dateOfListen = i.endTime.substring(0, 10);
+        let dateArrayIndex = artistDateStats.findIndex(e => e['dateOfListen'] === dateOfListen);
+                    
+        if (dateArrayIndex === -1) {
+            artistDateStats.push ({
+                dateOfListen: dateOfListen,
+                msPlayed: i.msPlayed,
+                uniqueListens: 1,
+                listens: []
+            });
+        } else {
+            artistDateStats[dateArrayIndex].msPlayed += i.msPlayed;
+            artistDateStats[dateArrayIndex].uniqueListens += 1;
+            // newStats.time.dates.listens.push(i);
+        }
+    });
+    artistDateStats.forEach( (j) => {
+        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+    })
+    console.log(artistDateStats);
 
     const uniqueTracksArray = artistData.map(
         (i) => {
@@ -28,6 +60,21 @@ export default function Artist(props) {
     const uniqueTracks = uniqueTracksArray.length;
 
     const averageListensPerTrack = parseFloat(uniqueListens / uniqueTracks).toFixed(2);
+
+    // bar chart
+
+    const width = 960;
+    const height = 700;
+    const margin = { top: 20, right: 20, bottom: 20, left: 230};
+    const innerHeight = height - margin.top - margin.bottom - 100;
+    const innerWidth = width - margin.left - margin.right;
+    const xAxisLabelOffset = 50
+    const xValue = d => d.dateOfListen;
+    const yValue = d => d.hrsPlayed;
+    const d3Format = d3.format(".2s")
+    const xAxisTickFormat = n => d3Format(n)
+
+
 
 
     const columns = useMemo(() => [
@@ -81,6 +128,22 @@ export default function Artist(props) {
             <br/><br/>
             Average Listens per Track = {averageListensPerTrack}
             <br/><br/>
+
+            <BarChart 
+                width={width}
+                height={height}
+                innerHeight={innerHeight}
+                innerWidth={innerWidth}
+                margin={margin}
+                data={artistDateStats}
+                xValue={xValue}
+                yValue={yValue}
+                xAxisLabelOffset={xAxisLabelOffset}
+                xAxisTickFormat={xAxisTickFormat}
+            />
+
+            <br/><br/>
+
             <Table
                 columns={columns}
                 data={artistData}

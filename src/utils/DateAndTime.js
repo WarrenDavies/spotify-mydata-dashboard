@@ -3,16 +3,16 @@ export function convertMsToHours(millisec) {
     var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
     
     return hours + " Hrs";
-  }
+}
 
-  export function convertMsToDays(millisec) {
+export function convertMsToDays(millisec) {
 
     var hours = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
     
     return hours + " Days";
-  }
+}
 
-  export function convertMsToLargestTimeUnit(millisec) {
+export function convertMsToLargestTimeUnit(millisec) {
 
     var seconds = (millisec / 1000).toFixed(1);
 
@@ -23,19 +23,19 @@ export function convertMsToHours(millisec) {
     var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
 
     if (seconds < 60) {
-        return seconds + " Sec";
+            return seconds + " Sec";
     } else if (minutes < 60) {
-        return minutes + " Min";
+            return minutes + " Min";
     } else if (hours < 24) {
-        return hours + " Hrs";
+            return hours + " Hrs";
     } else {
-        return days + " Days"
+            return days + " Days"
     }
-  }
+}
 
-  export function convertMsToHoursNumber(millisec) {
+export function convertMsToHoursNumber(millisec) {
 
     var hours = (millisec / (1000 * 60 * 60));
     
     return hours;
-  }
+}
