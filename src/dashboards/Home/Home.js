@@ -159,6 +159,7 @@ export default function Home(props) {
                 yValue={timeChart.yValue}
                 xAxisLabelOffset={timeChart.xAxisLabelOffset}
                 xAxisTickFormat={timeChart.xAxisTickFormat}
+                tickLimiter={40}
             />
 
 

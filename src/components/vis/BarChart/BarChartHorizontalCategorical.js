@@ -26,6 +26,7 @@ export default function BarChartHorizontalCategorical(props) {
                     xScale={xScale}
                     innerHeight={props.innerHeight}
                     tickFormat={props.xAxisTickFormat}
+                    tickLimiter={3}
                 />
                 
                 <AxisYDiscreet

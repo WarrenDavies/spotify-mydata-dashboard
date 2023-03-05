@@ -3,8 +3,23 @@ import { format } from 'd3';
 // ({ xScale, innerHeight, tickFormat }) 
 
 export default function AxisX(props) {
+
+
+    let xScaleUpdated = props.xScale.domain();
+    // console.log(xScaleUpdated);
+    if (props.tickLimiter) {
+        for (let i = xScaleUpdated.length - 1; i >= 0; i--) {
+            // console.log(i);
+            if ( i % props.tickLimiter !== 0) {
+                // console.log(xScaleUpdated[i]);
+                xScaleUpdated.splice(i, 1);
+            }
+            // console.log(xScaleUpdated);
+        }
+    }
+    // console.log(xScaleUpdated);
     return (
-        props.xScale.domain().map(tickValue => (
+        xScaleUpdated.map(tickValue => (
             
             <g  
                 className="tick"

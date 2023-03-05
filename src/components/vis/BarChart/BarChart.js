@@ -19,13 +19,14 @@ export default function BarChart(props) {
 
     return (
         <svg width={props.width} height={props.height}>
-            lll
+            
             <g transform={`translate(${props.margin.left}, ${props.margin.top})`} >
 
                 <AxisX 
                     xScale={xScale}
                     innerHeight={props.innerHeight}
                     tickFormat={props.xAxisTickFormat}
+                    tickLimiter={props.tickLimiter}
                 />
                 
                 <AxisY 

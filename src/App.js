@@ -202,6 +202,7 @@ function App(props) {
                 // then update stats
                 newStats.tracks[trackArrayIndex].msPlayed += i.msPlayed;
                 newStats.tracks[trackArrayIndex].uniqueListens += 1;
+                
                 newStats.tracks[trackArrayIndex].firstListen = newStats.tracks[trackArrayIndex].firstListen < i.endTime ? newStats.tracks[trackArrayIndex].firstListen : i.endTime;
                 
                 newStats.tracks[trackArrayIndex].lastListen = newStats.tracks[artistArrayIndex].lastListen > i.endTime ? newStats.tracks[trackArrayIndex].lastListen : i.endTime;
