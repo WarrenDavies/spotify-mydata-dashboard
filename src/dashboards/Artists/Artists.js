@@ -115,6 +115,7 @@ export default function Artists(props) {
                 yValue={yValue}
                 xAxisLabelOffset={xAxisLabelOffset}
                 xAxisTickFormat={xAxisTickFormat}
+                urlPrefix={'artist/'}
             />
 
             <Table
