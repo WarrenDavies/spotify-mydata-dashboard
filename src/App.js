@@ -209,11 +209,17 @@ function App(props) {
 
         });
 
-        newStats.time.dates.forEach( (j) => {
-            j.listens = newData.filter(
+        newStats.time.dates.forEach( (j, i) => {
+            if (i === 0) {
+                console.log(j);
+            }
+            j.listens = combinedData.filter(
                 i => i.endTime.substring(0, 10) == j.dateOfListen
             )
             j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+            if (i === 0) {
+                console.log(j);
+            }
             j = getHighLevelStatsThisDay(j);
         })
 
@@ -236,6 +242,7 @@ function App(props) {
         newStats.highLevel.daysInPeriod = (newStats.highLevel.maxDate - newStats.highLevel.minDate);
 
         setStats(newStats);
+        console.log(newStats);
     }
 
 

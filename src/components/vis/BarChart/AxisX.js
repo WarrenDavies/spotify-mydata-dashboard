@@ -3,8 +3,19 @@ import { format } from 'd3';
 // ({ xScale, innerHeight, tickFormat }) 
 
 export default function AxisX(props) {
+
+    let numberOfDataPoints = props.xScale.domain().length;
+    let nthTick = Math.floor(numberOfDataPoints / 7)
     return (
-        props.xScale.domain().map(tickValue => (
+        props.xScale.domain()
+        .filter( (tickValue, i) => {
+            
+            if (i % nthTick === 0) {
+                return true
+            }
+
+        })
+        .map( (tickValue, i) => (
             
             <g  
                 className="tick"
