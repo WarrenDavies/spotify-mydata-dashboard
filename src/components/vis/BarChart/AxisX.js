@@ -28,7 +28,7 @@ export default function AxisX(props) {
                     x={props.xScale.bandwidth() / 2}
                     y={props.innerHeight + 3}
                     dy='.71em'
-                    fill='#635FSD'
+                    fill='#ffffff'
                     textAnchor='middle'
                 > 
                     {tickValue}

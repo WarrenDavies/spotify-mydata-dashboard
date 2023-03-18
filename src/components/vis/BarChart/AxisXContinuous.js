@@ -1,4 +1,5 @@
 import { format } from 'd3';
+import './BarChart.scss';
 
 export default function AxisXContinuous({ xScale, innerHeight, tickFormat }) {
     return ( 
@@ -18,7 +19,7 @@ export default function AxisXContinuous({ xScale, innerHeight, tickFormat }) {
                 <text 
                     y={innerHeight + 3}
                     dy='.71em'
-                    fill='#635FSD'
+                    // fill='#ffffff'
                     textAnchor='middle'
                 >
                     {tickFormat(tickValue)}

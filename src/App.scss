@@ -1,3 +1,24 @@
+@import './variables.scss';
+
+body {
+  color: white;
+}
+
+text {
+  fill: white;
+}
+
+a, a:visited {
+  color: $link-color;
+}
+
+a {
+  color: $link-color;
+  &:visited {
+    color: $link-color;
+  }
+}
+
 .container {
   display: flex;
   align-items: stretch;
@@ -11,6 +32,6 @@
 .dashboard {
   width: 100%;
   padding: 20px;
-  background-color: blueviolet;
+  background-color: #231B1B;
   box-sizing: border-box;
 }

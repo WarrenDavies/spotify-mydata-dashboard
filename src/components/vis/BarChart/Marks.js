@@ -5,7 +5,7 @@ export default function Marks(props) {
             return (
                 <rect 
                     key={i} 
-                    fill='#137B80'
+                    fill='#DDFFF7'
                     x={props.xScale(props.xValue(d))} 
                     y={props.innerHeight - props.yScale(props.yValue(d))} 
                     width={props.xScale.bandwidth()} 

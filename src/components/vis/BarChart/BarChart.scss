@@ -1,0 +1,16 @@
+@import '../../../variables.scss';
+
+text {
+    fill: $link-color;
+    text a:visited {
+        color: $link-color;
+    }
+}
+
+.axis-label {
+    color: #fff;
+}
+
+rect {
+    fill: $bar-chart-bar-colour;
+}

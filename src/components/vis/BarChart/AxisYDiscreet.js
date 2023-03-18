@@ -1,5 +1,6 @@
 import { format } from 'd3';
 import { Link } from 'react-router-dom';
+import './BarChart.scss'
 
 export default function AxisYDiscreet(props) {
 
@@ -25,7 +26,7 @@ export default function AxisYDiscreet(props) {
                     key={tickValue}
                 >
                     <text 
-                        style={{textAnchor:'end', fill:'#635FSD'}}
+                        style={{textAnchor:'end'}}
                         x='-9'
                         y={props.yScale(tickValue) + props.yScale.bandwidth() / 2}
                         dy='.32em'

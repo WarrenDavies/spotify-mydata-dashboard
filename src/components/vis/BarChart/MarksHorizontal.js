@@ -6,7 +6,7 @@ export default function MarksHorizontal(props) {
             return (
                 <rect 
                     key={i} 
-                    fill='#137B80'
+                    fill='#FFD2FC'
                     x={0} 
                     y={props.yScale(props.yValue(d))} 
                     width={props.xScale(props.xValue(d))} 

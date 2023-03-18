@@ -1,4 +1,6 @@
-$header-color: yellowgreen;
+@import '../../variables';
+
+// $header-color: #231B1B;
 
 .Header {
     display: flex;
@@ -7,6 +9,7 @@ $header-color: yellowgreen;
     padding: 10px 20px 10px 10px;
     width: 100%;
     height: 100px;
-    background-color: $header-color;
+    background-color: $main-background-color;
     box-sizing: border-box;
+    color: white;
 }

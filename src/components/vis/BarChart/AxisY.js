@@ -9,7 +9,7 @@ export default function AxisY(props) {
                 transform={`translate(0, ${props.innerHeight - props.yScale(tickValue)})`}
             >
                 <text 
-                    style={{textAnchor:'end', fill:'#635FSD'}}
+                    style={{textAnchor:'end'}}
                     x='-9'
                     y='1'
                     // y={props.yScale(tickValue) + props.yScale.bandwidth() / 2}

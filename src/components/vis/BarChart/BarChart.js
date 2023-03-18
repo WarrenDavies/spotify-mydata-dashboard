@@ -2,6 +2,7 @@ import AxisX from './AxisX';
 import AxisY from './AxisY';
 import Marks from './Marks';
 import * as d3 from 'd3';
+import './BarChart.scss';
 
 export default function BarChart(props) {
 
@@ -19,7 +20,7 @@ export default function BarChart(props) {
 
     return (
         <svg width={props.width} height={props.height}>
-            lll
+         
             <g transform={`translate(${props.margin.left}, ${props.margin.top})`} >
 
                 <AxisX 
@@ -34,6 +35,7 @@ export default function BarChart(props) {
                 />
                 <text
                     className='axis-label'
+                    // fill='#ffffff'
                     x = {(props.innerWidth / 2)}
                     textAnchor='middle'
                     y = {props.innerHeight + props.xAxisLabelOffset}
