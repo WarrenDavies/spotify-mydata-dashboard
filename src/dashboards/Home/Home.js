@@ -6,7 +6,7 @@ import BarChart from '../../components/vis/BarChart/BarChart';
 import * as dateAndTime from '../../utils/DateAndTime';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 import ReactDropdown from 'react-dropdown';
-
+import './home.scss'
 
 export default function Home(props) {
 
@@ -23,9 +23,9 @@ export default function Home(props) {
 
 
     const timeChart = {
-        width: 960,
-        height: 700,
-        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        width: 1100,
+        height: 600,
+        margin: { top: 20, right: 20, bottom: 20, left: 20 },
         xAxisLabelOffset: 50,
         xValue: d => d.dateOfListen,
         yValue: d => d[barChartMeasure],
@@ -148,19 +148,21 @@ export default function Home(props) {
             
             <h1>Listening History over Time</h1>
 
-            <BarChart 
-                width={timeChart.width}
-                height={timeChart.height}
-                innerHeight={timeChart.innerHeight}
-                innerWidth={timeChart.innerWidth}
-                margin={timeChart.margin}
-                data={props.stats.time.dates}
-                xValue={timeChart.xValue}
-                yValue={timeChart.yValue}
-                xAxisLabelOffset={timeChart.xAxisLabelOffset}
-                xAxisTickFormat={timeChart.xAxisTickFormat}
-            />
-
+            <div id="bar-chart-container">
+                <BarChart 
+                    id="time-bar-chart"
+                    width={timeChart.width}
+                    height={timeChart.height}
+                    innerHeight={timeChart.innerHeight}
+                    innerWidth={timeChart.innerWidth}
+                    margin={timeChart.margin}
+                    data={props.stats.time.dates}
+                    xValue={timeChart.xValue}
+                    yValue={timeChart.yValue}
+                    xAxisLabelOffset={timeChart.xAxisLabelOffset}
+                    xAxisTickFormat={timeChart.xAxisTickFormat}
+                />
+            </div>
 
             <h1>Top Artists</h1>
 

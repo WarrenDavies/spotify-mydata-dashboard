@@ -19,7 +19,12 @@ export default function BarChart(props) {
 
 
     return (
-        <svg width={props.width} height={props.height}>
+        <svg 
+            // width={props.width} 
+            // height={props.height} 
+            viewBox="0 0 1000 600" 
+            id={props.id}
+        >
          
             <g transform={`translate(${props.margin.left}, ${props.margin.top})`} >
 

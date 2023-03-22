@@ -67,9 +67,9 @@ export default function Artist(props) {
 
     // bar chart
 
-    const width = 960;
-    const height = 700;
-    const margin = { top: 20, right: 20, bottom: 20, left: 230};
+    const width = 1100;
+    const height = 600;
+    const margin = { top: 20, right: 20, bottom: 20, left: 20};
     const innerHeight = height - margin.top - margin.bottom - 100;
     const innerWidth = width - margin.left - margin.right;
     const xAxisLabelOffset = 50
@@ -136,19 +136,20 @@ export default function Artist(props) {
             <br/><br/>
             Average Listens per Track = {averageListensPerTrack}
             <br/><br/>
-
-            <BarChart 
-                width={width}
-                height={height}
-                innerHeight={innerHeight}
-                innerWidth={innerWidth}
-                margin={margin}
-                data={artistDateStats}
-                xValue={xValue}
-                yValue={yValue}
-                xAxisLabelOffset={xAxisLabelOffset}
-                xAxisTickFormat={xAxisTickFormat}
-            />
+            <div id="bar-chart-container">
+                <BarChart 
+                    width={width}
+                    height={height}
+                    innerHeight={innerHeight}
+                    innerWidth={innerWidth}
+                    margin={margin}
+                    data={artistDateStats}
+                    xValue={xValue}
+                    yValue={yValue}
+                    xAxisLabelOffset={xAxisLabelOffset}
+                    xAxisTickFormat={xAxisTickFormat}
+                />
+            </div>
 
             <br/><br/>
 
