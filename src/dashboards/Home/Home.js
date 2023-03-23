@@ -5,8 +5,10 @@ import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart';
 import * as dateAndTime from '../../utils/DateAndTime';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
+import StatBox from '../../components/vis/StatBox/StatBox';
 import ReactDropdown from 'react-dropdown';
 import './home.scss'
+
 
 export default function Home(props) {
 
@@ -120,6 +122,26 @@ export default function Home(props) {
     //     processData(props.data);
     // });
     
+
+    const headlineStats = [
+        {
+            header: 'Total listening time',
+            stat: props.stats.highLevel.totalListeningTimeString
+        },
+        {
+            header: 'Total artists',
+            stat: props.stats.highLevel.uniqueArtists
+        },
+        {
+            header: 'Total tracks',
+            stat: props.stats.highLevel.uniqueTracks
+        },
+        {
+            header: 'Average tracks per artist',
+            stat: (props.stats.highLevel.uniqueTracks / props.stats.highLevel.uniqueArtists).toFixed(2)
+        },
+    ]
+
     if (!props.data) {
         return (
             <>
@@ -132,12 +154,20 @@ export default function Home(props) {
         
         <div className='Home'>
             The home page with high level stats. <br/>
-            Total listening time: {props.stats.highLevel.totalListeningTimeString}<br/>
-            Total artists listened to: {props.stats.highLevel.uniqueArtists}<br/>
-            Total tracks listened to: {props.stats.highLevel.uniqueTracks}<br/>
-            Average tracks per artist: {(props.stats.highLevel.uniqueTracks / props.stats.highLevel.uniqueArtists).toFixed(2)}<br/>
+
             data.length: {props.data.length} <br/>
             listensProcessed: {listensProcessed} <br/><br/>
+
+            <div id="stat-box-holder">
+                {headlineStats.map( (stat) => {
+                    return(
+                        <StatBox 
+                            header={stat.header}
+                            stat={stat.stat}
+                        />        
+                    )
+                })}                   
+            </div>
 
             <ReactDropdown
                 options={dropDownAttributes}

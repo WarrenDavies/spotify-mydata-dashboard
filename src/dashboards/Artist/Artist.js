@@ -136,6 +136,9 @@ export default function Artist(props) {
             <br/><br/>
             Average Listens per Track = {averageListensPerTrack}
             <br/><br/>
+
+
+            
             <div id="bar-chart-container">
                 <BarChart 
                     width={width}
