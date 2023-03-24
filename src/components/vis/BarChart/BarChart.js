@@ -18,7 +18,7 @@ export default function BarChart(props) {
 
     return (
         <svg 
-            viewBox={`0 0 ${props.width} ${props.width}`} 
+            viewBox={`0 0 ${props.width} ${props.height}`} 
             id={props.id}
         >
          
