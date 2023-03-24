@@ -15,14 +15,10 @@ export default function BarChart(props) {
     const yScale = d3.scaleLinear()
         .domain([ 0, d3.max(props.data, props.yValue)])
         .range([0, props.innerHeight]);
-        // .paddingInner(.1);
-
 
     return (
         <svg 
-            // width={props.width} 
-            // height={props.height} 
-            viewBox="0 0 1000 600" 
+            viewBox={`0 0 ${props.width} ${props.width}`} 
             id={props.id}
         >
          
@@ -32,6 +28,7 @@ export default function BarChart(props) {
                     xScale={xScale}
                     innerHeight={props.innerHeight}
                     tickFormat={props.xAxisTickFormat}
+                    xAxisOffset={props.xAxisOffset}
                 />
                 
                 <AxisY 
@@ -40,12 +37,12 @@ export default function BarChart(props) {
                 />
                 <text
                     className='axis-label'
-                    // fill='#ffffff'
                     x = {(props.innerWidth / 2)}
                     textAnchor='middle'
                     y = {props.innerHeight + props.xAxisLabelOffset}
+                    transform = {`translate( 0, ${props.xAxisLabelOffset})`}
                 >
-                    Axis Label
+                    {props.xAxisLabel}
                 </text>
                 <Marks 
                     data={props.data}

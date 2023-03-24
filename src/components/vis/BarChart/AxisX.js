@@ -6,6 +6,7 @@ export default function AxisX(props) {
 
     let numberOfDataPoints = props.xScale.domain().length;
     let nthTick = Math.floor(numberOfDataPoints / 7)
+
     return (
         props.xScale.domain()
         .filter( (tickValue, i) => {
@@ -19,7 +20,7 @@ export default function AxisX(props) {
             
             <g  
                 className="tick"
-                transform={`translate(${props.xScale(tickValue)}, 0)`}
+                transform={`translate(${props.xScale(tickValue)}, ${props.xAxisOffset})`}
                 key={tickValue}
             >
                 <text 

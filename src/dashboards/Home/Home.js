@@ -27,8 +27,10 @@ export default function Home(props) {
     const timeChart = {
         width: 1100,
         height: 600,
-        margin: { top: 20, right: 20, bottom: 20, left: 20 },
-        xAxisLabelOffset: 50,
+        margin: { top: 20, right: 50, bottom: 20, left: 50 },
+        xAxisOffset: 10,
+        xAxisLabel: 'Date',
+        xAxisLabelOffset: 23,
         xValue: d => d.dateOfListen,
         yValue: d => d[barChartMeasure],
         d3Format: d3.format(".2s"),
@@ -189,7 +191,9 @@ export default function Home(props) {
                     data={props.stats.time.dates}
                     xValue={timeChart.xValue}
                     yValue={timeChart.yValue}
+                    xAxisLabel={timeChart.xAxisLabel}
                     xAxisLabelOffset={timeChart.xAxisLabelOffset}
+                    xAxisOffset={timeChart.xAxisOffset}
                     xAxisTickFormat={timeChart.xAxisTickFormat}
                 />
             </div>
