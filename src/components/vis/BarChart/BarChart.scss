@@ -1,9 +1,12 @@
 @import '../../../variables.scss';
 
 text {
-    fill: $link-color;
-    text a:visited {
-        color: $link-color;
+    fill: white;
+    a {
+        fill: $link-color;
+    }
+    a:visited {
+        fill: $link-color;
     }
 }
 
