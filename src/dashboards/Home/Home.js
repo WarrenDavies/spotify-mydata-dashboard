@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart';
 import * as dateAndTime from '../../utils/DateAndTime';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
+import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import StatBox from '../../components/vis/StatBox/StatBox';
 import ReactDropdown from 'react-dropdown';
 import './home.scss'
@@ -145,6 +146,11 @@ export default function Home(props) {
     ]
 
     if (!props.data) {
+
+        headlineStats.forEach((j) => {
+            j.stat = 0;
+        })
+
         return (
             <>
                 Upload some data!
@@ -159,17 +165,10 @@ export default function Home(props) {
 
             data.length: {props.data.length} <br/>
             listensProcessed: {listensProcessed} <br/><br/>
-
-            <div id="stat-box-holder">
-                {headlineStats.map( (stat) => {
-                    return(
-                        <StatBox 
-                            header={stat.header}
-                            stat={stat.stat}
-                        />        
-                    )
-                })}                   
-            </div>
+            
+            <StatBoxContainer 
+                statBoxes={headlineStats}
+            />
 
             <ReactDropdown
                 options={dropDownAttributes}

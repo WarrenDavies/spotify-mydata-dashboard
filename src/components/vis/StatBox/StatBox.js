@@ -6,11 +6,11 @@ export default function StatBox(props) {
 
 
     return (
-        <div class="StatBox">
-            <div class="StatBox__header">
+        <div className="StatBox">
+            <div className="StatBox__header">
                 <h4>{props.header}</h4>
             </div>
-            <div class="StatBox__stat">
+            <div className="StatBox__stat">
                 <p>{props.stat}</p>
             </div>
         </div>

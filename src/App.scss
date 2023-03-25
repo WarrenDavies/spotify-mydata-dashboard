@@ -19,14 +19,17 @@ a {
   }
 }
 
+@import 'variables.scss';
+
 .container {
   display: flex;
   align-items: stretch;
   flex: 0 0 100%;
-  background-color: yellow;
   width: 100%;
+  max-width: 1360px;
   height: 100%;
   min-height: 100vh;
+  margin: 0px auto;
 }
 
 .dashboard {
