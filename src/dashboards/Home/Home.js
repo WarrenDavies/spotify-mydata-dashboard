@@ -161,10 +161,6 @@ export default function Home(props) {
     return (
         
         <div className='Home'>
-            The home page with high level stats. <br/>
-
-            data.length: {props.data.length} <br/>
-            listensProcessed: {listensProcessed} <br/><br/>
             
             <StatBoxContainer 
                 statBoxes={headlineStats}

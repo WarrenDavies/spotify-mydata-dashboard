@@ -71,7 +71,7 @@ function App(props) {
         if (dateData.listens.length == 0) {
             // dateData.topArtist = artistStatsThisDaySorted[0];
             dateData.topTrack = {};
-            dateData.topTrack.trackAndArtistName = 'None';
+            dateData.topTrack.trackAndArtistName = '';
 
             return dateData
         }
