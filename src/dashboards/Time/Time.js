@@ -5,6 +5,7 @@ import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart';
 import * as dateAndTime from '../../utils/DateAndTime';
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
+import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 
 export default function Time(props) {
     // Listens Uploaded = {props.listensUploaded}<br/>
@@ -60,6 +61,20 @@ export default function Time(props) {
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
 
+
+    const dayChart = {
+        width: 600,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xAxisLabel: '',
+        xValue: d => d.hrsPlayed,
+        yValue: d => d.name,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => dayChart.d3Format(n),
+    }
+    dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 100;
+    dayChart.innerWidth = dayChart.width - dayChart.margin.left - dayChart.margin.right;
 
     const columns = useMemo(() => [
         {
@@ -149,6 +164,28 @@ export default function Time(props) {
                 xAxisOffset={timeChart.xAxisOffset}
                 xAxisTickFormat={xAxisTickFormat}
             />
+
+            <div className='chart-container'>
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>What day do you listen on most?</h2>
+
+                    <BarChartHorizontalCategorical
+                        width={dayChart.width}
+                        height={dayChart.height}
+                        innerHeight={dayChart.innerHeight}
+                        innerWidth={dayChart.innerWidth}
+                        margin={dayChart.margin}
+                        data={props.stats.time.days}
+                        xValue={dayChart.xValue}
+                        yValue={dayChart.yValue}
+                        xAxisLabel={dayChart.xAxisLabel}
+                        xAxisLabelOffset={dayChart.xAxisLabelOffset}
+                        xAxisTickFormat={dayChart.xAxisTickFormat}
+                        urlPrefix='artist/'
+                        urlSuffix=''
+                    />
+                </div>
+            </div>
 
             <Table
                 columns={columns}

@@ -266,8 +266,7 @@ function App(props) {
         newStats.time.days.forEach( (j, i) => {
             j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
         })
-        console.log(newStats.time.days);
-        
+
         newStats.artists.forEach( (j) => {
             j.hrsPlayed = +(convertMsToHoursNumber(j.msPlayed).toFixed(2));
         })
