@@ -42,7 +42,7 @@ export default function BarChartHorizontalCategorical(props) {
                     textAnchor='middle'
                     y = {props.innerHeight + props.xAxisLabelOffset}
                 >
-                    Axis Label
+                    {props.xAxisLabel}
                 </text>
                 <MarksHorizontal 
                     data={props.data}

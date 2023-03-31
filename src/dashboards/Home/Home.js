@@ -11,6 +11,7 @@ import ReactDropdown from 'react-dropdown';
 import './home.scss'
 
 
+
 export default function Home(props) {
 
     const [listensProcessed, setListensProcessed] = useState(0)
@@ -23,10 +24,10 @@ export default function Home(props) {
     ];
     const initialBarChartMeasure = 'hrsPlayed';
     const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
-
+    const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label
 
     const timeChart = {
-        width: 1100,
+        width: 1400,
         height: 600,
         margin: { top: 20, right: 50, bottom: 20, left: 50 },
         xAxisOffset: 10,
@@ -40,11 +41,13 @@ export default function Home(props) {
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
 
+    
     const topArtistChart = {
-        width: 960,
+        width: 600,
         height: 700,
         margin: { top: 20, right: 20, bottom: 20, left: 230 },
         xAxisLabelOffset: 50,
+        xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.artistName,
         d3Format: d3.format(".2s"),
@@ -77,10 +80,11 @@ export default function Home(props) {
 
 
     const topTracksChart = {
-        width: 960,
+        width: 600,
         height: 700,
         margin: { top: 20, right: 20, bottom: 20, left: 230 },
         xAxisLabelOffset: 50,
+        xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.trackName,
         d3Format: d3.format(".2s"),
@@ -173,9 +177,9 @@ export default function Home(props) {
                 dropdownLabel="Choose time or listens: "
             />
             
-            <h1>Listening History over Time</h1>
+            <h2 className='chart-title'>Listening History over Time</h2>
 
-            <div id="bar-chart-container">
+            {/* <div id="bar-chart-container"> */}
                 <BarChart 
                     id="time-bar-chart"
                     width={timeChart.width}
@@ -191,42 +195,49 @@ export default function Home(props) {
                     xAxisOffset={timeChart.xAxisOffset}
                     xAxisTickFormat={timeChart.xAxisTickFormat}
                 />
+            {/* </div> */}
+
+            <div className='chart-container'>
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>Top Artists</h2>
+
+                    <BarChartHorizontalCategorical
+                        width={topArtistChart.width}
+                        height={topArtistChart.height}
+                        innerHeight={topArtistChart.innerHeight}
+                        innerWidth={topArtistChart.innerWidth}
+                        margin={topArtistChart.margin}
+                        data={topArtists[barChartMeasure]}
+                        xValue={topArtistChart.xValue}
+                        yValue={topArtistChart.yValue}
+                        xAxisLabel={topArtistChart.xAxisLabel}
+                        xAxisLabelOffset={topArtistChart.xAxisLabelOffset}
+                        xAxisTickFormat={topArtistChart.xAxisTickFormat}
+                        urlPrefix='artist/'
+                        urlSuffix=''
+                    />
+                </div>
+
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>Top Tracks</h2>
+
+                    <BarChartHorizontalCategorical
+                        width={topTracksChart.width}
+                        height={topTracksChart.height}
+                        innerHeight={topTracksChart.innerHeight}
+                        innerWidth={topTracksChart.innerWidth}
+                        margin={topTracksChart.margin}
+                        data={topTracks[barChartMeasure]}
+                        xValue={topTracksChart.xValue}
+                        yValue={topTracksChart.yValue}
+                        xAxisLabel={topTracksChart.xAxisLabel}
+                        xAxisLabelOffset={topTracksChart.xAxisLabelOffset}
+                        xAxisTickFormat={topTracksChart.xAxisTickFormat}
+                        urlPrefix='track/'
+                        urlSuffixLookup='artistName'
+                    />
+                </div>
             </div>
-
-            <h1>Top Artists</h1>
-
-            <BarChartHorizontalCategorical
-                width={topArtistChart.width}
-                height={topArtistChart.height}
-                innerHeight={topArtistChart.innerHeight}
-                innerWidth={topArtistChart.innerWidth}
-                margin={topArtistChart.margin}
-                data={topArtists[barChartMeasure]}
-                xValue={topArtistChart.xValue}
-                yValue={topArtistChart.yValue}
-                xAxisLabelOffset={topArtistChart.xAxisLabelOffset}
-                xAxisTickFormat={topArtistChart.xAxisTickFormat}
-                urlPrefix='artist/'
-                urlSuffix=''
-            />
-            
-            <h1>Top Tracks</h1>
-
-            <BarChartHorizontalCategorical
-                width={topTracksChart.width}
-                height={topTracksChart.height}
-                innerHeight={topTracksChart.innerHeight}
-                innerWidth={topTracksChart.innerWidth}
-                margin={topTracksChart.margin}
-                data={topTracks[barChartMeasure]}
-                xValue={topTracksChart.xValue}
-                yValue={topTracksChart.yValue}
-                xAxisLabelOffset={topTracksChart.xAxisLabelOffset}
-                xAxisTickFormat={topTracksChart.xAxisTickFormat}
-                urlPrefix='track/'
-                urlSuffixLookup='artistName'
-            />
-
         </div>
     )
 }

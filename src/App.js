@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter}
         from 'react-router-dom';
 import './App.scss';
 import './variables.scss';
+import './globals.scss';
 import Header from './components/Header/Header'
 import Sidebar from './components/Sidebar/Sidebar'
 import Home from './dashboards/Home/Home'
@@ -14,6 +15,7 @@ import Track from './dashboards/Track/Track'
 import DatePage from './dashboards/Time/DatePage'
 import {min, max} from 'd3'
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from './utils/DateAndTime'
+
 
 function App(props) {
 

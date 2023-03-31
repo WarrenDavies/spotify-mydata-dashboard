@@ -4,3 +4,39 @@
     margin: 0px auto;
 }
 
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    text-align: left;
+}
+
+
+
+.inline-chart {
+    display: inline-block;
+    width: 48%;
+    text-align: left;
+    &:nth-child(even) {
+        // text-align: right;
+        h2 {
+            text-align: left;
+        }
+    }
+}
+
+@media screen and (max-width: 1260px) {
+    .chart-container {
+        flex-direction: column;
+    }
+    .inline-chart {
+        display: inline-block;
+        width: 100%;
+        background-color: darkblue;
+        svg {
+            display: inline-block;
+            width: 100%;
+        }
+    }
+}
