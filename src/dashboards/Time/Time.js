@@ -35,17 +35,6 @@ export default function Time(props) {
 
     // bar chart
 
-    const width = 1400;
-    const height = 600;
-    const margin = { top: 20, right: 20, bottom: 20, left: 50};
-    const innerHeight = height - margin.top - margin.bottom - 100;
-    const innerWidth = width - margin.left - margin.right;
-    const xAxisLabelOffset = 50
-    const xValue = d => d.dateOfListen;
-    const yValue = d => d.hrsPlayed;
-    const d3Format = d3.format(".2s");
-    const xAxisTickFormat = n => d3Format(n);
-
     const timeChart = {
         width: 1400,
         height: 600,
@@ -65,7 +54,7 @@ export default function Time(props) {
     const dayChart = {
         width: 600,
         height: 700,
-        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        margin: { top: 20, right: 20, bottom: 20, left: 100 },
         xAxisLabelOffset: 50,
         xAxisLabel: '',
         xValue: d => d.hrsPlayed,
@@ -75,6 +64,24 @@ export default function Time(props) {
     }
     dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 100;
     dayChart.innerWidth = dayChart.width - dayChart.margin.left - dayChart.margin.right;
+
+    const hourChart = {
+        width: 600,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 100 },
+        xAxisLabelOffset: 50,
+        xAxisLabel: '',
+        xValue: d => d.hrsPlayed,
+        yValue: d => d.name,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => hourChart.d3Format(n),
+    }
+    hourChart.innerHeight = hourChart.height - hourChart.margin.top - hourChart.margin.bottom - 100;
+    hourChart.innerWidth = hourChart.width - hourChart.margin.left - hourChart.margin.right;
+
+
+
+
 
     const columns = useMemo(() => [
         {
@@ -151,24 +158,23 @@ export default function Time(props) {
 
             <BarChart 
                 id="time-bar-chart"
-                width={width}
-                height={height}
-                innerHeight={innerHeight}
-                innerWidth={innerWidth}
-                margin={margin}
+                width={timeChart.width}
+                height={timeChart.height}
+                innerHeight={timeChart.innerHeight}
+                innerWidth={timeChart.innerWidth}
+                margin={timeChart.margin}
                 data={props.stats.time.dates}
-                xValue={xValue}
-                yValue={yValue}
+                xValue={timeChart.xValue}
+                yValue={timeChart.yValue}
                 xAxisLabel={timeChart.xAxisLabel}
-                xAxisLabelOffset={xAxisLabelOffset}
+                xAxisLabelOffset={timeChart.xAxisLabelOffset}
                 xAxisOffset={timeChart.xAxisOffset}
-                xAxisTickFormat={xAxisTickFormat}
+                xAxisTickFormat={timeChart.xAxisTickFormat}
             />
 
             <div className='chart-container'>
                 <div className='inline-chart'>
-                    <h2 className='chart-title'>What day do you listen on most?</h2>
-
+                    <h2 className='chart-title'>On what days do you listen most?</h2>
                     <BarChartHorizontalCategorical
                         width={dayChart.width}
                         height={dayChart.height}
@@ -185,6 +191,24 @@ export default function Time(props) {
                         urlSuffix=''
                     />
                 </div>
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>When in the day do you listen?</h2>
+                    <BarChartHorizontalCategorical
+                        width={hourChart.width}
+                        height={hourChart.height}
+                        innerHeight={hourChart.innerHeight}
+                        innerWidth={hourChart.innerWidth}
+                        margin={hourChart.margin}
+                        data={props.stats.time.hours}
+                        xValue={hourChart.xValue}
+                        yValue={hourChart.yValue}
+                        xAxisLabel={hourChart.xAxisLabel}
+                        xAxisLabelOffset={hourChart.xAxisLabelOffset}
+                        xAxisTickFormat={hourChart.xAxisTickFormat}
+                        urlPrefix='artist/'
+                        urlSuffix=''
+                    />
+                </div>
             </div>
 
             <Table
@@ -193,10 +217,6 @@ export default function Time(props) {
                 convertMsToLargestTimeUnit={dateAndTime.convertMsToLargestTimeUnit}
                 placeholder="Search for a date"
             />
-
-            <br/><br/><br/><br/>
-            hours: {JSON.stringify(props.stats.time.hours)} <br/><br/>
-            dates: {JSON.stringify(props.stats.time.dates)} <br/>
         </div>
     )
 }

@@ -16,10 +16,22 @@ for (let i = 0; i < 24; i++) {
   	hour = '0' + hour;
   }
   let hourObject = {
-    msPlayed: 0
+    "name": i,
+    "msPlayed": 0,
   }
   hourObject['hourOfListen'] = hour;
   hoursArray.push(hourObject);
+}
+
+const hourData = []
+for (let i = 0; i < 24; i++) {
+  hourData.push(
+    {
+        "hourName": i,
+        "msPlayed": 0,
+        "uniqueListens": 0,
+    }
+  );
 }
 
 const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
