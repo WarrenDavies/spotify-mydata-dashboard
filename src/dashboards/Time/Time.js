@@ -32,6 +32,34 @@ export default function Time(props) {
         },
     ]
 
+    // bar chart
+
+    const width = 1400;
+    const height = 600;
+    const margin = { top: 20, right: 20, bottom: 20, left: 50};
+    const innerHeight = height - margin.top - margin.bottom - 100;
+    const innerWidth = width - margin.left - margin.right;
+    const xAxisLabelOffset = 50
+    const xValue = d => d.dateOfListen;
+    const yValue = d => d.hrsPlayed;
+    const d3Format = d3.format(".2s");
+    const xAxisTickFormat = n => d3Format(n);
+
+    const timeChart = {
+        width: 1400,
+        height: 600,
+        margin: { top: 20, right: 50, bottom: 20, left: 50 },
+        xAxisOffset: 10,
+        xAxisLabel: 'Date',
+        xAxisLabelOffset: 23,
+        xValue: d => d.dateOfListen,
+        yValue: d => d.hrsPlayed,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => timeChart.d3Format(n),
+    }
+    timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
+    timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
+
 
     const columns = useMemo(() => [
         {
@@ -81,34 +109,6 @@ export default function Time(props) {
         }
     ])
 
-
-    // bar chart
-
-    const width = 1400;
-    const height = 600;
-    const margin = { top: 20, right: 20, bottom: 20, left: 50};
-    const innerHeight = height - margin.top - margin.bottom - 100;
-    const innerWidth = width - margin.left - margin.right;
-    const xAxisLabelOffset = 50
-    const xValue = d => d.dateOfListen;
-    const yValue = d => d.hrsPlayed;
-    const d3Format = d3.format(".2s");
-    const xAxisTickFormat = n => d3Format(n);
-
-    const timeChart = {
-        width: 1400,
-        height: 600,
-        margin: { top: 20, right: 50, bottom: 20, left: 50 },
-        xAxisOffset: 10,
-        xAxisLabel: 'Date',
-        xAxisLabelOffset: 23,
-        xValue: d => d.dateOfListen,
-        yValue: d => d.hrsPlayed,
-        d3Format: d3.format(".2s"),
-        xAxisTickFormat: n => timeChart.d3Format(n),
-    }
-    timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
-    timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
 
     if (!props.data) {
 

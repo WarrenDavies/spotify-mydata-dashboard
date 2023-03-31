@@ -172,7 +172,7 @@ function App(props) {
                 });
             }
         })
-        console.log(newStats.time.dates);
+        // console.log(newStats.time.dates);
 
         newData.forEach((i) => {
             newTotalListeningTime += i.msPlayed;
@@ -245,6 +245,14 @@ function App(props) {
                 newStats.tracks[trackArrayIndex].lastListen = newStats.tracks[artistArrayIndex].lastListen > i.endTime ? newStats.tracks[trackArrayIndex].lastListen : i.endTime;
             }
 
+
+            // Days
+            ////////
+            let dayOfListen = new Date(i.endTime).getDay();
+            console.log(dayOfListen);
+            newStats.time.days[dayOfListen].msPlayed += i.msPlayed;
+            newStats.time.days[dayOfListen].uniqueListens += 1;
+
         });
 
         newStats.time.dates.forEach( (j, i) => {
@@ -255,6 +263,11 @@ function App(props) {
             j = getHighLevelStatsThisDay(j);
         })
 
+        newStats.time.days.forEach( (j, i) => {
+            j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+        })
+        console.log(newStats.time.days);
+        
         newStats.artists.forEach( (j) => {
             j.hrsPlayed = +(convertMsToHoursNumber(j.msPlayed).toFixed(2));
         })

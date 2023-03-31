@@ -22,6 +22,17 @@ for (let i = 0; i < 24; i++) {
   hoursArray.push(hourObject);
 }
 
+const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const dayData = [];
+for (let i = 0; i < 7; i++) {
+    dayData.push(
+        {
+            "name": dayNames[i],
+            "msPlayed": 0,
+            "uniqueListens": 0,
+        }
+    );
+}
 
 const STATS = {
   highLevel: {
@@ -31,10 +42,12 @@ const STATS = {
   },
   time: {
     dates: [],
-    hours: hoursArray
+    hours: hoursArray,
+    days: dayData,
   },
   artists: [],
-  tracks: []
+  tracks: [],
+  
 };
 
 const CURRENT_PAGE = 'Home';
