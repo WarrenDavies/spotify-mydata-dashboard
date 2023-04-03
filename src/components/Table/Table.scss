@@ -7,3 +7,17 @@
 th {
     color: $main-text-color;
 }
+
+table > thead > tr:nth-child(1) > th {
+    font-size: 2em;
+    font-weight: bold;
+    padding-bottom: 50px;
+}
+
+tr {
+    text-align: left;
+}
+
+table > thead > tr:nth-child(2) > th:nth-child(1) {
+    min-width: 100px;
+}

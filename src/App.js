@@ -68,10 +68,59 @@ function App(props) {
         return array.findIndex(e => (e[trackKey] == listen[trackKey]) && (e[artistKey] == listen[artistKey]));
     }
 
+    function getTopTenArtistsBySingleDayPlays(listeningHistory, measure) {
+        const artistsToPlaysMap = new Map();
+        
+        // Create a map of artists to the maximum number of plays on a single day
+        // for (const { artistName, endTime } of listeningHistory) {
+        //   const date = new Date(endTime).toISOString().substring(0, 10);
+
+        //   const playsOnDate = artistsToPlaysMap.get(artistName) || new Map();
+        //   const plays = playsOnDate.get(date) || 0;
+      
+        //   playsOnDate.set(date, plays + 1);
+        //   artistsToPlaysMap.set(artistName, playsOnDate);
+        // }
+      
+        listeningHistory.forEach((j) => {
+            const date = new Date(j.endTime).toISOString().substring(0, 10);
+
+            const playsOnDate = artistsToPlaysMap.get(j[measure]) || new Map();
+            const plays = playsOnDate.get(date) || 0;
+        
+            playsOnDate.set(date, plays + 1);
+            artistsToPlaysMap.set(j[measure], playsOnDate);
+        });
+
+        // Sort the artists by the maximum number of plays on a single day
+        const sortedArtists = Array.from(artistsToPlaysMap.entries()).sort(([artistA, playsOnDateA], [artistB, playsOnDateB]) => {
+          const maxPlaysOnSingleDayA = Math.max(...Array.from(playsOnDateA.values()));
+          const maxPlaysOnSingleDayB = Math.max(...Array.from(playsOnDateB.values()));
+          return maxPlaysOnSingleDayB - maxPlaysOnSingleDayA;
+        });
+
+        // Get the top ten artists by the maximum number of plays on a single day
+        const topTenArtists = sortedArtists.slice(0, 30).map((artist) => {
+            const maxPlays = Math.max(...artist[1].values());
+            const maxDate = Array.from(artist[1].entries()).find(([date, plays]) => plays === maxPlays)[0];
+
+            return (
+                {
+                    artistName: artist[0],
+                    maxPlays, maxPlays,
+                    date: maxDate
+                
+                }
+
+            )
+        });
+      
+        return topTenArtists;
+    }
+
     function getHighLevelStatsThisDay(dateData) {
             
         if (dateData.listens.length == 0) {
-            // dateData.topArtist = artistStatsThisDaySorted[0];
             dateData.topTrack = {};
             dateData.topTrack.trackAndArtistName = '';
 
@@ -130,12 +179,6 @@ function App(props) {
         dateData.topTrack.trackAndArtistName = trackStatsThisDaySorted[0].trackName + ' (' + trackStatsThisDaySorted[0].artistName + ')';
 
         return dateData
-        // return {
-        //         'artists': artistStatsThisDaySorted, 
-        //         'tracks': trackStatsThisDaySorted,
-        //         'listeningTimeThisDay': props.convertMsToLargestTimeUnit(listeningTimeThisDay),
-        //         'uniqueListensThisDay': uniqueListensThisDay,
-        // }
     }
 
 
@@ -249,7 +292,7 @@ function App(props) {
             // Days
             ////////
             let dayOfListen = new Date(i.endTime).getDay();
-            console.log(dayOfListen);
+
             newStats.time.days[dayOfListen].msPlayed += i.msPlayed;
             newStats.time.days[dayOfListen].uniqueListens += 1;
 
@@ -288,6 +331,14 @@ function App(props) {
         newStats.highLevel.minDate = new Date(min(combinedData, d => d.endTime));
 
         newStats.highLevel.daysInPeriod = (newStats.highLevel.maxDate - newStats.highLevel.minDate);
+
+        newStats.bingedTracks = getTopTenArtistsBySingleDayPlays(combinedData, 'trackName');
+        console.log('binged tracks');
+        console.log(newStats.bingedArtists);
+
+        newStats.bingedArtists = getTopTenArtistsBySingleDayPlays(combinedData, 'artistName');
+        console.log('binged artists');
+        console.log(newStats.bingedArtists);
 
         setStats(newStats);
     }

@@ -85,7 +85,7 @@ export default function Time(props) {
 
     const columns = useMemo(() => [
         {
-            Header: 'Data',
+            Header: 'Top stats for each day',
             columns: [
                 {
                     Header: "Date",
@@ -94,7 +94,9 @@ export default function Time(props) {
                         return (
                             <Link to={'/time/' + value}>{value}</Link>
                         )
-                    }
+                    },
+                    size: 200,
+                    title: "Date",
                 },
                 {
                     Header: "Listening Time",
@@ -119,11 +121,55 @@ export default function Time(props) {
                     }
                 },
                 {
+                    Header: "Top Artist listening time",
+                    accessor: 'topArtist.msPlayed',
+                    Cell: ({ value }) => {
+                        let returnValue = ''
+                        if (value) {
+                            returnValue = dateAndTime.convertMsToLargestTimeUnit(value)     
+                        }
+                        return (
+                            returnValue
+                        )
+                    }
+                },
+                {
+                    Header: "Top Artist listens",
+                    accessor: 'topArtist.uniqueListens',
+                    Cell: ({ value }) => {
+                        return (
+                            value
+                        )
+                    }
+                },
+                {
                     Header: "Top Track",
                     accessor: 'topTrack.trackAndArtistName',
                     Cell: ({ value }) => {
                         return (
                             <Link to={'/track/' + value}>{value}</Link>
+                        )
+                    }
+                },
+                {
+                    Header: "Top Track listening time",
+                    accessor: 'topTrack.msPlayed',
+                    Cell: ({ value }) => {
+                        let returnValue = ''
+                        if (value) {
+                            returnValue = dateAndTime.convertMsToLargestTimeUnit(value)     
+                        }
+                        return (
+                            returnValue
+                        )
+                    }
+                },
+                {
+                    Header: "Top Track listens",
+                    accessor: 'topTrack.uniqueListens',
+                    Cell: ({ value }) => {
+                        return (
+                            value
                         )
                     }
                 }

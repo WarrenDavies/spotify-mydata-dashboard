@@ -78,7 +78,37 @@ export default function Artist(props) {
     const d3Format = d3.format(".2s")
     const xAxisTickFormat = n => d3Format(n)
 
+    
+    function getTopTenArtistsBySingleDayPlays(listeningHistory) {
+        const artistsToPlaysMap = new Map();
+      
+        // Create a map of artists to the maximum number of plays on a single day
+        for (const { artistName, endDate } of listeningHistory) {
+          const date = new Date(endDate).toDateString();
+      
+          const playsOnDate = artistsToPlaysMap.get(artistName) || new Map();
+          const plays = playsOnDate.get(date) || 0;
+      
+          playsOnDate.set(date, plays + 1);
+          artistsToPlaysMap.set(artistName, playsOnDate);
+        }
+      
+        // Sort the artists by the maximum number of plays on a single day
+        const sortedArtists = Array.from(artistsToPlaysMap.entries()).sort(([artistA, playsOnDateA], [artistB, playsOnDateB]) => {
+          const maxPlaysOnSingleDayA = Math.max(...Array.from(playsOnDateA.values()));
+          const maxPlaysOnSingleDayB = Math.max(...Array.from(playsOnDateB.values()));
+          return maxPlaysOnSingleDayB - maxPlaysOnSingleDayA;
+        });
+      
+        // Get the top ten artists by the maximum number of plays on a single day
+        const topTenArtists = sortedArtists.slice(0, 10).map(([artistName]) => artistName);
+      
+        return topTenArtists;
+    }
 
+    const bingedArtists = useMemo(() => getTopTenArtistsBySingleDayPlays(props.data), [props.data]);
+    console.log('binged artists');
+    console.log(bingedArtists);
 
 
     const columns = useMemo(() => [
