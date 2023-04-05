@@ -79,39 +79,46 @@ function App(props) {
                 key += '  (' + j['artistName'] + ')'
             }
             
-            const playsOnDate = playsMap.get(key) ?? new Map();
+            let playsOnDate;
+            if (playsMap.has(key)) {
+                playsOnDate = playsMap.get(key);
+            } else {
+                playsOnDate = new Map()
+                playsOnDate.set('artistName', j['artistName']);
+                playsOnDate.set('plays', new Map())
+            }
 
-            const plays = playsOnDate.get(date) ?? 0;
-            playsOnDate.set(date, plays + 1);
-
-
-            // if (measure === 'trackName') {
-            //     if (!playsOnDate.has('artistName')) {
-            //         playsOnDate.set('artistName', j['artistName'])
-            //     }
-            // }
+            let plays;
+            if (playsOnDate.get('plays').has(date)) {
+                plays = playsOnDate.get('plays').get(date);
+            } else {
+                plays = 0;
+            }
+            
+            playsOnDate.get('plays').set(date, plays + 1);
             
             playsMap.set(key, playsOnDate);
         });
         
-        console.log(playsMap);
 
         const sortedItems = Array.from(playsMap.entries()).sort(([A, playsOnDateA], [B, playsOnDateB]) => {
-          const maxPlaysOnSingleDayA = Math.max(...Array.from(playsOnDateA.values()));
-          const maxPlaysOnSingleDayB = Math.max(...Array.from(playsOnDateB.values()));
+          const maxPlaysOnSingleDayA = Math.max(...Array.from(playsOnDateA.get('plays').values()));
+          const maxPlaysOnSingleDayB = Math.max(...Array.from(playsOnDateB.get('plays').values()));
           return maxPlaysOnSingleDayB - maxPlaysOnSingleDayA;
         });
 
         const topN = sortedItems.slice(0, 30).map((item) => {
-            const maxPlays = Math.max(...item[1].values());
-            const maxDate = Array.from(item[1].entries()).find(([date, plays]) => plays === maxPlays)[0];
+            const maxPlays = Math.max(...item[1].get('plays').values());
+            const maxDate = Array.from(item[1].get('plays').entries()).find(([date, plays]) => plays === maxPlays)[0];
 
             const returnData = {
                 maxPlays: maxPlays,
-                date: maxDate
+                date: maxDate,
+                artistName: item[1].get('artistName')
             }
-            returnData[measure] = item[0];
-
+            if (measure === 'trackName') {
+                returnData[measure] = item[0];
+            }
             return returnData
         });
       
