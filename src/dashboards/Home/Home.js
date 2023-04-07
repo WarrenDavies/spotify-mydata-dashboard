@@ -37,6 +37,7 @@ export default function Home(props) {
         yValue: d => d[barChartMeasure],
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => timeChart.d3Format(n),
+        xAxisTickLimiter: 8,
     }
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
@@ -194,6 +195,7 @@ export default function Home(props) {
                     xAxisLabelOffset={timeChart.xAxisLabelOffset}
                     xAxisOffset={timeChart.xAxisOffset}
                     xAxisTickFormat={timeChart.xAxisTickFormat}
+                    xAxisTickLimiter={timeChart.xAxisTickLimiter}
                 />
             {/* </div> */}
 
