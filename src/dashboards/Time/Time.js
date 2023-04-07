@@ -8,11 +8,6 @@ import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 
 export default function Time(props) {
-    // Listens Uploaded = {props.listensUploaded}<br/>
-    // Days listened on = {props.stats.time.dates.length}<br/>
-    // From: {props.stats.highLevel.minDate.toDateString()}<br/>
-    // To: {props.stats.highLevel.maxDate.toDateString()}<br/>
-    // Days in period: {dateAndTime.convertMsToDays(props.stats.highLevel.daysInPeriod)}<br/>
 
     const headlineStats = [
         {
@@ -53,9 +48,10 @@ export default function Time(props) {
 
 
     const dayChart = {
-        width: 600,
+        width: 700,
         height: 700,
         margin: { top: 20, right: 20, bottom: 20, left: 100 },
+        xAxisOffset: 10,
         xAxisLabelOffset: 50,
         xAxisLabel: '',
         xValue: d => d.name,
@@ -236,10 +232,9 @@ export default function Time(props) {
                         yValue={dayChart.yValue}
                         xAxisLabel={dayChart.xAxisLabel}
                         xAxisLabelOffset={dayChart.xAxisLabelOffset}
+                        xAxisOffset={dayChart.xAxisOffset}
                         xAxisTickFormat={dayChart.xAxisTickFormat}
                         xAxisTickLimiter={dayChart.xAxisTickLimiter}
-                        urlPrefix='artist/'
-                        urlSuffix=''
                     />
                 </div>
                 <div className='inline-chart'>

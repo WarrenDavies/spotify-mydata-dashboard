@@ -16,6 +16,9 @@ export default function BarChart(props) {
         .domain([ 0, d3.max(props.data, props.yValue)])
         .range([0, props.innerHeight]);
 
+    console.log(xScale);
+    console.log(yScale);
+
     return (
         <svg 
             viewBox={`0 0 ${props.width} ${props.height}`} 

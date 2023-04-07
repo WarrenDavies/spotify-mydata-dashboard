@@ -18,7 +18,7 @@ export default function AxisX(props) {
 
         })
     }
-
+    console.log(props.xScale(0));
     return (
         xScale.map( (tickValue, i) => (
             
