@@ -4,19 +4,23 @@ import { format } from 'd3';
 
 export default function AxisX(props) {
 
-    let numberOfDataPoints = props.xScale.domain().length;
-    let nthTick = Math.floor(numberOfDataPoints / 7)
+    let xScale = props.xScale.domain();
 
-    return (
-        props.xScale.domain()
-        .filter( (tickValue, i) => {
+    if (props.xAxisTickLimiter) {
+        const numberOfDataPoints = props.xScale.domain().length;
+        const nthTick = Math.floor(numberOfDataPoints / props.xAxisTickLimiter);
+
+        xScale = xScale.filter( (tickValue, i) => {
             
             if (i % nthTick === 0) {
                 return true
             }
 
         })
-        .map( (tickValue, i) => (
+    }
+
+    return (
+        xScale.map( (tickValue, i) => (
             
             <g  
                 className="tick"

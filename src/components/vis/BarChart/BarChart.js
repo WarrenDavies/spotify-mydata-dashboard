@@ -29,6 +29,7 @@ export default function BarChart(props) {
                     innerHeight={props.innerHeight}
                     tickFormat={props.xAxisTickFormat}
                     xAxisOffset={props.xAxisOffset}
+                    xAxisTickLimiter={props.xAxisTickLimiter}
                 />
                 
                 <AxisY 

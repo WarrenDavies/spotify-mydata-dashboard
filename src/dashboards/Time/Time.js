@@ -46,6 +46,7 @@ export default function Time(props) {
         yValue: d => d.hrsPlayed,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => timeChart.d3Format(n),
+        xAxisTickLimiter: 8,
     }
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
@@ -57,10 +58,11 @@ export default function Time(props) {
         margin: { top: 20, right: 20, bottom: 20, left: 100 },
         xAxisLabelOffset: 50,
         xAxisLabel: '',
-        xValue: d => d.hrsPlayed,
-        yValue: d => d.name,
+        xValue: d => d.name,
+        yValue: d => d.hrsPlayed,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => dayChart.d3Format(n),
+        xAxisTickLimiter: 0,
     }
     dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 100;
     dayChart.innerWidth = dayChart.width - dayChart.margin.left - dayChart.margin.right;
@@ -216,12 +218,14 @@ export default function Time(props) {
                 xAxisLabelOffset={timeChart.xAxisLabelOffset}
                 xAxisOffset={timeChart.xAxisOffset}
                 xAxisTickFormat={timeChart.xAxisTickFormat}
+                xAxisTickLimiter={timeChart.xAxisTickLimiter}
             />
 
             <div className='chart-container'>
                 <div className='inline-chart'>
                     <h2 className='chart-title'>On what days do you listen most?</h2>
-                    <BarChartHorizontalCategorical
+                    <BarChart 
+                        id="time-day-chart"
                         width={dayChart.width}
                         height={dayChart.height}
                         innerHeight={dayChart.innerHeight}
@@ -233,6 +237,7 @@ export default function Time(props) {
                         xAxisLabel={dayChart.xAxisLabel}
                         xAxisLabelOffset={dayChart.xAxisLabelOffset}
                         xAxisTickFormat={dayChart.xAxisTickFormat}
+                        xAxisTickLimiter={dayChart.xAxisTickLimiter}
                         urlPrefix='artist/'
                         urlSuffix=''
                     />
