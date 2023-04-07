@@ -337,7 +337,8 @@ function App(props) {
         newStats.highLevel.maxDate = new Date(max(combinedData, d => d.endTime));
         newStats.highLevel.minDate = new Date(min(combinedData, d => d.endTime));
 
-        newStats.highLevel.daysInPeriod = (newStats.highLevel.maxDate - newStats.highLevel.minDate);
+        newStats.highLevel.daysInPeriod = (newStats.time.dates.length);
+        newStats.highLevel.daysListenedOn = newStats.time.dates.filter( (date) => date.listens.length > 0).length;
 
         newStats.bingedTracks = getTopNBySingleDayPlays(combinedData, 'trackName', 30);
         console.log('binged tracks');

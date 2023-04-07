@@ -25,11 +25,11 @@ export default function Time(props) {
         },
         {
             header: 'Days listened on',
-            stat: props.stats.time.dates.length
+            stat: props.stats.highLevel.daysListenedOn
         },
         {
             header: 'Days in period',
-            stat: dateAndTime.convertMsToDays(props.stats.highLevel.daysInPeriod),
+            stat: props.stats.highLevel.daysInPeriod
         },
     ]
 
