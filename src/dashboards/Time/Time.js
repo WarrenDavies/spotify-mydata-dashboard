@@ -68,11 +68,13 @@ export default function Time(props) {
         height: 700,
         margin: { top: 20, right: 20, bottom: 20, left: 100 },
         xAxisLabelOffset: 50,
+        xAxisOffset: 10,
         xAxisLabel: '',
-        xValue: d => d.hrsPlayed,
-        yValue: d => d.name,
+        xValue: d => d.name,
+        yValue: d => d.hrsPlayed,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => hourChart.d3Format(n),
+        xAxisTickLimiter: 0,
     }
     hourChart.innerHeight = hourChart.height - hourChart.margin.top - hourChart.margin.bottom - 100;
     hourChart.innerWidth = hourChart.width - hourChart.margin.left - hourChart.margin.right;
@@ -239,7 +241,7 @@ export default function Time(props) {
                 </div>
                 <div className='inline-chart'>
                     <h2 className='chart-title'>When in the day do you listen?</h2>
-                    <BarChartHorizontalCategorical
+                    <BarChart
                         width={hourChart.width}
                         height={hourChart.height}
                         innerHeight={hourChart.innerHeight}
@@ -250,9 +252,9 @@ export default function Time(props) {
                         yValue={hourChart.yValue}
                         xAxisLabel={hourChart.xAxisLabel}
                         xAxisLabelOffset={hourChart.xAxisLabelOffset}
+                        xAxisOffset={hourChart.xAxisOffset}
                         xAxisTickFormat={hourChart.xAxisTickFormat}
-                        urlPrefix='artist/'
-                        urlSuffix=''
+                        xAxisTickLimiter={hourChart.xAxisTickLimiter}
                     />
                 </div>
             </div>

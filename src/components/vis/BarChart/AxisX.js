@@ -1,7 +1,5 @@
 import { format } from 'd3';
 
-// ({ xScale, innerHeight, tickFormat }) 
-
 export default function AxisX(props) {
 
     let xScale = props.xScale.domain();
@@ -18,7 +16,7 @@ export default function AxisX(props) {
 
         })
     }
-    console.log(props.xScale(0));
+
     return (
         xScale.map( (tickValue, i) => (
             
