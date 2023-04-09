@@ -423,6 +423,7 @@ function App(props) {
                                 <Artists 
                                     data={data} 
                                     stats={props.stats}
+                                    listensUploaded={listensUploaded} 
                                     convertMsToHours={convertMsToHours}
                                     convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
                                 />

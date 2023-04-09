@@ -7,10 +7,29 @@ import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChar
 import * as d3 from 'd3';
 import ReactDropdown from 'react-dropdown';
 import './artists.scss';
+import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
+import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from '../../utils/DateAndTime';
 
 export default function Artists(props) {
 
-
+    const headlineStats = [
+        {
+            header: 'Total artists',
+            stat: props.stats.highLevel.uniqueArtists
+        },
+        {
+            header: 'Average hrs per artist',
+            stat: convertMsToHoursNumber(props.stats.highLevel.totalListeningTimeMs / props.stats.highLevel.uniqueArtists).toFixed(2)
+        },
+        {
+            header: 'Average listens per artist',
+            stat: (props.listensUploaded / props.stats.highLevel.uniqueArtists).toFixed(2)
+        },
+        {
+            header: 'Average tracks per artist',
+            stat: (props.stats.highLevel.uniqueTracks / props.stats.highLevel.uniqueArtists).toFixed(2)
+        },
+    ]
 
 
     const topArtists = useMemo(() => {
@@ -18,13 +37,13 @@ export default function Artists(props) {
             .sort((a, b) => {
                 return b.hrsPlayed - a.hrsPlayed;
             })
-            .slice(0, 19);
+            .slice(0, 29);
 
         const uniqueListens = props.stats.artists
             .sort((a, b) => {
                 return b.uniqueListens - a.uniqueListens;
             })
-            .slice(0, 19);
+            .slice(0, 29);
 
         return (
             {
@@ -112,10 +131,10 @@ export default function Artists(props) {
     return (
         <div className="Artists">
             This is the artists page.
-
-            <br /><br />
-            You listened to {props.stats.highLevel.uniqueArtists} artists.
-            <br /><br />
+            
+            <StatBoxContainer 
+                statBoxes={headlineStats}
+            />
 
             <ReactDropdown
                 options={dropDownAttributes}
