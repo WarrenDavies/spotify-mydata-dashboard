@@ -146,7 +146,7 @@ export default function Artists(props) {
                         innerHeight={bingedArtistsChart.innerHeight}
                         innerWidth={bingedArtistsChart.innerWidth}
                         margin={bingedArtistsChart.margin}
-                        data={topArtists[barChartMeasure]}
+                        data={props.stats.bingedArtists[barChartMeasure]}
                         xValue={bingedArtistsChart.xValue}
                         yValue={bingedArtistsChart.yValue}
                         xAxisLabelOffset={bingedArtistsChart.xAxisLabelOffset}
