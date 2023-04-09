@@ -10,6 +10,9 @@ import './artists.scss';
 
 export default function Artists(props) {
 
+
+
+
     const topArtists = useMemo(() => {
         const hrsPlayed = props.stats.artists
             .sort((a, b) => {
@@ -38,20 +41,37 @@ export default function Artists(props) {
     ];
     const initialBarChartMeasure = 'hrsPlayed';
     const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
+    const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label
+
+    const topArtistChart = {
+        width: 600,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xAxisLabel: barChartMeasureLabel,
+        xValue: d => d[barChartMeasure],
+        yValue: d => d.artistName,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => topArtistChart.d3Format(n),
+    }
+    topArtistChart.innerHeight = topArtistChart.height - topArtistChart.margin.top - topArtistChart.margin.bottom - 100;
+    topArtistChart.innerWidth = topArtistChart.width - topArtistChart.margin.left - topArtistChart.margin.right;
+
+    const bingedArtistsChart = {
+        width: 600,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xAxisLabel: barChartMeasureLabel,
+        xValue: d => d[barChartMeasure],
+        yValue: d => d.artistName,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => bingedArtistsChart.d3Format(n),
+    }
+    bingedArtistsChart.innerHeight = bingedArtistsChart.height - bingedArtistsChart.margin.top - bingedArtistsChart.margin.bottom - 100;
+    bingedArtistsChart.innerWidth = bingedArtistsChart.width - bingedArtistsChart.margin.left - bingedArtistsChart.margin.right;
 
 
-    // bar chart
-    const width = 960;
-    const height = 700;
-    const margin = { top: 20, right: 20, bottom: 20, left: 230 };
-    const innerHeight = height - margin.top - margin.bottom - 100;
-    const innerWidth = width - margin.left - margin.right;
-    const xAxisLabelOffset = 50
-    const xValue = d => d[barChartMeasure];
-    const yValue = d => d.artistName;
-    const d3Format = d3.format(".2s")
-    const xAxisTickFormat = n => d3Format(n)
- 
     const columns = useMemo(() => [
         {
             Header: 'Data',
@@ -103,21 +123,38 @@ export default function Artists(props) {
                 value={initialBarChartMeasure}
                 dropdownLabel="Choose time or listens: "
             />
-
-            <BarChartHorizontalCategorical
-                width={width}
-                height={height}
-                innerHeight={innerHeight}
-                innerWidth={innerWidth}
-                margin={margin}
-                data={topArtists[barChartMeasure]}
-                xValue={xValue}
-                yValue={yValue}
-                xAxisLabelOffset={xAxisLabelOffset}
-                xAxisTickFormat={xAxisTickFormat}
-                urlPrefix={'artist/'}
-            />
-
+            <div className='chart-container'>
+                <div className='inline-chart'>
+                    <BarChartHorizontalCategorical
+                        width={topArtistChart.width}
+                        height={topArtistChart.height}
+                        innerHeight={topArtistChart.innerHeight}
+                        innerWidth={topArtistChart.innerWidth}
+                        margin={topArtistChart.margin}
+                        data={topArtists[barChartMeasure]}
+                        xValue={topArtistChart.xValue}
+                        yValue={topArtistChart.yValue}
+                        xAxisLabelOffset={topArtistChart.xAxisLabelOffset}
+                        xAxisTickFormat={topArtistChart.xAxisTickFormat}
+                        urlPrefix={'artist/'}
+                    />
+                </div>
+                <div className='inline-chart'>
+                    <BarChartHorizontalCategorical
+                        width={bingedArtistsChart.width}
+                        height={bingedArtistsChart.height}
+                        innerHeight={bingedArtistsChart.innerHeight}
+                        innerWidth={bingedArtistsChart.innerWidth}
+                        margin={bingedArtistsChart.margin}
+                        data={topArtists[barChartMeasure]}
+                        xValue={bingedArtistsChart.xValue}
+                        yValue={bingedArtistsChart.yValue}
+                        xAxisLabelOffset={bingedArtistsChart.xAxisLabelOffset}
+                        xAxisTickFormat={bingedArtistsChart.xAxisTickFormat}
+                        urlPrefix={'artist/'}
+                    />
+                </div>
+            </div>
             <Table
                 columns={columns}
                 data={props.stats.artists}

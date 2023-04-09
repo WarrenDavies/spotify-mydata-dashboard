@@ -68,14 +68,14 @@ function App(props) {
         return array.findIndex(e => (e[trackKey] == listen[trackKey]) && (e[artistKey] == listen[artistKey]));
     }
 
-    function getTopNBySingleDayPlays(listeningHistory, measure, n) {
+    function getTopNBySingleDayPlays(listeningHistory, groupingVariable, outcomeMeasure, n) {
         const playsMap = new Map();
       
         listeningHistory.forEach((j) => {
             const date = new Date(j.endTime).toISOString().substring(0, 10);
 
-            let key = j[measure];
-            if (measure === 'trackName') {
+            let key = j[groupingVariable];
+            if (groupingVariable === 'trackName') {
                 key += '  (' + j['artistName'] + ')'
             }
             
@@ -94,12 +94,16 @@ function App(props) {
             } else {
                 plays = 0;
             }
-            
-            playsOnDate.get('plays').set(date, plays + 1);
-            
+            if (outcomeMeasure === 'uniqueListens') {
+                playsOnDate.get('plays').set(date, plays + 1);
+            }
+
+            if (outcomeMeasure === 'msPlayed') {
+                playsOnDate.get('plays').set(date, plays + j['msPlayed']);
+            }
+
             playsMap.set(key, playsOnDate);
         });
-        
 
         const sortedItems = Array.from(playsMap.entries()).sort(([A, playsOnDateA], [B, playsOnDateB]) => {
           const maxPlaysOnSingleDayA = Math.max(...Array.from(playsOnDateA.get('plays').values()));
@@ -107,18 +111,24 @@ function App(props) {
           return maxPlaysOnSingleDayB - maxPlaysOnSingleDayA;
         });
 
-        const topN = sortedItems.slice(0, 30).map((item) => {
+        const topN = sortedItems.slice(0, n).map((item) => {
             const maxPlays = Math.max(...item[1].get('plays').values());
+            // console.log(maxPlays);
             const maxDate = Array.from(item[1].get('plays').entries()).find(([date, plays]) => plays === maxPlays)[0];
 
             const returnData = {
-                maxPlays: maxPlays,
                 date: maxDate,
                 artistName: item[1].get('artistName')
             }
-            if (measure === 'trackName') {
-                returnData[measure] = item[0];
+            returnData[outcomeMeasure] = maxPlays;
+            if (groupingVariable === 'trackName') {
+                returnData[groupingVariable] = item[0];
             }
+
+            if (outcomeMeasure === 'msPlayed') {
+                returnData['hrsPlayed'] = +(convertMsToHoursNumber(returnData.msPlayed).toFixed(2));
+            }
+
             return returnData
         });
       
@@ -310,7 +320,6 @@ function App(props) {
             
 
         });
-        console.log(newStats.time.months);
 
         newStats.time.dates.forEach( (j, i) => {
             j.listens = combinedData.filter(
@@ -351,9 +360,14 @@ function App(props) {
         newStats.highLevel.daysInPeriod = (newStats.time.dates.length);
         newStats.highLevel.daysListenedOn = newStats.time.dates.filter( (date) => date.listens.length > 0).length;
 
-        newStats.bingedTracks = getTopNBySingleDayPlays(combinedData, 'trackName', 30);
-
-        newStats.bingedArtists = getTopNBySingleDayPlays(combinedData, 'artistName', 30);
+        newStats.bingedTracks = { 
+            uniqueListens: getTopNBySingleDayPlays(combinedData, 'trackName', 'uniqueListens', 30),
+            hrsPlayed: getTopNBySingleDayPlays(combinedData, 'trackName', 'msPlayed', 30),
+        }
+        newStats.bingedArtists = { 
+            uniqueListens: getTopNBySingleDayPlays(combinedData, 'artistName', 'uniqueListens', 30),
+            hrsPlayed: getTopNBySingleDayPlays(combinedData, 'artistName', 'msPlayed', 30),
+        }
 
         setStats(newStats);
     }
