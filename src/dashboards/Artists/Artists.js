@@ -144,6 +144,7 @@ export default function Artists(props) {
             />
             <div className='chart-container'>
                 <div className='inline-chart'>
+                <h2 className='chart-title'>Top Artists</h2>
                     <BarChartHorizontalCategorical
                         width={topArtistChart.width}
                         height={topArtistChart.height}
@@ -159,6 +160,7 @@ export default function Artists(props) {
                     />
                 </div>
                 <div className='inline-chart'>
+                <h2 className='chart-title'>Binged artists - most listens on one day</h2>
                     <BarChartHorizontalCategorical
                         width={bingedArtistsChart.width}
                         height={bingedArtistsChart.height}
