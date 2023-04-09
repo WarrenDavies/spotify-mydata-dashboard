@@ -93,7 +93,7 @@ export default function Artists(props) {
 
     const columns = useMemo(() => [
         {
-            Header: 'Data',
+            Header: 'All artist data',
             columns: [
                 {
                     Header: "ArtistName",
@@ -160,7 +160,7 @@ export default function Artists(props) {
                     />
                 </div>
                 <div className='inline-chart'>
-                <h2 className='chart-title'>Binged artists - most listens on one day</h2>
+                <h2 className='chart-title'>Binged Artists - most listens on one day</h2>
                     <BarChartHorizontalCategorical
                         width={bingedArtistsChart.width}
                         height={bingedArtistsChart.height}
@@ -176,14 +176,15 @@ export default function Artists(props) {
                     />
                 </div>
             </div>
-            <Table
-                columns={columns}
-                data={props.stats.artists}
-                convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
-                placeholder='Search for an artist'
-                search={true}
-            />
-
+            <div class='table-container'>
+                <Table
+                    columns={columns}
+                    data={props.stats.artists}
+                    convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
+                    placeholder='Search for an artist'
+                    search={true}
+                />
+            </div>
         </div>
     )
 }
