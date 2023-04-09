@@ -6,6 +6,7 @@ import BarChart from '../../components/vis/BarChart/BarChart';
 import * as dateAndTime from '../../utils/DateAndTime';
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
+import './time.scss'
 
 export default function Time(props) {
 
@@ -32,10 +33,10 @@ export default function Time(props) {
 
     const timeChart = {
         width: 1400,
-        height: 600,
+        height: 500,
         margin: { top: 20, right: 50, bottom: 20, left: 50 },
         xAxisOffset: 10,
-        xAxisLabel: 'Date',
+        xAxisLabel: '',
         xAxisLabelOffset: 23,
         xValue: d => d.dateOfListen,
         yValue: d => d.hrsPlayed,
@@ -43,30 +44,30 @@ export default function Time(props) {
         xAxisTickFormat: n => timeChart.d3Format(n),
         xAxisTickLimiter: 8,
     }
-    timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 100;
+    timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 50;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;
 
 
     const dayChart = {
-        width: 700,
-        height: 700,
+        width: 600,
+        height: 550,
         margin: { top: 20, right: 20, bottom: 20, left: 100 },
         xAxisOffset: 10,
         xAxisLabelOffset: 50,
         xAxisLabel: '',
-        xValue: d => d.name,
-        yValue: d => d.hrsPlayed,
+        xValue: d => d.hrsPlayed,
+        yValue: d => d.name,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => dayChart.d3Format(n),
         xAxisTickLimiter: 0,
     }
-    dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 100;
+    dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 50;
     dayChart.innerWidth = dayChart.width - dayChart.margin.left - dayChart.margin.right;
 
     const hourChart = {
         width: 600,
-        height: 700,
-        margin: { top: 20, right: 20, bottom: 20, left: 100 },
+        height: 550,
+        margin: { top: 20, right: 20, bottom: 20, left: 40 },
         xAxisLabelOffset: 50,
         xAxisOffset: 10,
         xAxisLabel: '',
@@ -76,10 +77,24 @@ export default function Time(props) {
         xAxisTickFormat: n => hourChart.d3Format(n),
         xAxisTickLimiter: 0,
     }
-    hourChart.innerHeight = hourChart.height - hourChart.margin.top - hourChart.margin.bottom - 100;
+    hourChart.innerHeight = hourChart.height - hourChart.margin.top - hourChart.margin.bottom - 50;
     hourChart.innerWidth = hourChart.width - hourChart.margin.left - hourChart.margin.right;
 
-
+    const monthChart = {
+        width: 500,
+        height: 550,
+        margin: { top: 20, right: 20, bottom: 20, left: 100 },
+        xAxisLabelOffset: 50,
+        xAxisOffset: 10,
+        xAxisLabel: '',
+        xValue: d => d.hrsPlayed,
+        yValue: d => d.name,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => monthChart.d3Format(n),
+        xAxisTickLimiter: 0,
+    }
+    monthChart.innerHeight = monthChart.height - monthChart.margin.top - monthChart.margin.bottom - 50;
+    monthChart.innerWidth = monthChart.width - monthChart.margin.left - monthChart.margin.right;
 
 
 
@@ -221,9 +236,31 @@ export default function Time(props) {
 
             <div className='chart-container'>
                 <div className='inline-chart'>
+                    <h2 className='chart-title'>On what months do you listen most?</h2>
+                    <BarChartHorizontalCategorical 
+                        id="month-chart"
+                        width={monthChart.width}
+                        height={monthChart.height}
+                        innerHeight={monthChart.innerHeight}
+                        innerWidth={monthChart.innerWidth}
+                        margin={monthChart.margin}
+                        data={props.stats.time.months}
+                        xValue={monthChart.xValue}
+                        yValue={monthChart.yValue}
+                        xAxisLabel={monthChart.xAxisLabel}
+                        xAxisLabelOffset={monthChart.xAxisLabelOffset}
+                        xAxisOffset={monthChart.xAxisOffset}
+                        xAxisTickFormat={monthChart.xAxisTickFormat}
+                        xAxisTickLimiter={monthChart.xAxisTickLimiter}
+                        xAxisLabelLinks={false}
+                        urlPrefix={false}
+                    />
+                </div>
+                
+                <div className='inline-chart'>
                     <h2 className='chart-title'>On what days do you listen most?</h2>
-                    <BarChart 
-                        id="time-day-chart"
+                    <BarChartHorizontalCategorical 
+                        id="day-chart"
                         width={dayChart.width}
                         height={dayChart.height}
                         innerHeight={dayChart.innerHeight}
@@ -239,26 +276,26 @@ export default function Time(props) {
                         xAxisTickLimiter={dayChart.xAxisTickLimiter}
                     />
                 </div>
-                <div className='inline-chart'>
-                    <h2 className='chart-title'>When in the day do you listen?</h2>
-                    <BarChart
-                        width={hourChart.width}
-                        height={hourChart.height}
-                        innerHeight={hourChart.innerHeight}
-                        innerWidth={hourChart.innerWidth}
-                        margin={hourChart.margin}
-                        data={props.stats.time.hours}
-                        xValue={hourChart.xValue}
-                        yValue={hourChart.yValue}
-                        xAxisLabel={hourChart.xAxisLabel}
-                        xAxisLabelOffset={hourChart.xAxisLabelOffset}
-                        xAxisOffset={hourChart.xAxisOffset}
-                        xAxisTickFormat={hourChart.xAxisTickFormat}
-                        xAxisTickLimiter={hourChart.xAxisTickLimiter}
-                    />
-                </div>
+                
             </div>
-
+            <div className='chart-container-full-width'>
+                <h2 className='chart-title'>When in the day do you listen?</h2>
+                <BarChart
+                    width={timeChart.width}
+                    height={timeChart.height}
+                    innerHeight={timeChart.innerHeight}
+                    innerWidth={timeChart.innerWidth}
+                    margin={timeChart.margin}
+                    data={props.stats.time.hours}
+                    xValue={hourChart.xValue}
+                    yValue={hourChart.yValue}
+                    xAxisLabel={hourChart.xAxisLabel}
+                    xAxisLabelOffset={hourChart.xAxisLabelOffset}
+                    xAxisOffset={hourChart.xAxisOffset}
+                    xAxisTickFormat={hourChart.xAxisTickFormat}
+                    xAxisTickLimiter={hourChart.xAxisTickLimiter}
+                />
+            </div>
             <Table
                 columns={columns}
                 data={props.stats.time.dates}

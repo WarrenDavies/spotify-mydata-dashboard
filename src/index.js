@@ -46,6 +46,19 @@ for (let i = 0; i < 7; i++) {
     );
 }
 
+const monthNames = ["January", "February", "March", "April", "May",
+  "June", "July", "August", "September", "October", "November", "December"];
+const monthData = [];
+for (let i = 0; i < 12; i++) {
+  monthData.push(
+        {
+            "name": monthNames[i],
+            "msPlayed": 0,
+            "uniqueListens": 0,
+        }
+    );
+} 
+
 const STATS = {
   highLevel: {
     totalListeningTimeMs: 0,
@@ -56,6 +69,7 @@ const STATS = {
     dates: [],
     hours: hoursArray,
     days: dayData,
+    months: monthData,
   },
   artists: [],
   tracks: [],

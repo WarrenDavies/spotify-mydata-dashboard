@@ -299,11 +299,18 @@ function App(props) {
             // Days
             ////////
             let dayOfListen = new Date(i.endTime).getDay();
-
             newStats.time.days[dayOfListen].msPlayed += i.msPlayed;
             newStats.time.days[dayOfListen].uniqueListens += 1;
 
+            // Months
+            ////////
+            let monthOfListen = new Date(i.endTime).getMonth();
+            newStats.time.months[monthOfListen].msPlayed += i.msPlayed;
+            newStats.time.months[monthOfListen].uniqueListens += 1;
+            
+
         });
+        console.log(newStats.time.months);
 
         newStats.time.dates.forEach( (j, i) => {
             j.listens = combinedData.filter(
@@ -314,6 +321,10 @@ function App(props) {
         })
 
         newStats.time.days.forEach( (j, i) => {
+            j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+        })
+
+        newStats.time.months.forEach( (j, i) => {
             j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
         })
 
@@ -341,12 +352,8 @@ function App(props) {
         newStats.highLevel.daysListenedOn = newStats.time.dates.filter( (date) => date.listens.length > 0).length;
 
         newStats.bingedTracks = getTopNBySingleDayPlays(combinedData, 'trackName', 30);
-        console.log('binged tracks');
-        console.log(newStats.bingedTracks);
 
         newStats.bingedArtists = getTopNBySingleDayPlays(combinedData, 'artistName', 30);
-        console.log('binged artists');
-        console.log(newStats.bingedArtists);
 
         setStats(newStats);
     }

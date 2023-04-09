@@ -7,12 +7,26 @@
 .chart-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     text-align: left;
 }
 
+.chart-container-full-width {
+    margin: 0px 50px;
+}
 
+.vertical-chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: left;
+    .inline-chart {
+        width: 96%;
+    }
+}
 
 .inline-chart {
     display: inline-block;
