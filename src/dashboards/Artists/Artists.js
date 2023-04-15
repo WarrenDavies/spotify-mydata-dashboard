@@ -55,12 +55,13 @@ export default function Artists(props) {
 
     // msPlayed/listens dropdown
     const dropDownAttributes = [
-        { value: 'hrsPlayed', label: 'Listening time (hours)' },
-        { value: 'uniqueListens', label: 'Number of listens' }
+        { value: 'hrsPlayed', label: 'Listening time (hours)', chartTitle: 'most time on one day' },
+        { value: 'uniqueListens', label: 'Number of listens', chartTitle: 'most listens on one day'}
     ];
     const initialBarChartMeasure = 'hrsPlayed';
     const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
-    const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label
+    const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label;
+    const chartTitle = dropDownAttributes.find(x => x.value === barChartMeasure).chartTitle;
 
     const topArtistChart = {
         width: 600,
@@ -160,7 +161,7 @@ export default function Artists(props) {
                     />
                 </div>
                 <div className='inline-chart'>
-                <h2 className='chart-title'>Binged Artists - most listens on one day</h2>
+                <h2 className='chart-title'>Binged Artists - {chartTitle}</h2>
                     <BarChartHorizontalCategorical
                         width={bingedArtistsChart.width}
                         height={bingedArtistsChart.height}

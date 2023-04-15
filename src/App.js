@@ -75,9 +75,9 @@ function App(props) {
             const date = new Date(j.endTime).toISOString().substring(0, 10);
 
             let key = j[groupingVariable];
-            if (groupingVariable === 'trackName') {
-                key += '  (' + j['artistName'] + ')'
-            }
+            // if (groupingVariable === 'trackName') {
+            //     key += '  (' + j['artistName'] + ')'
+            // }
             
             let playsOnDate;
             if (playsMap.has(key)) {
@@ -447,6 +447,7 @@ function App(props) {
                                 <Tracks
                                     data={data} 
                                     stats={props.stats}
+                                    listensUploaded={listensUploaded} 
                                     convertMsToHours={convertMsToHours}
                                     convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
                                 />
