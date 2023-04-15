@@ -37,7 +37,7 @@ export default function Table({columns, data, convertMsToLargestTimeUnit, placeh
     : null
 
     return (
-        <div id='artistTable'>
+        <div id='table'>
             {searchBar}
             
             <table {...getTableProps()}>

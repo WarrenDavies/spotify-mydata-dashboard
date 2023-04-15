@@ -1,0 +1,11 @@
+
+.table-container.tracks #table > table > thead > tr:nth-child(2) > th:nth-child(5),
+.table-container.tracks #table > table > thead > tr:nth-child(2) > th:nth-child(6) {
+    min-width: 140px;
+}
+
+.Tracks {
+    .table-container {
+        max-width: 80%;
+    }
+}

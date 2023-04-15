@@ -75,6 +75,7 @@ function App(props) {
             const date = new Date(j.endTime).toISOString().substring(0, 10);
 
             let key = j[groupingVariable];
+            // add artist name in brackets to track name - makes it a little long
             // if (groupingVariable === 'trackName') {
             //     key += '  (' + j['artistName'] + ')'
             // }

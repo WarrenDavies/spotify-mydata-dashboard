@@ -125,8 +125,13 @@ export default function Tracks(props) {
                 },
                 {
                     Header: "First Listen",
-                    accessor: 'firstListen'
+                    accessor: 'firstListen',
+                },
+                {
+                    Header: "Last Listen",
+                    accessor: 'lastListen',
                 }
+
             ]
         }
     ], [props.data])
@@ -181,7 +186,7 @@ export default function Tracks(props) {
                     />
                 </div>
             </div>
-            <div class='table-container'>
+            <div className='table-container tracks'>
                 <Table
                     columns={columns}
                     data={props.stats.tracks}
