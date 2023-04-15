@@ -296,12 +296,14 @@ export default function Time(props) {
                     xAxisTickLimiter={hourChart.xAxisTickLimiter}
                 />
             </div>
-            <Table
-                columns={columns}
-                data={props.stats.time.dates}
-                convertMsToLargestTimeUnit={dateAndTime.convertMsToLargestTimeUnit}
-                placeholder="Search for a date"
-            />
+            <div className='table-container time-table'>
+                <Table
+                    columns={columns}
+                    data={props.stats.time.dates}
+                    convertMsToLargestTimeUnit={dateAndTime.convertMsToLargestTimeUnit}
+                    placeholder="Search for a date"
+                />
+            </div>
         </div>
     )
 }

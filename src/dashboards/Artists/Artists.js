@@ -122,6 +122,10 @@ export default function Artists(props) {
                 {
                     Header: "First Listen",
                     accessor: 'firstListen'
+                },
+                {
+                    Header: "Last Listen",
+                    accessor: 'lastListen',
                 }
             ]
         }
@@ -177,7 +181,7 @@ export default function Artists(props) {
                     />
                 </div>
             </div>
-            <div class='table-container'>
+            <div class='table-container artists-table'>
                 <Table
                     columns={columns}
                     data={props.stats.artists}
