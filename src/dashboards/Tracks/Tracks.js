@@ -167,6 +167,7 @@ export default function Tracks(props) {
                         xAxisLabelOffset={topTrackChart.xAxisLabelOffset}
                         xAxisTickFormat={topTrackChart.xAxisTickFormat}
                         urlPrefix={'track/'}
+                        urlSuffixLookup='artistName'
                     />
                 </div>
                 <div className='inline-chart binged-tracks'>
@@ -183,6 +184,7 @@ export default function Tracks(props) {
                         xAxisLabelOffset={bingedTracksChart.xAxisLabelOffset}
                         xAxisTickFormat={bingedTracksChart.xAxisTickFormat}
                         urlPrefix={'track/'}
+                        urlSuffixLookup='artistName'
                     />
                 </div>
             </div>
