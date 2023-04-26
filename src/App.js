@@ -22,6 +22,7 @@ function App(props) {
     const [data, setData] = useState(props.data);
     const [listensUploaded, setListensUploaded] = useState(props.listensUploaded);
     const [stats, setStats] = useState(props.stats);
+    const [dateList, setDateList] = useState(props.stats);
 
     function checkIfRecordExists(existingListen, newListen) {
         if (
@@ -233,7 +234,24 @@ function App(props) {
                 });
             }
         })
-        // console.log(newStats.time.dates);
+
+        let emptyDateList = []
+        dateList.forEach((i) => {
+            
+            let dateOfListen = i.toISOString().substring(0, 10);
+            let dateArrayIndex = emptyDateList.findIndex(e => e['dateOfListen'] === dateOfListen);
+                        
+            if (dateArrayIndex === -1) {
+                emptyDateList.push ({
+                    dateOfListen: dateOfListen,
+                    msPlayed: 0,
+                    hrsPlayed: 0,
+                    uniqueListens: 0,
+                    listens: [],
+                });
+            }
+        })
+        setDateList(emptyDateList);
 
         newData.forEach((i) => {
             newTotalListeningTime += i.msPlayed;
@@ -422,7 +440,8 @@ function App(props) {
                             path='/artists' 
                             element={
                                 <Artists 
-                                    data={data} 
+                                    data={data}
+                                    dateList={dateList} 
                                     stats={props.stats}
                                     listensUploaded={listensUploaded} 
                                     convertMsToHours={convertMsToHours}
@@ -435,6 +454,7 @@ function App(props) {
                             path="/artist/:artistName"
                             element = {
                                 <Artist
+                                    dateList={dateList}
                                     data={data}
                                     stats={stats}
                                     convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}

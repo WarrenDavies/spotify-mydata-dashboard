@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart';
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from '../../utils/DateAndTime'
+import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 
 export default function Artist(props) {
 
@@ -25,8 +26,9 @@ export default function Artist(props) {
     const artistDateData = props.data.filter(
         i => i.artistName == artistName
     );
-    
-    let artistDateStats = []
+
+    let artistDateStats = [...props.dateList];
+
     artistDateData.forEach((i) => {
         
         // Dates
@@ -65,18 +67,27 @@ export default function Artist(props) {
 
     const averageListensPerTrack = parseFloat(uniqueListens / uniqueTracks).toFixed(2);
 
-    // bar chart
+    const headlineStats = [
+        {
+            header: 'Total listening time',
+            stat: totalListeningTime
+        },
+        {
+            header: 'Total unique Listens',
+            stat: uniqueListens
+        },
+        {
+            header: 'Tracks listened to',
+            stat: uniqueTracks
+        },
+        {
+            header: 'Average listens per track',
+            stat: averageListensPerTrack
+        },
+    ]
 
-    const width = 1100;
-    const height = 600;
-    const margin = { top: 20, right: 20, bottom: 20, left: 20};
-    const innerHeight = height - margin.top - margin.bottom - 100;
-    const innerWidth = width - margin.left - margin.right;
-    const xAxisLabelOffset = 50
-    const xValue = d => d.dateOfListen;
-    const yValue = d => d.hrsPlayed;
-    const d3Format = d3.format(".2s")
-    const xAxisTickFormat = n => d3Format(n)
+
+    // bar chart
 
     const timeChart = {
         width: 1400,
@@ -140,18 +151,10 @@ export default function Artist(props) {
 
             This is the artist page for {artistName}
             <br/><br/>
-            {JSON.stringify(artistStats)}
 
-            <br/><br/>
-            Total listening time = {totalListeningTime}
-            <br/><br/>
-            Number of listens = {uniqueListens}
-            <br/><br/>
-            Number of tracks listened to = {uniqueTracks}
-            <br/><br/>
-            Average Listens per Track = {averageListensPerTrack}
-            <br/><br/>
-
+            <StatBoxContainer 
+                statBoxes={headlineStats}
+            />
 
             
             <div id="bar-chart-container">
@@ -163,6 +166,7 @@ export default function Artist(props) {
                     innerWidth={timeChart.innerWidth}
                     margin={timeChart.margin}
                     data={artistDateStats}
+                    allData={props.data}
                     xValue={timeChart.xValue}
                     yValue={timeChart.yValue}
                     xAxisLabel={timeChart.xAxisLabel}
