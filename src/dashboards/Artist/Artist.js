@@ -78,6 +78,23 @@ export default function Artist(props) {
     const d3Format = d3.format(".2s")
     const xAxisTickFormat = n => d3Format(n)
 
+    const timeChart = {
+        width: 1400,
+        height: 500,
+        margin: { top: 20, right: 50, bottom: 20, left: 50 },
+        xAxisOffset: 10,
+        xAxisLabel: '',
+        xAxisLabelOffset: 23,
+        xValue: d => d.dateOfListen,
+        yValue: d => d.hrsPlayed,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => timeChart.d3Format(n),
+        xAxisTickLimiter: 8,
+    }
+    timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 50;
+    timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;    
+
+
     
     const columns = useMemo(() => [
         {
@@ -139,16 +156,20 @@ export default function Artist(props) {
             
             <div id="bar-chart-container">
                 <BarChart 
-                    width={width}
-                    height={height}
-                    innerHeight={innerHeight}
-                    innerWidth={innerWidth}
-                    margin={margin}
+                    id="time-bar-chart"
+                    width={timeChart.width}
+                    height={timeChart.height}
+                    innerHeight={timeChart.innerHeight}
+                    innerWidth={timeChart.innerWidth}
+                    margin={timeChart.margin}
                     data={artistDateStats}
-                    xValue={xValue}
-                    yValue={yValue}
-                    xAxisLabelOffset={xAxisLabelOffset}
-                    xAxisTickFormat={xAxisTickFormat}
+                    xValue={timeChart.xValue}
+                    yValue={timeChart.yValue}
+                    xAxisLabel={timeChart.xAxisLabel}
+                    xAxisLabelOffset={timeChart.xAxisLabelOffset}
+                    xAxisOffset={timeChart.xAxisOffset}
+                    xAxisTickFormat={timeChart.xAxisTickFormat}
+                    xAxisTickLimiter={timeChart.xAxisTickLimiter}
                 />
             </div>
 
