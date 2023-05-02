@@ -7,7 +7,7 @@ import BarChart from '../../components/vis/BarChart/BarChart';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmtptyTimeArrays} from '../../utils/DateAndTime'
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
-
+import ReactDropdown from 'react-dropdown';
 
 export default function Artist(props) {
 
@@ -17,6 +17,14 @@ export default function Artist(props) {
     const totalListeningTime = props.convertMsToLargestTimeUnit(artistStats.msPlayed);
     const uniqueListens = artistStats.uniqueListens;
 
+    // msPlayed/listens dropdown
+    const dropDownAttributes = [
+        { value: 'hrsPlayed', label: 'Listening time (hours)' },
+        { value: 'uniqueListens', label: 'Number of listens' }
+    ];
+    const initialBarChartMeasure = 'hrsPlayed';
+    const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
+    const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label
     // another way to do this will be to add the listents to an array in .artists during updateStats.
 
     // should this be using data not tracks
@@ -135,7 +143,7 @@ export default function Artist(props) {
         xAxisOffset: 10,
         xAxisLabelOffset: 50,
         xAxisLabel: '',
-        xValue: d => d.hrsPlayed,
+        xValue: d => d[barChartMeasure],
         yValue: d => d.name,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => dayChart.d3Format(n),
@@ -152,7 +160,7 @@ export default function Artist(props) {
         xAxisOffset: 10,
         xAxisLabel: '',
         xValue: d => d.name,
-        yValue: d => d.hrsPlayed,
+        yValue: d => d[barChartMeasure],
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => hourChart.d3Format(n),
         xAxisTickLimiter: 0,
@@ -167,7 +175,7 @@ export default function Artist(props) {
         xAxisLabelOffset: 50,
         xAxisOffset: 10,
         xAxisLabel: '',
-        xValue: d => d.hrsPlayed,
+        xValue: d => d[barChartMeasure],
         yValue: d => d.name,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => monthChart.d3Format(n),
@@ -225,7 +233,13 @@ export default function Artist(props) {
                 statBoxes={headlineStats}
             />
 
-            
+            <ReactDropdown
+                options={dropDownAttributes}
+                onChange={option => setBarChartMeasure(option.value)}
+                value={initialBarChartMeasure}
+                dropdownLabel="Choose time or listens: "
+            />
+
             <div id="bar-chart-container">
                 <BarChart 
                     id="time-bar-chart"
