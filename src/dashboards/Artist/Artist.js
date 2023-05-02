@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
-import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmtptyTimeArrays} from '../../utils/DateAndTime'
+import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays} from '../../utils/DateAndTime'
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import ReactDropdown from 'react-dropdown';
 
@@ -39,7 +39,7 @@ export default function Artist(props) {
 
     let artistDateStats = [...props.dateList];
 
-    const [hourData, dayData, monthData] = getEmtptyTimeArrays();
+    const [hourData, dayData, monthData] = getEmptyTimeArrays();
 
     artistDateData.forEach((i) => {
         
@@ -72,8 +72,18 @@ export default function Artist(props) {
         let monthOfListen = new Date(i.endTime).getMonth();
         monthData[monthOfListen].msPlayed += i.msPlayed;
         monthData[monthOfListen].uniqueListens += 1;
+        console.log(hourData);    
+
+        // Hours
+        ////////
+        let hourOfListen = i.endTime.substring(11, 13);
+        let hourArrayIndex = hourData.findIndex(e => e['hourOfListen'] === hourOfListen);
+        hourData[hourArrayIndex].msPlayed += i.msPlayed;
+        hourData[hourArrayIndex].uniqueListens += 1;
 
     });
+    console.log(hourData);
+
     artistDateStats.forEach( (j) => {
         j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
     })
@@ -83,7 +93,9 @@ export default function Artist(props) {
     monthData.forEach( (j) => {
         j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
     })
-
+    hourData.forEach( (j) => {
+        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+    })
     const uniqueTracksArray = artistTrackData.map(
         (i) => {
           return i.trackName
@@ -302,6 +314,25 @@ export default function Artist(props) {
                         xAxisTickLimiter={dayChart.xAxisTickLimiter}
                     />
                 </div>
+            </div>
+
+            <div className='chart-container-full-width'>
+                <h2 className='chart-title'>When in the day do you listen?</h2>
+                <BarChart
+                    width={timeChart.width}
+                    height={timeChart.height}
+                    innerHeight={timeChart.innerHeight}
+                    innerWidth={timeChart.innerWidth}
+                    margin={timeChart.margin}
+                    data={hourData}
+                    xValue={hourChart.xValue}
+                    yValue={hourChart.yValue}
+                    xAxisLabel={hourChart.xAxisLabel}
+                    xAxisLabelOffset={hourChart.xAxisLabelOffset}
+                    xAxisOffset={hourChart.xAxisOffset}
+                    xAxisTickFormat={hourChart.xAxisTickFormat}
+                    xAxisTickLimiter={hourChart.xAxisTickLimiter}
+                />
             </div>
 
             <Table

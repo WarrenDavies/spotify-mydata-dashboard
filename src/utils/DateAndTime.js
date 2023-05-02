@@ -40,7 +40,7 @@ export function convertMsToHoursNumber(millisec) {
     return hours;
 }
 
-export function getEmtptyTimeArrays() {
+export function getEmptyTimeArrays() {
     const hoursArray = []
     for (let i = 0; i < 24; i++) {
     let hour = i.toString();
@@ -50,6 +50,7 @@ export function getEmtptyTimeArrays() {
     let hourObject = {
         "name": i,
         "msPlayed": 0,
+        "uniqueListens": 0,
     }
     hourObject['hourOfListen'] = hour;
     hoursArray.push(hourObject);
@@ -91,5 +92,5 @@ export function getEmtptyTimeArrays() {
         );
     } 
 
-    return [hourData, dayData, monthData]
+    return [hoursArray, dayData, monthData]
 }
