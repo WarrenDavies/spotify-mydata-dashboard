@@ -39,3 +39,57 @@ export function convertMsToHoursNumber(millisec) {
     
     return hours;
 }
+
+export function getEmtptyTimeArrays() {
+    const hoursArray = []
+    for (let i = 0; i < 24; i++) {
+    let hour = i.toString();
+    if (hour.length == 1) {
+        hour = '0' + hour;
+    }
+    let hourObject = {
+        "name": i,
+        "msPlayed": 0,
+    }
+    hourObject['hourOfListen'] = hour;
+    hoursArray.push(hourObject);
+    }
+
+    const hourData = []
+    for (let i = 0; i < 24; i++) {
+    hourData.push(
+        {
+            "hourName": i,
+            "msPlayed": 0,
+            "uniqueListens": 0,
+        }
+    );
+    }
+
+    const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    const dayData = [];
+    for (let i = 0; i < 7; i++) {
+        dayData.push(
+            {
+                "name": dayNames[i],
+                "msPlayed": 0,
+                "uniqueListens": 0,
+            }
+        );
+    }
+
+    const monthNames = ["January", "February", "March", "April", "May",
+    "June", "July", "August", "September", "October", "November", "December"];
+    const monthData = [];
+    for (let i = 0; i < 12; i++) {
+    monthData.push(
+            {
+                "name": monthNames[i],
+                "msPlayed": 0,
+                "uniqueListens": 0,
+            }
+        );
+    } 
+
+    return [hourData, dayData, monthData]
+}

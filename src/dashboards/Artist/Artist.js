@@ -4,8 +4,10 @@ import Table from '../../components/Table/Table'
 import { Link } from 'react-router-dom'
 import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart';
-import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from '../../utils/DateAndTime'
+import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
+import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmtptyTimeArrays} from '../../utils/DateAndTime'
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
+
 
 export default function Artist(props) {
 
@@ -29,6 +31,8 @@ export default function Artist(props) {
 
     let artistDateStats = [...props.dateList];
 
+    const [hourData, dayData, monthData] = getEmtptyTimeArrays();
+
     artistDateData.forEach((i) => {
         
         // Dates
@@ -48,8 +52,27 @@ export default function Artist(props) {
             artistDateStats[dateArrayIndex].uniqueListens += 1;
             // newStats.time.dates.listens.push(i);
         }
+
+        // Days
+        ////////
+        let dayOfListen = new Date(i.endTime).getDay();
+        dayData[dayOfListen].msPlayed += i.msPlayed;
+        dayData[dayOfListen].uniqueListens += 1;
+
+        // Months
+        ////////
+        let monthOfListen = new Date(i.endTime).getMonth();
+        monthData[monthOfListen].msPlayed += i.msPlayed;
+        monthData[monthOfListen].uniqueListens += 1;
+
     });
     artistDateStats.forEach( (j) => {
+        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+    })
+    dayData.forEach( (j) => {
+        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+    })
+    monthData.forEach( (j) => {
         j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
     })
 
@@ -105,7 +128,53 @@ export default function Artist(props) {
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 50;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;    
 
+    const dayChart = {
+        width: 600,
+        height: 550,
+        margin: { top: 20, right: 20, bottom: 20, left: 100 },
+        xAxisOffset: 10,
+        xAxisLabelOffset: 50,
+        xAxisLabel: '',
+        xValue: d => d.hrsPlayed,
+        yValue: d => d.name,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => dayChart.d3Format(n),
+        xAxisTickLimiter: 0,
+    }
+    dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 50;
+    dayChart.innerWidth = dayChart.width - dayChart.margin.left - dayChart.margin.right;
 
+    const hourChart = {
+        width: 600,
+        height: 550,
+        margin: { top: 20, right: 20, bottom: 20, left: 40 },
+        xAxisLabelOffset: 50,
+        xAxisOffset: 10,
+        xAxisLabel: '',
+        xValue: d => d.name,
+        yValue: d => d.hrsPlayed,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => hourChart.d3Format(n),
+        xAxisTickLimiter: 0,
+    }
+    hourChart.innerHeight = hourChart.height - hourChart.margin.top - hourChart.margin.bottom - 50;
+    hourChart.innerWidth = hourChart.width - hourChart.margin.left - hourChart.margin.right;
+
+    const monthChart = {
+        width: 500,
+        height: 550,
+        margin: { top: 20, right: 20, bottom: 20, left: 100 },
+        xAxisLabelOffset: 50,
+        xAxisOffset: 10,
+        xAxisLabel: '',
+        xValue: d => d.hrsPlayed,
+        yValue: d => d.name,
+        d3Format: d3.format(".2s"),
+        xAxisTickFormat: n => monthChart.d3Format(n),
+        xAxisTickLimiter: 0,
+    }
+    monthChart.innerHeight = monthChart.height - monthChart.margin.top - monthChart.margin.bottom - 50;
+    monthChart.innerWidth = monthChart.width - monthChart.margin.left - monthChart.margin.right;
     
     const columns = useMemo(() => [
         {
@@ -177,7 +246,49 @@ export default function Artist(props) {
                 />
             </div>
 
-            <br/><br/>
+            <div className='chart-container'>
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>On what months do you listen most?</h2>
+                    <BarChartHorizontalCategorical 
+                        id="month-chart"
+                        width={monthChart.width}
+                        height={monthChart.height}
+                        innerHeight={monthChart.innerHeight}
+                        innerWidth={monthChart.innerWidth}
+                        margin={monthChart.margin}
+                        data={monthData}
+                        xValue={monthChart.xValue}
+                        yValue={monthChart.yValue}
+                        xAxisLabel={monthChart.xAxisLabel}
+                        xAxisLabelOffset={monthChart.xAxisLabelOffset}
+                        xAxisOffset={monthChart.xAxisOffset}
+                        xAxisTickFormat={monthChart.xAxisTickFormat}
+                        xAxisTickLimiter={monthChart.xAxisTickLimiter}
+                        xAxisLabelLinks={false}
+                        urlPrefix={false}
+                    />
+                </div>
+                
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>On what days do you listen most?</h2>
+                    <BarChartHorizontalCategorical 
+                        id="day-chart"
+                        width={dayChart.width}
+                        height={dayChart.height}
+                        innerHeight={dayChart.innerHeight}
+                        innerWidth={dayChart.innerWidth}
+                        margin={dayChart.margin}
+                        data={dayData}
+                        xValue={dayChart.xValue}
+                        yValue={dayChart.yValue}
+                        xAxisLabel={dayChart.xAxisLabel}
+                        xAxisLabelOffset={dayChart.xAxisLabelOffset}
+                        xAxisOffset={dayChart.xAxisOffset}
+                        xAxisTickFormat={dayChart.xAxisTickFormat}
+                        xAxisTickLimiter={dayChart.xAxisTickLimiter}
+                    />
+                </div>
+            </div>
 
             <Table
                 columns={columns}
