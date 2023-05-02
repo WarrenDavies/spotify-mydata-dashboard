@@ -297,7 +297,8 @@ function App(props) {
             let hourOfListen = i.endTime.substring(11, 13);
             let hourArrayIndex = newStats.time.hours.findIndex(e => e['hourOfListen'] === hourOfListen);
             newStats.time.hours[hourArrayIndex].msPlayed += i.msPlayed;
-
+            newStats.time.hours[hourArrayIndex].uniqueListens += 1;
+            
             // Tracks
             /////////
             /// to do - get indices, return as array

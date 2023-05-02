@@ -18,6 +18,7 @@ for (let i = 0; i < 24; i++) {
   let hourObject = {
     "name": i,
     "msPlayed": 0,
+    "uniqueListens": 0,
   }
   hourObject['hourOfListen'] = hour;
   hoursArray.push(hourObject);

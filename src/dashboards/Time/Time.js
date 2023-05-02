@@ -7,6 +7,7 @@ import * as dateAndTime from '../../utils/DateAndTime';
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 import './time.scss'
+import ReactDropdown from 'react-dropdown';
 
 export default function Time(props) {
 
@@ -29,6 +30,15 @@ export default function Time(props) {
         },
     ]
 
+    // msPlayed/listens dropdown
+    const dropDownAttributes = [
+        { value: 'hrsPlayed', label: 'Listening time (hours)' },
+        { value: 'uniqueListens', label: 'Number of listens' }
+    ];
+    const initialBarChartMeasure = 'hrsPlayed';
+    const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
+    const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label
+
     // bar chart
 
     const timeChart = {
@@ -39,7 +49,7 @@ export default function Time(props) {
         xAxisLabel: '',
         xAxisLabelOffset: 23,
         xValue: d => d.dateOfListen,
-        yValue: d => d.hrsPlayed,
+        yValue: d => d[barChartMeasure],
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => timeChart.d3Format(n),
         xAxisTickLimiter: 8,
@@ -55,7 +65,7 @@ export default function Time(props) {
         xAxisOffset: 10,
         xAxisLabelOffset: 50,
         xAxisLabel: '',
-        xValue: d => d.hrsPlayed,
+        xValue: d => d[barChartMeasure],
         yValue: d => d.name,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => dayChart.d3Format(n),
@@ -72,7 +82,7 @@ export default function Time(props) {
         xAxisOffset: 10,
         xAxisLabel: '',
         xValue: d => d.name,
-        yValue: d => d.hrsPlayed,
+        yValue: d => d[barChartMeasure],
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => hourChart.d3Format(n),
         xAxisTickLimiter: 0,
@@ -87,7 +97,7 @@ export default function Time(props) {
         xAxisLabelOffset: 50,
         xAxisOffset: 10,
         xAxisLabel: '',
-        xValue: d => d.hrsPlayed,
+        xValue: d => d[barChartMeasure],
         yValue: d => d.name,
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => monthChart.d3Format(n),
@@ -96,7 +106,7 @@ export default function Time(props) {
     monthChart.innerHeight = monthChart.height - monthChart.margin.top - monthChart.margin.bottom - 50;
     monthChart.innerWidth = monthChart.width - monthChart.margin.left - monthChart.margin.right;
 
-
+    console.log(props.stats.time.hours);
 
     const columns = useMemo(() => [
         {
@@ -217,6 +227,13 @@ export default function Time(props) {
                 statBoxes={headlineStats}
             />
 
+            <ReactDropdown
+                options={dropDownAttributes}
+                onChange={option => setBarChartMeasure(option.value)}
+                value={initialBarChartMeasure}
+                dropdownLabel="Choose time or listens: "
+            />
+
             <BarChart 
                 id="time-bar-chart"
                 width={timeChart.width}
@@ -276,8 +293,8 @@ export default function Time(props) {
                         xAxisTickLimiter={dayChart.xAxisTickLimiter}
                     />
                 </div>
-                
             </div>
+
             <div className='chart-container-full-width'>
                 <h2 className='chart-title'>When in the day do you listen?</h2>
                 <BarChart
