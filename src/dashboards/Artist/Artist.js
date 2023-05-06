@@ -33,77 +33,107 @@ export default function Artist(props) {
     );
 
     // should this be using data not tracks
-    const artistDateData = props.data.filter(
-        i => i.artistName == artistName
-    );
+    const artistDateData = props.data.filter(i => i.artistName == artistName);
 
-    let artistDateStats = [...props.dateList];
+    function getThisArtistData(artistDateData) {
+        console.log('updating artist data');
+        let artistDateStats = [...props.dateList];
 
-    const [hourData, dayData, monthData] = getEmptyTimeArrays();
+        const [hourData, dayData, monthData] = getEmptyTimeArrays();
 
-    artistDateData.forEach((i) => {
+        artistDateData.forEach((i) => {
         
-        // Dates
-        ////////
-        let dateOfListen = i.endTime.substring(0, 10);
-        let dateArrayIndex = artistDateStats.findIndex(e => e['dateOfListen'] === dateOfListen);
-                    
-        if (dateArrayIndex === -1) {
-            artistDateStats.push ({
-                dateOfListen: dateOfListen,
-                msPlayed: i.msPlayed,
-                uniqueListens: 1,
-                listens: []
-            });
-        } else {
-            artistDateStats[dateArrayIndex].msPlayed += i.msPlayed;
-            artistDateStats[dateArrayIndex].uniqueListens += 1;
-            // newStats.time.dates.listens.push(i);
+            // Dates
+            ////////
+            let dateOfListen = i.endTime.substring(0, 10);
+            let dateArrayIndex = artistDateStats.findIndex(e => e['dateOfListen'] === dateOfListen);
+                        
+            if (dateArrayIndex === -1) {
+                artistDateStats.push ({
+                    dateOfListen: dateOfListen,
+                    msPlayed: i.msPlayed,
+                    uniqueListens: 1,
+                    listens: []
+                });
+            } else {
+                artistDateStats[dateArrayIndex].msPlayed += i.msPlayed;
+                artistDateStats[dateArrayIndex].uniqueListens += 1;
+                // newStats.time.dates.listens.push(i);
+            }
+    
+            // Days
+            ////////
+            let dayOfListen = new Date(i.endTime).getDay();
+            dayData[dayOfListen].msPlayed += i.msPlayed;
+            dayData[dayOfListen].uniqueListens += 1;
+    
+            // Months
+            ////////
+            let monthOfListen = new Date(i.endTime).getMonth();
+            monthData[monthOfListen].msPlayed += i.msPlayed;
+            monthData[monthOfListen].uniqueListens += 1;
+    
+            // Hours
+            ////////
+            let hourOfListen = i.endTime.substring(11, 13);
+            let hourArrayIndex = hourData.findIndex(e => e['hourOfListen'] === hourOfListen);
+            hourData[hourArrayIndex].msPlayed += i.msPlayed;
+            hourData[hourArrayIndex].uniqueListens += 1;
+    
+        });
+
+        artistDateStats.forEach( (j) => {
+            j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+        })
+        dayData.forEach( (j) => {
+            j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+        })
+        monthData.forEach( (j) => {
+            j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+        })
+        hourData.forEach( (j) => {
+            j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
+        })
+
+        return {
+            'artistDateStats': artistDateStats, 
+            'hourData': hourData, 
+            'dayData': dayData, 
+            'monthData': monthData
         }
+    }
 
-        // Days
-        ////////
-        let dayOfListen = new Date(i.endTime).getDay();
-        dayData[dayOfListen].msPlayed += i.msPlayed;
-        dayData[dayOfListen].uniqueListens += 1;
+    const artistIndex = props.stats.artists.findIndex(e => e['artistName'] == artistName);
 
-        // Months
-        ////////
-        let monthOfListen = new Date(i.endTime).getMonth();
-        monthData[monthOfListen].msPlayed += i.msPlayed;
-        monthData[monthOfListen].uniqueListens += 1;
-        console.log(hourData);    
+    // props.stats.artists[artistIndex].artistPageStats = useMemo(
+    //     () => getThisArtistData(artistDateData),
+    //     [props.data]
+    // );
 
-        // Hours
-        ////////
-        let hourOfListen = i.endTime.substring(11, 13);
-        let hourArrayIndex = hourData.findIndex(e => e['hourOfListen'] === hourOfListen);
-        hourData[hourArrayIndex].msPlayed += i.msPlayed;
-        hourData[hourArrayIndex].uniqueListens += 1;
+    if (!("artistDateStats" in props.stats.artists[artistIndex].artistPageStats)) {
+        props.stats.artists[artistIndex].artistPageStats = getThisArtistData(artistDateData);
+    }
+    
+    const thisArtistStats = props.stats.artists[artistIndex].artistPageStats;
 
-    });
-    console.log(hourData);
+    console.log(artistIndex);
+    console.log(artistName);
+    console.log(props.stats.artists[artistIndex].artistPageStats);
+    console.log(props.stats.artists);
+    console.log(thisArtistStats);
 
-    artistDateStats.forEach( (j) => {
-        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
-    })
-    dayData.forEach( (j) => {
-        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
-    })
-    monthData.forEach( (j) => {
-        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
-    })
-    hourData.forEach( (j) => {
-        j.hrsPlayed = convertMsToHoursNumber(j.msPlayed);
-    })
-    const uniqueTracksArray = artistTrackData.map(
-        (i) => {
-          return i.trackName
-        }
-    ).filter(
-        (item, index, arr) => {
-            return arr.indexOf(item) == index
-        }
+
+    const uniqueTracksArray = (artistTrackData
+        .map(
+            (i) => {
+                return i.trackName
+            }
+        )
+        .filter(
+            (item, index, arr) => {
+                return arr.indexOf(item) == index
+            }
+        )
     );
 
     const uniqueTracks = uniqueTracksArray.length;
@@ -260,7 +290,7 @@ export default function Artist(props) {
                     innerHeight={timeChart.innerHeight}
                     innerWidth={timeChart.innerWidth}
                     margin={timeChart.margin}
-                    data={artistDateStats}
+                    data={thisArtistStats.artistDateStats}
                     allData={props.data}
                     xValue={timeChart.xValue}
                     yValue={timeChart.yValue}
@@ -282,7 +312,7 @@ export default function Artist(props) {
                         innerHeight={monthChart.innerHeight}
                         innerWidth={monthChart.innerWidth}
                         margin={monthChart.margin}
-                        data={monthData}
+                        data={props.stats.artists[artistIndex].artistPageStats.monthData}
                         xValue={monthChart.xValue}
                         yValue={monthChart.yValue}
                         xAxisLabel={monthChart.xAxisLabel}
@@ -304,7 +334,7 @@ export default function Artist(props) {
                         innerHeight={dayChart.innerHeight}
                         innerWidth={dayChart.innerWidth}
                         margin={dayChart.margin}
-                        data={dayData}
+                        data={props.stats.artists[artistIndex].artistPageStats.dayData}
                         xValue={dayChart.xValue}
                         yValue={dayChart.yValue}
                         xAxisLabel={dayChart.xAxisLabel}
@@ -324,7 +354,7 @@ export default function Artist(props) {
                     innerHeight={timeChart.innerHeight}
                     innerWidth={timeChart.innerWidth}
                     margin={timeChart.margin}
-                    data={hourData}
+                    data={props.stats.artists[artistIndex].artistPageStats.hourData}
                     xValue={hourChart.xValue}
                     yValue={hourChart.yValue}
                     xAxisLabel={hourChart.xAxisLabel}

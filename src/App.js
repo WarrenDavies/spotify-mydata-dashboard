@@ -265,7 +265,7 @@ function App(props) {
                     msPlayed: i.msPlayed,
                     firstListen: i.endTime,
                     lastListen: i.endTime,
-                    uniqueListens: 1
+                    uniqueListens: 1,
                 });
             } else {
                 newStats.artists[artistArrayIndex].msPlayed += i.msPlayed;
@@ -338,7 +338,7 @@ function App(props) {
             newStats.time.months[monthOfListen].msPlayed += i.msPlayed;
             newStats.time.months[monthOfListen].uniqueListens += 1;
             
-
+            
         });
 
         newStats.time.dates.forEach( (j, i) => {
@@ -359,6 +359,7 @@ function App(props) {
 
         newStats.artists.forEach( (j) => {
             j.hrsPlayed = +(convertMsToHoursNumber(j.msPlayed).toFixed(2));
+            j.artistPageStats = {};
         })
 
         newStats.tracks.forEach( (j) => {
@@ -392,6 +393,7 @@ function App(props) {
         setStats(newStats);
     }
 
+    
 
     return (
         
