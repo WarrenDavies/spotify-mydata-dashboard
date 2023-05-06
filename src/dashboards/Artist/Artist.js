@@ -34,12 +34,22 @@ export default function Artist(props) {
 
     // should this be using data not tracks
     const artistDateData = props.data.filter(i => i.artistName == artistName);
+    console.log(props.dateList);
+
+    function deepCloneArray(arrayToClone) {
+        return arrayToClone.map( x => { return {...x}} )
+    }
 
     function getThisArtistData(artistDateData) {
         console.log('updating artist data');
-        let artistDateStats = [...props.dateList];
+        // let artistDateStats = [...props.dateList];
+        let artistDateStats = deepCloneArray(props.dateList)
 
-        const [hourData, dayData, monthData] = getEmptyTimeArrays();
+        const [hours, days, months] = getEmptyTimeArrays();
+
+        let hourData = deepCloneArray(hours);
+        let dayData = deepCloneArray(days);
+        let monthData = deepCloneArray(months);
 
         artistDateData.forEach((i) => {
         
@@ -105,14 +115,14 @@ export default function Artist(props) {
 
     const artistIndex = props.stats.artists.findIndex(e => e['artistName'] == artistName);
 
-    // props.stats.artists[artistIndex].artistPageStats = useMemo(
-    //     () => getThisArtistData(artistDateData),
-    //     [props.data]
-    // );
+    props.stats.artists[artistIndex].artistPageStats = useMemo(
+        () => getThisArtistData(artistDateData),
+        [props.data]
+    );
 
-    if (!("artistDateStats" in props.stats.artists[artistIndex].artistPageStats)) {
-        props.stats.artists[artistIndex].artistPageStats = getThisArtistData(artistDateData);
-    }
+    // if (!("artistDateStats" in props.stats.artists[artistIndex].artistPageStats)) {
+    //     props.stats.artists[artistIndex].artistPageStats = getThisArtistData(artistDateData);
+    // }
     
     const thisArtistStats = props.stats.artists[artistIndex].artistPageStats;
 
@@ -121,7 +131,7 @@ export default function Artist(props) {
     console.log(props.stats.artists[artistIndex].artistPageStats);
     console.log(props.stats.artists);
     console.log(thisArtistStats);
-
+    console.log(props.dateList);
 
     const uniqueTracksArray = (artistTrackData
         .map(

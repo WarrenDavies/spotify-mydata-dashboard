@@ -393,7 +393,7 @@ function App(props) {
         setStats(newStats);
     }
 
-    
+    console.log(dateList);
 
     return (
         
@@ -444,7 +444,6 @@ function App(props) {
                             element={
                                 <Artists 
                                     data={data}
-                                    dateList={dateList} 
                                     stats={props.stats}
                                     listensUploaded={listensUploaded} 
                                     convertMsToHours={convertMsToHours}
