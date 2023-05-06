@@ -140,7 +140,7 @@ export default function Artist(props) {
         xAxisLabel: '',
         xAxisLabelOffset: 23,
         xValue: d => d.dateOfListen,
-        yValue: d => d.hrsPlayed,
+        yValue: d => d[barChartMeasure],
         d3Format: d3.format(".2s"),
         xAxisTickFormat: n => timeChart.d3Format(n),
         xAxisTickLimiter: 8,
