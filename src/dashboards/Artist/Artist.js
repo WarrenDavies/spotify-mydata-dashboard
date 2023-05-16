@@ -238,7 +238,7 @@ export default function Artist(props) {
     
     const columns = useMemo(() => [
         {
-            Header: 'Data',
+            Header: 'All tracks for ' + artistName,
             columns: [
                 {
                     Header: "TrackName",
@@ -374,14 +374,15 @@ export default function Artist(props) {
                     xAxisTickLimiter={hourChart.xAxisTickLimiter}
                 />
             </div>
-
-            <Table
-                columns={columns}
-                data={artistTrackData}
-                convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
-                placeholder={'Search for a track'}
-                search={true}
-            />
+            <div class='table-container artists-table'>
+                <Table
+                    columns={columns}
+                    data={artistTrackData}
+                    convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
+                    placeholder={'Search for a track'}
+                    search={true}
+                />
+            </div>
         </div>
     )
 }
