@@ -167,7 +167,7 @@ export default function Track(props) {
         yValue: d => d[barChartMeasure],
         d3Format: d3.format(""),
         xAxisTickFormat: n => timeChart.d3Format(n),
-        xAxisTickLimiter: 8,
+        xAxisTicks: 6,
     }
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 50;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;    
@@ -183,7 +183,7 @@ export default function Track(props) {
         yValue: d => d.name,
         d3Format: d3.format(""),
         xAxisTickFormat: n => dayChart.d3Format(n),
-        xAxisTickLimiter: 0,
+        xAxisTicks: 6,
     }
     dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 50;
     dayChart.innerWidth = dayChart.width - dayChart.margin.left - dayChart.margin.right;
@@ -215,7 +215,7 @@ export default function Track(props) {
         yValue: d => d.name,
         d3Format: d3.format(""),
         xAxisTickFormat: n => monthChart.d3Format(n),
-        xAxisTickLimiter: 0,
+        xAxisTicks: 6,
     }
     monthChart.innerHeight = monthChart.height - monthChart.margin.top - monthChart.margin.bottom - 50;
     monthChart.innerWidth = monthChart.width - monthChart.margin.left - monthChart.margin.right;
@@ -274,7 +274,7 @@ export default function Track(props) {
                         xAxisLabelOffset={monthChart.xAxisLabelOffset}
                         xAxisOffset={monthChart.xAxisOffset}
                         xAxisTickFormat={monthChart.xAxisTickFormat}
-                        xAxisTickLimiter={monthChart.xAxisTickLimiter}
+                        xAxisTicks={monthChart.xAxisTicks}
                         xAxisLabelLinks={false}
                         urlPrefix={false}
                     />
@@ -296,7 +296,7 @@ export default function Track(props) {
                         xAxisLabelOffset={dayChart.xAxisLabelOffset}
                         xAxisOffset={dayChart.xAxisOffset}
                         xAxisTickFormat={dayChart.xAxisTickFormat}
-                        xAxisTickLimiter={dayChart.xAxisTickLimiter}
+                        xAxisTicks={dayChart.xAxisTicks}
                     />
                 </div>
             </div>

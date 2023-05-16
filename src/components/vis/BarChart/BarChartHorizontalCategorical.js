@@ -5,7 +5,8 @@ import * as d3 from 'd3';
 
 export default function BarChartHorizontalCategorical(props) {
 
-    
+    // let xAxisTickLimiter;
+    const xAxisTicks = props.xAxisTicks ? props.xAxisTicks : null;
     
     const xScale = d3.scaleLinear()
         .domain([ 0, d3.max(props.data, props.xValue)])
@@ -26,6 +27,7 @@ export default function BarChartHorizontalCategorical(props) {
                     xScale={xScale}
                     innerHeight={props.innerHeight}
                     tickFormat={props.xAxisTickFormat}
+                    xAxisTicks={xAxisTicks}
                 />
                 
                 <AxisYDiscreet
