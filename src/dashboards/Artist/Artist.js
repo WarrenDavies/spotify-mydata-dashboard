@@ -34,7 +34,6 @@ export default function Artist(props) {
 
     // should this be using data not tracks
     const artistDateData = props.data.filter(i => i.artistName == artistName);
-    console.log(props.dateList);
 
     function deepCloneArray(arrayToClone) {
         return arrayToClone.map( x => { return {...x}} )
@@ -126,13 +125,6 @@ export default function Artist(props) {
     
     const thisArtistStats = props.stats.artists[artistIndex].artistPageStats;
 
-    console.log(artistIndex);
-    console.log(artistName);
-    console.log(props.stats.artists[artistIndex].artistPageStats);
-    console.log(props.stats.artists);
-    console.log(thisArtistStats);
-    console.log(props.dateList);
-
     const uniqueTracksArray = (artistTrackData
         .map(
             (i) => {
@@ -181,7 +173,7 @@ export default function Artist(props) {
         xAxisLabelOffset: 23,
         xValue: d => d.dateOfListen,
         yValue: d => d[barChartMeasure],
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => timeChart.d3Format(n),
         xAxisTickLimiter: 8,
     }

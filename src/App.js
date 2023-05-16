@@ -394,8 +394,6 @@ function App(props) {
         setStats(newStats);
     }
 
-    console.log(dateList);
-
     return (
         
         <div className="App">

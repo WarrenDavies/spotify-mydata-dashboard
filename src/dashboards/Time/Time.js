@@ -106,8 +106,6 @@ export default function Time(props) {
     monthChart.innerHeight = monthChart.height - monthChart.margin.top - monthChart.margin.bottom - 50;
     monthChart.innerWidth = monthChart.width - monthChart.margin.left - monthChart.margin.right;
 
-    console.log(props.stats.time.hours);
-
     const columns = useMemo(() => [
         {
             Header: 'Top stats for each day',
