@@ -365,6 +365,7 @@ function App(props) {
 
         newStats.tracks.forEach( (j) => {
             j.hrsPlayed = +(convertMsToHoursNumber(j.msPlayed).toFixed(2));
+            j.trackPageStats = {};
         })
 
         newStats.time.hours.forEach( (j) => {
@@ -481,6 +482,7 @@ function App(props) {
                             path="/track/:trackName/:artistName"
                                 element = {
                                         <Track
+                                            dateList={dateList}
                                             data={data}
                                             stats={stats}
                                             convertMsToLargestTimeUnit={convertMsToLargestTimeUnit}
