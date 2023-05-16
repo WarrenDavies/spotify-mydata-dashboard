@@ -67,7 +67,7 @@ export default function Tracks(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.trackName,
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => topTrackChart.d3Format(n),
     }
     topTrackChart.innerHeight = topTrackChart.height - topTrackChart.margin.top - topTrackChart.margin.bottom - 100;
@@ -81,7 +81,7 @@ export default function Tracks(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.trackName,
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => bingedTracksChart.d3Format(n),
     }
     bingedTracksChart.innerHeight = bingedTracksChart.height - bingedTracksChart.margin.top - bingedTracksChart.margin.bottom - 100;

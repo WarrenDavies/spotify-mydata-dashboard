@@ -197,7 +197,7 @@ export default function Artist(props) {
         xAxisLabel: '',
         xValue: d => d[barChartMeasure],
         yValue: d => d.name,
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => dayChart.d3Format(n),
         xAxisTickLimiter: 0,
     }
@@ -213,7 +213,7 @@ export default function Artist(props) {
         xAxisLabel: '',
         xValue: d => d.name,
         yValue: d => d[barChartMeasure],
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => hourChart.d3Format(n),
         xAxisTickLimiter: 0,
     }
@@ -229,7 +229,7 @@ export default function Artist(props) {
         xAxisLabel: '',
         xValue: d => d[barChartMeasure],
         yValue: d => d.name,
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => monthChart.d3Format(n),
         xAxisTickLimiter: 0,
     }

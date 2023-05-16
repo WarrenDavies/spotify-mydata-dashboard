@@ -35,7 +35,7 @@ export default function Home(props) {
         xAxisLabelOffset: 23,
         xValue: d => d.dateOfListen,
         yValue: d => d[barChartMeasure],
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => timeChart.d3Format(n),
         xAxisTickLimiter: 8,
     }
@@ -51,7 +51,7 @@ export default function Home(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.artistName,
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => topArtistChart.d3Format(n),
     }
     topArtistChart.innerHeight = topArtistChart.height - topArtistChart.margin.top - topArtistChart.margin.bottom - 100;
@@ -88,7 +88,7 @@ export default function Home(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.trackName,
-        d3Format: d3.format(".2s"),
+        d3Format: d3.format(""),
         xAxisTickFormat: n => topTracksChart.d3Format(n),
     }
     topTracksChart.innerHeight = topTracksChart.height - topTracksChart.margin.top - topTracksChart.margin.bottom - 100;
