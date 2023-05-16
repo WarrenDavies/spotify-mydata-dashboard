@@ -382,12 +382,6 @@ export default function Artist(props) {
                 placeholder={'Search for a track'}
                 search={true}
             />
-            <br/><br/>
-            {JSON.stringify(artistTrackData)}
-            <br/><br/>
-            {JSON.stringify(props.data)}
-            <br/><br/>
-            {JSON.stringify(props.stats)}
         </div>
     )
 }
