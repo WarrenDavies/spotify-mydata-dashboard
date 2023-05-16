@@ -312,6 +312,7 @@ function App(props) {
                     trackName: i.trackName,
                     msPlayed: i.msPlayed,
                     firstListen: i.endTime,
+                    lastListen: i.endTime,
                     uniqueListens: 1
                 });
             } else {
