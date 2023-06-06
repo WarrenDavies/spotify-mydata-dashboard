@@ -167,7 +167,7 @@ export default function Track(props) {
         yValue: d => d[barChartMeasure],
         d3Format: d3.format(""),
         xAxisTickFormat: n => timeChart.d3Format(n),
-        xAxisTicks: 6,
+        xAxisTickLimiter: 9,
     }
     timeChart.innerHeight = timeChart.height - timeChart.margin.top - timeChart.margin.bottom - 50;
     timeChart.innerWidth = timeChart.width - timeChart.margin.left - timeChart.margin.right;    
