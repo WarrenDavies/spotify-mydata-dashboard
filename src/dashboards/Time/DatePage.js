@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import { makePropGetter } from 'react-table';
 import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart'
+import ReactDropdown from 'react-dropdown';
+import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
+import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays} from '../../utils/DateAndTime'
 
 export default function DatePage(props) {
 
@@ -14,6 +17,14 @@ export default function DatePage(props) {
         i => i.endTime.substring(0, 10) == dateOfListen
     )
     
+    const dropDownAttributes = [
+        { value: 'hrsPlayed', label: 'Listening time (hours)' },
+        { value: 'uniqueListens', label: 'Number of listens' }
+    ];
+    const initialBarChartMeasure = 'hrsPlayed';
+    const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
+    const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label
+
     function getListeningTimePerHour(data) {
 
         let hours = []
@@ -44,7 +55,7 @@ export default function DatePage(props) {
         hours.forEach( (i) => {
 
             i.listeningTime = props.convertMsToLargestTimeUnit(i.listeningTimeMs);
-
+            i.hrsPlayed = convertMsToHoursNumber(i.listeningTimeMs);
         });
 
 
@@ -200,9 +211,24 @@ export default function DatePage(props) {
         return (j.trackName + ' (' + j.artistName + ')' + ",")
     });
 
+    const hourChart = {
+        width: 1400,
+        height: 500,
+        margin: { top: 20, right: 20, bottom: 20, left: 40 },
+        xAxisLabelOffset: 50,
+        xAxisOffset: 10,
+        xAxisLabel: '',
+        xValue: d => d.hour,
+        yValue: d => d[barChartMeasure],
+        d3Format: d3.format(""),
+        xAxisTickFormat: n => hourChart.d3Format(n),
+        xAxisTickLimiter: 0,
+    }
+    hourChart.innerHeight = hourChart.height - hourChart.margin.top - hourChart.margin.bottom - 50;
+    hourChart.innerWidth = hourChart.width - hourChart.margin.left - hourChart.margin.right;
+    
     return (
-        
-       <div className="Date">
+        <div className="Date">
             This is the date page for {dateOfListen}
             <br/><br/>
 
@@ -219,18 +245,31 @@ export default function DatePage(props) {
             unique listens this day: {highLevelStatsThisDay.uniqueListensThisDay}
             <br/><br/>
 
-            <BarChart 
-                width={width}
-                height={height}
-                innerHeight={innerHeight}
-                innerWidth={innerWidth}
-                margin={margin}
-                data={newHourData}
-                xValue={xValue}
-                yValue={yValue}
-                xAxisLabelOffset={xAxisLabelOffset}
-                xAxisTickFormat={xAxisTickFormat}
+            <ReactDropdown
+                options={dropDownAttributes}
+                onChange={option => setBarChartMeasure(option.value)}
+                value={initialBarChartMeasure}
+                dropdownLabel="Choose time or listens: "
             />
+
+            <div className='chart-container-full-width'>
+                <h2 className='chart-title'>When did you listen?</h2>
+                <BarChart
+                    width={hourChart.width}
+                    height={hourChart.height}
+                    innerHeight={hourChart.innerHeight}
+                    innerWidth={hourChart.innerWidth}
+                    margin={hourChart.margin}
+                    data={newHourData}
+                    xValue={hourChart.xValue}
+                    yValue={hourChart.yValue}
+                    xAxisLabel={hourChart.xAxisLabel}
+                    xAxisLabelOffset={hourChart.xAxisLabelOffset}
+                    xAxisOffset={hourChart.xAxisOffset}
+                    xAxisTickFormat={hourChart.xAxisTickFormat}
+                    xAxisTickLimiter={hourChart.xAxisTickLimiter}
+                />
+            </div>
 
             <Table
                 columns={allListenscolumns}
