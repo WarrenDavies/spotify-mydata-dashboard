@@ -119,7 +119,6 @@ export default function DatePage(props) {
 
         dateData.forEach((i) => {
             let artistArrayIndex = artistStatsThisDay.findIndex(e => e['artistName'] == i['artistName']);
-            // getArrayItemIndex(artistStatsThisDay.artists, i, 'artistName')
             if (artistArrayIndex === -1) {
                 artistStatsThisDay.push({
                     artistName: i.artistName,
@@ -158,8 +157,6 @@ export default function DatePage(props) {
         trackStatsThisDay.forEach( (i) => {
             i.hrsPlayed = convertMsToHoursNumber(i.msPlayed);
         });
-        
-        console.log(artistStatsThisDay);
 
         const artistStatsThisDaySorted = getTopN(artistStatsThisDay, 20)
         const trackStatsThisDaySorted = getTopN(trackStatsThisDay, 20)
@@ -217,7 +214,6 @@ export default function DatePage(props) {
                     accessor: 'artistName',
                     Cell: ({ value }) => {
                         return (
-                            // <a href={'/artist/' + value}>{value}</a>
                             <Link to={'/artist/' + value}>{value}</Link>
                         )
                     }
@@ -227,7 +223,6 @@ export default function DatePage(props) {
                     accessor: 'trackName',
                     Cell: ({ value }) => {
                         return (
-                            // <a href={'/artist/' + value}>{value}</a>
                             <Link to={'/track/' + value}>{value}</Link>
                         )
                     }
