@@ -8,6 +8,7 @@ import BarChart from '../../components/vis/BarChart/BarChart'
 import ReactDropdown from 'react-dropdown';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays} from '../../utils/DateAndTime'
+import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 
 export default function DatePage(props) {
 
@@ -142,10 +143,35 @@ export default function DatePage(props) {
             'tracks': trackStatsThisDaySorted,
             'listeningTimeThisDay': props.convertMsToLargestTimeUnit(listeningTimeThisDay),
             'uniqueListensThisDay': uniqueListensThisDay,
+            'totalArtists': artistStatsThisDay.length,
+            'totalTracks': trackStatsThisDay.length,
         }
     }
     
     const highLevelStatsThisDay = useMemo( () => getHighLevelStatsThisDay(dateData))
+
+    const headlineStats = [
+        {
+            header: 'Total listening time',
+            stat: highLevelStatsThisDay.listeningTimeThisDay
+        },
+        {
+            header: 'Total unique Listens',
+            stat: highLevelStatsThisDay.uniqueListensThisDay
+        },
+        {
+            header: 'Artists listened to',
+            stat: highLevelStatsThisDay.totalArtists
+        },
+        {
+            header: 'Tracks listened to',
+            stat: highLevelStatsThisDay.totalTracks
+        },
+        {
+            header: 'Avg tracks per artist',
+            stat: (highLevelStatsThisDay.totalTracks / highLevelStatsThisDay.totalArtists).toFixed(1)
+        },
+    ]
 
     const allListenscolumns = useMemo(() => [
         {
@@ -231,19 +257,9 @@ export default function DatePage(props) {
         <div className="Date">
             This is the date page for {dateOfListen}
             <br/><br/>
-
-            data.length: {props.data.length}
-            <br/><br/>
-
-            {/* Top Artists on this Date: {highLevelStatsThisDay[0].artistName} */}
-            Top Artists on this Date: {topArtists}
-            <br/><br/>
-            Top Tracks on this Date: {topTracks}
-            <br/><br/>
-            listening time this day: {highLevelStatsThisDay.listeningTimeThisDay}
-            <br/><br/>
-            unique listens this day: {highLevelStatsThisDay.uniqueListensThisDay}
-            <br/><br/>
+            <StatBoxContainer 
+                statBoxes={headlineStats}
+            />           
 
             <ReactDropdown
                 options={dropDownAttributes}
