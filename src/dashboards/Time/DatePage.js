@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import Table from '../../components/Table/Table'
 import { Link } from 'react-router-dom'
@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 import BarChart from '../../components/vis/BarChart/BarChart'
 import ReactDropdown from 'react-dropdown';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
-import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays} from '../../utils/DateAndTime'
+import { convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays } from '../../utils/DateAndTime'
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 
 export default function DatePage(props) {
@@ -17,7 +17,7 @@ export default function DatePage(props) {
     const dateData = props.data.filter(
         i => i.endTime.substring(0, 10) == dateOfListen
     )
-    
+
     const dropDownAttributes = [
         { value: 'hrsPlayed', label: 'Listening time (hours)' },
         { value: 'uniqueListens', label: 'Number of listens' }
@@ -41,19 +41,19 @@ export default function DatePage(props) {
             })
 
         }
-        
-        data.forEach( (i) => {
+
+        data.forEach((i) => {
 
             let hourOfThisListen = i.endTime.substring(11, 13);
-            
+
             let hoursArrayIndex = hours.findIndex(e => e['hour'] == hourOfThisListen);
-            
+
             hours[hoursArrayIndex].listeningTimeMs += i.msPlayed;
             hours[hoursArrayIndex].uniqueListens += 1;
 
         });
-        
-        hours.forEach( (i) => {
+
+        hours.forEach((i) => {
 
             i.listeningTime = props.convertMsToLargestTimeUnit(i.listeningTimeMs);
             i.hrsPlayed = convertMsToHoursNumber(i.listeningTimeMs);
@@ -63,8 +63,8 @@ export default function DatePage(props) {
         return hours
 
     }
-    
-    const newHourData = useMemo( () => getListeningTimePerHour(dateData))
+
+    const newHourData = useMemo(() => getListeningTimePerHour(dateData))
 
     const hoursColumns = useMemo(() => [
         {
@@ -88,8 +88,29 @@ export default function DatePage(props) {
         return array.findIndex(e => e[key] == listen[key]);
     }
 
+    function getTopN(data, n) {
+        const hrsPlayed = data
+            .sort((a, b) => {
+                return b.hrsPlayed - a.hrsPlayed;
+            })
+            .slice(0, n - 1);
+
+        const uniqueListens = data
+            .sort((a, b) => {
+                return b.uniqueListens - a.uniqueListens;
+            })
+            .slice(0, n - 1);
+
+        return (
+            {
+                "hrsPlayed": hrsPlayed,
+                "uniqueListens": uniqueListens
+            }
+        )
+    }
+
     const getHighLevelStatsThisDay = (dateData) => {
-        
+
         /// duplication from App here. need to pull these in from one place
         let artistStatsThisDay = [];
         let trackStatsThisDay = [];
@@ -100,7 +121,7 @@ export default function DatePage(props) {
             let artistArrayIndex = artistStatsThisDay.findIndex(e => e['artistName'] == i['artistName']);
             // getArrayItemIndex(artistStatsThisDay.artists, i, 'artistName')
             if (artistArrayIndex === -1) {
-                artistStatsThisDay.push ({
+                artistStatsThisDay.push({
                     artistName: i.artistName,
                     msPlayed: i.msPlayed,
                     uniqueListens: 1
@@ -114,7 +135,7 @@ export default function DatePage(props) {
             let trackArrayIndex = trackStatsThisDay.findIndex(e => e['trackName'] == i['trackName']);
 
             if (trackArrayIndex === -1) {
-                trackStatsThisDay.push ({
+                trackStatsThisDay.push({
                     trackName: i.trackName,
                     artistName: i.artistName,
                     msPlayed: i.msPlayed,
@@ -130,16 +151,21 @@ export default function DatePage(props) {
             uniqueListensThisDay = uniqueListensThisDay + 1;
         });
 
-        const artistStatsThisDaySorted = artistStatsThisDay.sort( (a, b) => {
-            return b.msPlayed - a.msPlayed;
-        })
+        artistStatsThisDay.forEach( (i) => {
+            i.hrsPlayed = convertMsToHoursNumber(i.msPlayed);
+        });
 
-        const trackStatsThisDaySorted = trackStatsThisDay.sort( (a, b) => {
-            return b.msPlayed - a.msPlayed;
-        })
+        trackStatsThisDay.forEach( (i) => {
+            i.hrsPlayed = convertMsToHoursNumber(i.msPlayed);
+        });
+        
+        console.log(artistStatsThisDay);
 
+        const artistStatsThisDaySorted = getTopN(artistStatsThisDay, 20)
+        const trackStatsThisDaySorted = getTopN(trackStatsThisDay, 20)
+        
         return {
-            'artists': artistStatsThisDaySorted, 
+            'artists': artistStatsThisDaySorted,
             'tracks': trackStatsThisDaySorted,
             'listeningTimeThisDay': props.convertMsToLargestTimeUnit(listeningTimeThisDay),
             'uniqueListensThisDay': uniqueListensThisDay,
@@ -147,8 +173,8 @@ export default function DatePage(props) {
             'totalTracks': trackStatsThisDay.length,
         }
     }
-    
-    const highLevelStatsThisDay = useMemo( () => getHighLevelStatsThisDay(dateData))
+
+    const highLevelStatsThisDay = useMemo(() => getHighLevelStatsThisDay(dateData))
 
     const headlineStats = [
         {
@@ -218,24 +244,7 @@ export default function DatePage(props) {
             ]
         }
     ])
-
-    const width = 960;
-    const height = 700;
-    const margin = { top: 20, right: 20, bottom: 20, left: 0};
-    const innerHeight = height - margin.top - margin.bottom - 100;
-    const innerWidth = width - margin.left - margin.right;
-    const xAxisLabelOffset = 50
-    const xValue = d => d.hour;
-    const yValue = d => Math.round((d.listeningTimeMs / 60000) * 100) / 100;
-    const d3Format = d3.format(".2s")
-    const xAxisTickFormat = n => d3Format(n)
-
-    const topArtists = highLevelStatsThisDay.artists.slice(0, 4).map( (j, i) => {
-        return (j.artistName + ",")
-    });
-    const topTracks = highLevelStatsThisDay.tracks.slice(0, 4).map( (j, i) => {
-        return (j.trackName + ' (' + j.artistName + ')' + ",")
-    });
+   
 
     const hourChart = {
         width: 1400,
@@ -252,14 +261,42 @@ export default function DatePage(props) {
     }
     hourChart.innerHeight = hourChart.height - hourChart.margin.top - hourChart.margin.bottom - 50;
     hourChart.innerWidth = hourChart.width - hourChart.margin.left - hourChart.margin.right;
-    
+
+    const topArtistChart = {
+        width: 600,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xAxisLabel: barChartMeasureLabel,
+        xValue: d => d[barChartMeasure],
+        yValue: d => d.artistName,
+        d3Format: d3.format(""),
+        xAxisTickFormat: n => topArtistChart.d3Format(n),
+    }
+    topArtistChart.innerHeight = topArtistChart.height - topArtistChart.margin.top - topArtistChart.margin.bottom - 100;
+    topArtistChart.innerWidth = topArtistChart.width - topArtistChart.margin.left - topArtistChart.margin.right;
+
+    const topTracksChart = {
+        width: 600,
+        height: 700,
+        margin: { top: 20, right: 20, bottom: 20, left: 230 },
+        xAxisLabelOffset: 50,
+        xAxisLabel: barChartMeasureLabel,
+        xValue: d => d[barChartMeasure],
+        yValue: d => d.trackName,
+        d3Format: d3.format(""),
+        xAxisTickFormat: n => topTracksChart.d3Format(n),
+    }
+    topTracksChart.innerHeight = topTracksChart.height - topTracksChart.margin.top - topTracksChart.margin.bottom - 100;
+    topTracksChart.innerWidth = topTracksChart.width - topTracksChart.margin.left - topTracksChart.margin.right;
+
     return (
         <div className="Date">
             This is the date page for {dateOfListen}
-            <br/><br/>
-            <StatBoxContainer 
+            <br /><br />
+            <StatBoxContainer
                 statBoxes={headlineStats}
-            />           
+            />
 
             <ReactDropdown
                 options={dropDownAttributes}
@@ -287,6 +324,48 @@ export default function DatePage(props) {
                 />
             </div>
 
+            <div className='chart-container'>
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>Top Artists</h2>
+
+                    <BarChartHorizontalCategorical
+                        width={topArtistChart.width}
+                        height={topArtistChart.height}
+                        innerHeight={topArtistChart.innerHeight}
+                        innerWidth={topArtistChart.innerWidth}
+                        margin={topArtistChart.margin}
+                        data={highLevelStatsThisDay.artists[barChartMeasure]}
+                        xValue={topArtistChart.xValue}
+                        yValue={topArtistChart.yValue}
+                        xAxisLabel={topArtistChart.xAxisLabel}
+                        xAxisLabelOffset={topArtistChart.xAxisLabelOffset}
+                        xAxisTickFormat={topArtistChart.xAxisTickFormat}
+                        urlPrefix='artist/'
+                        urlSuffix=''
+                    />
+                </div>
+
+                <div className='inline-chart'>
+                    <h2 className='chart-title'>Top Tracks</h2>
+
+                    <BarChartHorizontalCategorical
+                        width={topTracksChart.width}
+                        height={topTracksChart.height}
+                        innerHeight={topTracksChart.innerHeight}
+                        innerWidth={topTracksChart.innerWidth}
+                        margin={topTracksChart.margin}
+                        data={highLevelStatsThisDay.tracks[barChartMeasure]}
+                        xValue={topTracksChart.xValue}
+                        yValue={topTracksChart.yValue}
+                        xAxisLabel={topTracksChart.xAxisLabel}
+                        xAxisLabelOffset={topTracksChart.xAxisLabelOffset}
+                        xAxisTickFormat={topTracksChart.xAxisTickFormat}
+                        urlPrefix='track/'
+                        urlSuffixLookup='artistName'
+                    />
+                </div>
+            </div>
+
             <Table
                 columns={allListenscolumns}
                 data={dateData}
@@ -295,11 +374,11 @@ export default function DatePage(props) {
                 search={false}
             />
 
-            <br/><br/>
+            <br /><br />
             new hour data: {JSON.stringify(newHourData)}
-            <br/><br/>
+            <br /><br />
             {JSON.stringify(dateData)}
 
-       </div> 
+        </div>
     )
 }
