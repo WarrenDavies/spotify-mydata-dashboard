@@ -265,8 +265,9 @@ export default function DatePage(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.artistName,
-        d3Format: d3.format(""),
+        d3Format: d3.format(".1f"),
         xAxisTickFormat: n => topArtistChart.d3Format(n),
+        xAxisTicks: 4,
     }
     topArtistChart.innerHeight = topArtistChart.height - topArtistChart.margin.top - topArtistChart.margin.bottom - 100;
     topArtistChart.innerWidth = topArtistChart.width - topArtistChart.margin.left - topArtistChart.margin.right;
@@ -279,8 +280,9 @@ export default function DatePage(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.trackName,
-        d3Format: d3.format(""),
+        d3Format: d3.format(".2f"),
         xAxisTickFormat: n => topTracksChart.d3Format(n),
+        xAxisTicks: 4,
     }
     topTracksChart.innerHeight = topTracksChart.height - topTracksChart.margin.top - topTracksChart.margin.bottom - 100;
     topTracksChart.innerWidth = topTracksChart.width - topTracksChart.margin.left - topTracksChart.margin.right;
@@ -335,6 +337,7 @@ export default function DatePage(props) {
                         xAxisLabel={topArtistChart.xAxisLabel}
                         xAxisLabelOffset={topArtistChart.xAxisLabelOffset}
                         xAxisTickFormat={topArtistChart.xAxisTickFormat}
+                        xAxisTicks={topArtistChart.xAxisTicks}
                         urlPrefix='artist/'
                         urlSuffix=''
                     />
@@ -355,6 +358,7 @@ export default function DatePage(props) {
                         xAxisLabel={topTracksChart.xAxisLabel}
                         xAxisLabelOffset={topTracksChart.xAxisLabelOffset}
                         xAxisTickFormat={topTracksChart.xAxisTickFormat}
+                        xAxisTicks={topTracksChart.xAxisTicks}
                         urlPrefix='track/'
                         urlSuffixLookup='artistName'
                     />
