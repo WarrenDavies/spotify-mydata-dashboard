@@ -365,20 +365,15 @@ export default function DatePage(props) {
                     />
                 </div>
             </div>
-
-            <Table
-                columns={allListenscolumns}
-                data={dateData}
-                convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
-                placeholder={'Search for a track'}
-                search={false}
-            />
-
-            <br /><br />
-            new hour data: {JSON.stringify(newHourData)}
-            <br /><br />
-            {JSON.stringify(dateData)}
-
+            <div className='table-container time-table'>
+                <Table
+                    columns={allListenscolumns}
+                    data={dateData}
+                    convertMsToLargestTimeUnit={props.convertMsToLargestTimeUnit}
+                    placeholder={'Search for a track'}
+                    search={false}
+                />
+            </div>
         </div>
     )
 }
