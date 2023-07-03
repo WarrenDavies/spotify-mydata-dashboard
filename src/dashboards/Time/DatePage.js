@@ -19,12 +19,21 @@ export default function DatePage(props) {
     )
 
     const dropDownAttributes = [
-        { value: 'hrsPlayed', label: 'Listening time (hours)' },
-        { value: 'uniqueListens', label: 'Number of listens' }
+        { 
+            value: 'hrsPlayed', 
+            label: 'Listening time (hours)',
+            xAxisFormat: '.2f' 
+        },
+        { 
+            value: 'uniqueListens', 
+            label: 'Number of listens',
+            xAxisFormat: ''
+        }
     ];
     const initialBarChartMeasure = 'hrsPlayed';
     const [barChartMeasure, setBarChartMeasure] = useState(initialBarChartMeasure);
     const barChartMeasureLabel = dropDownAttributes.find(x => x.value === barChartMeasure).label
+    const topChartXAxisFormat = dropDownAttributes.find(x => x.value === barChartMeasure).xAxisFormat
 
     function getListeningTimePerHour(data) {
 
@@ -265,7 +274,7 @@ export default function DatePage(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.artistName,
-        d3Format: d3.format(".1f"),
+        d3Format: d3.format(topChartXAxisFormat),
         xAxisTickFormat: n => topArtistChart.d3Format(n),
         xAxisTicks: 4,
     }
@@ -280,7 +289,7 @@ export default function DatePage(props) {
         xAxisLabel: barChartMeasureLabel,
         xValue: d => d[barChartMeasure],
         yValue: d => d.trackName,
-        d3Format: d3.format(".2f"),
+        d3Format: d3.format(topChartXAxisFormat),
         xAxisTickFormat: n => topTracksChart.d3Format(n),
         xAxisTicks: 4,
     }
