@@ -3,24 +3,6 @@ import './BarChart.scss';
 
 export default function AxisXContinuous(props) {
 
-    // let xScale;
-    // // console.log(props.xScale);
-
-    // if (props.xAxisTickLimiter) {
-    //     const numberOfDataPoints = props.xScale.domain().length;
-    //     const nthTick = Math.floor(numberOfDataPoints / props.xAxisTickLimiter);
-
-    //     xScale = props.xScale.ticks().filter( (tickValue, i) => {
-            
-    //         if (i % nthTick === 0) {
-    //             return true
-    //         }
-
-    //     })
-    // } else {
-    //     xScale = props.xScale;
-    // }
-
     return ( 
         props.xScale.ticks(props.xAxisTicks).map(tickValue => (
             <g  
@@ -38,7 +20,6 @@ export default function AxisXContinuous(props) {
                 <text 
                     y={props.innerHeight + 3}
                     dy='.71em'
-                    // fill='#ffffff'
                     textAnchor='middle'
                 >
                     {props.tickFormat(tickValue)}

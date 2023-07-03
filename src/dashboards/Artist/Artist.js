@@ -191,7 +191,7 @@ export default function Artist(props) {
         yValue: d => d.name,
         d3Format: d3.format(""),
         xAxisTickFormat: n => dayChart.d3Format(n),
-        xAxisTickLimiter: 0,
+        xAxisTickLimiter: 6,
     }
     dayChart.innerHeight = dayChart.height - dayChart.margin.top - dayChart.margin.bottom - 50;
     dayChart.innerWidth = dayChart.width - dayChart.margin.left - dayChart.margin.right;
@@ -223,7 +223,8 @@ export default function Artist(props) {
         yValue: d => d.name,
         d3Format: d3.format(""),
         xAxisTickFormat: n => monthChart.d3Format(n),
-        xAxisTickLimiter: 0,
+        xAxisTickLimiter: 6,
+        xAxisTicks: 0,
     }
     monthChart.innerHeight = monthChart.height - monthChart.margin.top - monthChart.margin.bottom - 50;
     monthChart.innerWidth = monthChart.width - monthChart.margin.left - monthChart.margin.right;
@@ -322,6 +323,7 @@ export default function Artist(props) {
                         xAxisOffset={monthChart.xAxisOffset}
                         xAxisTickFormat={monthChart.xAxisTickFormat}
                         xAxisTickLimiter={monthChart.xAxisTickLimiter}
+                        xAxisTicks={monthChart.xAxisTickLimiter}
                         xAxisLabelLinks={false}
                         urlPrefix={false}
                     />
@@ -343,7 +345,7 @@ export default function Artist(props) {
                         xAxisLabelOffset={dayChart.xAxisLabelOffset}
                         xAxisOffset={dayChart.xAxisOffset}
                         xAxisTickFormat={dayChart.xAxisTickFormat}
-                        xAxisTickLimiter={dayChart.xAxisTickLimiter}
+                        xAxisTicks={dayChart.xAxisTickLimiter}
                     />
                 </div>
             </div>
