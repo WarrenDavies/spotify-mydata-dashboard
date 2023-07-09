@@ -238,8 +238,7 @@ export default function Artist(props) {
                     accessor: 'trackName',
                     Cell: ({ value }) => {
                         return (
-                            // <a href={'/artist/' + value}>{value}</a>
-                            <Link to={'/track/' + value + '/' + artistName}>{value}</Link>
+                            <Link to={'/track/' + encodeURIComponent(value) + '/' + encodeURIComponent(artistName)}>{value}</Link>
                         )
                     }
                 },

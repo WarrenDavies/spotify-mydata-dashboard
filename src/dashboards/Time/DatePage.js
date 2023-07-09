@@ -223,7 +223,7 @@ export default function DatePage(props) {
                     accessor: 'artistName',
                     Cell: ({ value }) => {
                         return (
-                            <Link to={'/artist/' + value}>{value}</Link>
+                            <Link to={'/artist/' + encodeURIComponent(value)}>{value}</Link>
                         )
                     }
                 },
@@ -232,7 +232,7 @@ export default function DatePage(props) {
                     accessor: 'trackName',
                     Cell: ({ value }) => {
                         return (
-                            <Link to={'/track/' + value}>{value}</Link>
+                            <Link to={'/track/' + encodeURIComponent(value)}>{value}</Link>
                         )
                     }
                 },

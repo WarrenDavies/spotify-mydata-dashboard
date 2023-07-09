@@ -139,7 +139,7 @@ export default function Time(props) {
                     accessor: 'topArtist.artistName',
                     Cell: ({ value }) => {
                         return (
-                            <Link to={'/artist/' + value}>{value}</Link>
+                            <Link to={'/artist/' + encodeURIComponent(value)}>{value}</Link>
                         )
                     }
                 },
@@ -170,7 +170,7 @@ export default function Time(props) {
                     accessor: 'topTrack.trackAndArtistName',
                     Cell: ({ value }) => {
                         return (
-                            <Link to={'/track/' + value}>{value}</Link>
+                            <Link to={'/track/' + encodeURIComponent(value)}>{value}</Link>
                         )
                     }
                 },

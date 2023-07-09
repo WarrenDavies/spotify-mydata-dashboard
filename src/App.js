@@ -477,7 +477,6 @@ function App(props) {
                             } 
                         />
 
-                        {/*different artists might have a track of the same name. Probs need to update this to be /track/:artistName/:trackName */}
                         <Route
                             path="/track/:trackName/:artistName"
                                 element = {
