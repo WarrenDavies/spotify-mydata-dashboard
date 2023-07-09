@@ -8,10 +8,13 @@ import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChar
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays} from '../../utils/DateAndTime'
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import ReactDropdown from 'react-dropdown';
+import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function Artist(props) {
 
     const { artistName } = useParams();
+
+    const pageTitle = "artistName";
 
     const artistStats = props.stats.artists.find(e => e.artistName == artistName);
     const totalListeningTime = props.convertMsToLargestTimeUnit(artistStats.msPlayed);
@@ -266,6 +269,10 @@ export default function Artist(props) {
             ]
         }
     ])
+
+    if (props.data.length == 0) {
+        return dashboardUtils.getPlaceholder(pageTitle);
+    }
 
     return (
         <div>

@@ -9,8 +9,11 @@ import ReactDropdown from 'react-dropdown';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 import { convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays } from '../../utils/DateAndTime'
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
+import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function DatePage(props) {
+
+    const pageTitle = "Dates";
 
     const { dateOfListen } = useParams();
 
@@ -295,6 +298,10 @@ export default function DatePage(props) {
     }
     topTracksChart.innerHeight = topTracksChart.height - topTracksChart.margin.top - topTracksChart.margin.bottom - 100;
     topTracksChart.innerWidth = topTracksChart.width - topTracksChart.margin.left - topTracksChart.margin.right;
+
+    if (props.data.length == 0) {
+        return dashboardUtils.getPlaceholder(pageTitle);
+    }
 
     if (dateData.length == 0) {
 

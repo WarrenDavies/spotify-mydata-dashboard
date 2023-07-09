@@ -9,10 +9,11 @@ import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import StatBox from '../../components/vis/StatBox/StatBox';
 import ReactDropdown from 'react-dropdown';
 import './home.scss'
-
-
+import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function Home(props) {
+
+    const pageTitle = "Home";
 
     const [listensProcessed, setListensProcessed] = useState(0)
     const [artistData, updateArtistData] = useState(props.stats.artists);
@@ -150,17 +151,8 @@ export default function Home(props) {
         },
     ]
 
-    if (!props.data) {
-
-        headlineStats.forEach((j) => {
-            j.stat = 0;
-        })
-
-        return (
-            <>
-                Upload some data!
-            </>
-        )
+    if (props.data.length == 0) {
+        return dashboardUtils.getPlaceholder(pageTitle);
     }
 
     return (

@@ -9,8 +9,11 @@ import ReactDropdown from 'react-dropdown';
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from '../../utils/DateAndTime';
 import './tracks.scss'
+import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function Tracks(props) {
+
+    const pageTitle = "Tracks";
 
     const headlineStats = [
         {
@@ -137,6 +140,10 @@ export default function Tracks(props) {
     ], [props.data])
 
     const [trackData, updateTrackData] = useState(props.stats.tracks);
+
+    if (props.data.length == 0) {
+        return dashboardUtils.getPlaceholder(pageTitle);
+    }
 
     return (
         <div className="Tracks">

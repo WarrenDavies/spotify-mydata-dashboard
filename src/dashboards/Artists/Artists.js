@@ -9,8 +9,11 @@ import ReactDropdown from 'react-dropdown';
 import './artists.scss';
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber} from '../../utils/DateAndTime';
+import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function Artists(props) {
+
+    const pageTitle = "Artists";
 
     const headlineStats = [
         {
@@ -131,6 +134,10 @@ export default function Artists(props) {
     ], [props.data])
 
     const [artistData, updateArtistData] = useState(props.stats.artists);
+
+    if (props.data.length == 0) {
+        return dashboardUtils.getPlaceholder(pageTitle);
+    }
 
     return (
         <div className="Artists">

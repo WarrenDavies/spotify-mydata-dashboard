@@ -8,10 +8,17 @@ import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChar
 import {convertMsToLargestTimeUnit, convertMsToHours, convertMsToHoursNumber, getEmptyTimeArrays} from '../../utils/DateAndTime'
 import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import ReactDropdown from 'react-dropdown';
+import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function Track(props) {
 
+    
+
     const { trackName, artistName } = useParams();
+
+    const pageTitle = trackName + ' by ' + artistName;
+
+
     const trackStats = props.stats.tracks.find(
         e => (e.trackName == trackName) && (e.artistName == artistName)
     );
@@ -220,6 +227,10 @@ export default function Track(props) {
     monthChart.innerHeight = monthChart.height - monthChart.margin.top - monthChart.margin.bottom - 50;
     monthChart.innerWidth = monthChart.width - monthChart.margin.left - monthChart.margin.right;
     
+    if (props.data.length == 0) {
+        return dashboardUtils.getPlaceholder(pageTitle);
+    }
+
     return (
         <div>
 

@@ -8,8 +8,11 @@ import StatBoxContainer from '../../components/vis/StatBox/StatBoxContainer';
 import BarChartHorizontalCategorical from '../../components/vis/BarChart/BarChartHorizontalCategorical';
 import './time.scss'
 import ReactDropdown from 'react-dropdown';
+import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function Time(props) {
+
+    const pageTitle = "Time"
 
     const headlineStats = [
         {
@@ -200,18 +203,8 @@ export default function Time(props) {
         }
     ])
 
-
-    if (!props.data) {
-
-        headlineStats.forEach((j) => {
-            j.stat = 0;
-        })
-
-        return (
-            <>
-                Upload some data!
-            </>
-        )
+    if (props.data.length == 0) {
+        return dashboardUtils.getPlaceholder(pageTitle);
     }
 
     return (
