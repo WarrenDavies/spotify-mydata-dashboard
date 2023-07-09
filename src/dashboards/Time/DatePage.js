@@ -13,9 +13,10 @@ import * as dashboardUtils from '../../utils/Dashboards';
 
 export default function DatePage(props) {
 
-    const pageTitle = "Dates";
+   
 
     const { dateOfListen } = useParams();
+    const pageTitle = dateOfListen;
 
     const dateData = props.data.filter(
         i => i.endTime.substring(0, 10) == dateOfListen
@@ -300,6 +301,7 @@ export default function DatePage(props) {
     topTracksChart.innerWidth = topTracksChart.width - topTracksChart.margin.left - topTracksChart.margin.right;
 
     if (props.data.length == 0) {
+        let pageTitle = "Dates";
         return dashboardUtils.getPlaceholder(pageTitle);
     }
 
@@ -325,7 +327,7 @@ export default function DatePage(props) {
 
     return (
         <div className="Date">
-            This is the date page for {dateOfListen}
+            <h2>{pageTitle}</h2>
             <br /><br />
             <StatBoxContainer
                 statBoxes={headlineStats}

@@ -159,6 +159,8 @@ export default function Home(props) {
         
         <div className='Home'>
             
+            <h2>{pageTitle}</h2>
+            
             <StatBoxContainer 
                 statBoxes={headlineStats}
             />

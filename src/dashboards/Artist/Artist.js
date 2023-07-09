@@ -277,8 +277,7 @@ export default function Artist(props) {
     return (
         <div>
 
-            This is the artist page for {artistName}
-            <br/><br/>
+            <h2>{pageTitle}</h2>
 
             <StatBoxContainer 
                 statBoxes={headlineStats}

@@ -234,8 +234,7 @@ export default function Track(props) {
     return (
         <div>
 
-            This is the track page for {trackName} by {artistName}
-            <br/><br/>
+            <h2>{pageTitle}</h2>
 
             <StatBoxContainer 
                 statBoxes={headlineStats}

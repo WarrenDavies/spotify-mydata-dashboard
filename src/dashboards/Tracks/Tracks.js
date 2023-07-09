@@ -100,7 +100,7 @@ export default function Tracks(props) {
                     accessor: 'trackName',
                     Cell: ({ row, value }) => {
                         return (
-                            <Link to={'/track/' + value + '/' + row.original.artistName}>{value}</Link>
+                            <Link to={'/track/' + encodeURIComponent(value) + '/' + row.original.artistName}>{value}</Link>
                         )
                     }
                 },
@@ -109,7 +109,7 @@ export default function Tracks(props) {
                     accessor: 'artistName',
                     Cell: ({ value }) => {
                         return (
-                            <Link to={'/track/' + value}>{value}</Link>
+                            <Link to={'/artist/' + encodeURIComponent(value)}>{value}</Link>
                         )
                     }
                 },
@@ -147,7 +147,8 @@ export default function Tracks(props) {
 
     return (
         <div className="Tracks">
-            This is the tracks page. 
+
+            <h2>{pageTitle}</h2>
             
             <StatBoxContainer 
                 statBoxes={headlineStats}

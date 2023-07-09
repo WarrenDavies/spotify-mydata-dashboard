@@ -211,8 +211,7 @@ export default function Time(props) {
         
         <div className='Time'>
             
-            Time dashboard<br/>
-
+            <h2>{pageTitle}</h2>
 
             <StatBoxContainer 
                 statBoxes={headlineStats}
