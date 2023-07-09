@@ -296,6 +296,26 @@ export default function DatePage(props) {
     topTracksChart.innerHeight = topTracksChart.height - topTracksChart.margin.top - topTracksChart.margin.bottom - 100;
     topTracksChart.innerWidth = topTracksChart.width - topTracksChart.margin.left - topTracksChart.margin.right;
 
+    if (dateData.length == 0) {
+
+        headlineStats.forEach( (j, i) => {
+            console.log(i, j);
+            if(j.header == "Avg tracks per artist") {
+                j.stat = 0;
+            }
+        });
+
+        return (
+            <div className="Date">
+                This is the date page for {dateOfListen}
+                <StatBoxContainer
+                    statBoxes={headlineStats}
+                />
+                <h2 className='chart-title'>Looks like you didn't listen to Spotify on this date!</h2>
+            </div>
+        )
+    }
+
     return (
         <div className="Date">
             This is the date page for {dateOfListen}
