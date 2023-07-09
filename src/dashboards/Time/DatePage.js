@@ -311,7 +311,7 @@ export default function DatePage(props) {
                 <StatBoxContainer
                     statBoxes={headlineStats}
                 />
-                <h2 className='chart-title'>Looks like you didn't listen to Spotify on this date!</h2>
+                <h3 className='chart-title'>Looks like you didn't listen to Spotify on this date!</h3>
             </div>
         )
     }
