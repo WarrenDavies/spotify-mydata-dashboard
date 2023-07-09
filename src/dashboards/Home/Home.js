@@ -116,22 +116,6 @@ export default function Home(props) {
         )
     }, [props.data])
 
-
-    // function processData(data) {
-    //     // let listensUploaded;
-
-    //     // if (listensProcessed != data.length) {
-            
-    //     //     listensUploaded = listensProcessed + data.length;
-    //     //     setListensProcessed(listensUploaded);
-    //     // }
-    // }
-
-    // useEffect(() => {
-    //     processData(props.data);
-    // });
-    
-
     const headlineStats = [
         {
             header: 'Total listening time',
@@ -160,7 +144,7 @@ export default function Home(props) {
         <div className='Home'>
             
             <h2>{pageTitle}</h2>
-            
+
             <StatBoxContainer 
                 statBoxes={headlineStats}
             />
